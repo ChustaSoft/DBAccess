@@ -15,7 +15,10 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions
         IEnumerable<TEntity> GetMultiple(
                 Expression<Func<TEntity, bool>> filter = null, 
                 Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
-                IList<Expression<Func<TEntity, object>>> includeProperties = null
+                IList<Expression<Func<TEntity, object>>> includedProperties = null,
+                int? skippedBatches = null,
+                int? batchSize = null,
+                bool trackingEnabled = false
             );
 
 
@@ -25,7 +28,7 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions
 
         void Update(TEntity entityToUpdate);
 
-        void Update(List<TEntity> entities);
+        void Update(IEnumerable<TEntity> entities);
 
         void Delete(TKey id);
 
