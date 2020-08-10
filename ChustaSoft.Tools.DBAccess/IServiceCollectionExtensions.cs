@@ -1,5 +1,4 @@
 ﻿#if NETCORE
-using ChustaSoft.Tools.DBAccess.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

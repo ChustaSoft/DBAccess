@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace ChustaSoft.Tools.DBAccess.Abstractions
+namespace ChustaSoft.Tools.DBAccess
 {
     public interface IUnitOfWork : IDisposable
     {

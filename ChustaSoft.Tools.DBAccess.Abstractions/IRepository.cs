@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace ChustaSoft.Tools.DBAccess.Abstractions
+namespace ChustaSoft.Tools.DBAccess
 {
     public interface IRepository<TEntity, TKey> 
         where TEntity : class, IKeyable<TKey>
