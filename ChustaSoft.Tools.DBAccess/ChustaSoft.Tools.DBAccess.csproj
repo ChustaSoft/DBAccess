@@ -2,6 +2,22 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;netcoreapp2.2;netcoreapp3.1;net471</TargetFrameworks>
+    <PackageId>ChustaSoft.Tools.DBAccess</PackageId>
+    <RootNamespace>ChustaSoft.Tools.DBAccess</RootNamespace>
+    <Description>Utilities for managing access to SQLServer database with EntityFramework</Description>
+    <Copyright>ChustaSoft</Copyright>
+    <Authors>Xelit3</Authors>
+    <Company>ChustaSoft</Company>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <Version>1.0.0-beta.1</Version>
+    <FileVersion>1.0.0</FileVersion>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <PackageProjectUrl>https://github.com/ChustaSoft/DBAccess</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/ChustaSoft/DBAccess/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageReleaseNotes>https://github.com/ChustaSoft/DBAccess/wiki/Release-notes</PackageReleaseNotes>
+    <RepositoryUrl>https://github.com/ChustaSoft/DBAccess.git</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+    <PackageTags>Utilities;Extensions;EFCore,EntityFramework;EF6;UnitOfWork;UoW</PackageTags>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
