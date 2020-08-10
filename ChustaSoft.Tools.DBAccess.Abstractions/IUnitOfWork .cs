@@ -1,6 +1,5 @@
 ﻿using ChustaSoft.Common.Contracts;
 using System;
-using System.Threading.Tasks;
 
 namespace ChustaSoft.Tools.DBAccess
 {
@@ -10,8 +9,6 @@ namespace ChustaSoft.Tools.DBAccess
             where TEntity : class, IKeyable<TKey>;
 
         bool CommitTransaction();
-
-        Task<bool> CommitTransactionAsync();
 
     }
 }
