@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.1;netcoreapp2.2;netcoreapp3.1</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.14" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.2' ">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.6" />  
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ChustaSoft.Tools.DBAccess.Abstractions\ChustaSoft.Tools.DBAccess.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>
