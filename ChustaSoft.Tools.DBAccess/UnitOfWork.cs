@@ -1,6 +1,11 @@
-﻿using ChustaSoft.Common.Contracts;
-using ChustaSoft.Tools.DBAccess.Abstractions;
+﻿#if NETFRAMEWORK
+using System.Data.Entity;
+#elif NETCORE
 using Microsoft.EntityFrameworkCore;
+#endif
+
+using ChustaSoft.Common.Contracts;
+using ChustaSoft.Tools.DBAccess.Abstractions;
 using System;
 using System.Collections;
 using System.Threading.Tasks;

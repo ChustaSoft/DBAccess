@@ -1,4 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿#if NETFRAMEWORK
+using System.Data.Entity;
+#elif NETCORE
+using Microsoft.EntityFrameworkCore;
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
