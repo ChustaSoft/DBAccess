@@ -1,4 +1,6 @@
 ﻿using ChustaSoft.Common.Contracts;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ChustaSoft.Tools.DBAccess
 {
