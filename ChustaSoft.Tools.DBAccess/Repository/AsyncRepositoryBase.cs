@@ -6,8 +6,10 @@ using System.Collections.Generic;
 #endif
 
 using ChustaSoft.Common.Contracts;
-
 using System.Threading.Tasks;
+using System.Linq.Expressions;
+using System.Linq;
+using System;
 
 namespace ChustaSoft.Tools.DBAccess
 {
@@ -30,9 +32,9 @@ namespace ChustaSoft.Tools.DBAccess
             return await _dbSet.FindAsync(id);
         }
 
-#if NETCOREAPP_31
+#if NETCOREAPP3_1
 
-        public virtual async Task<IAsyncEnumerable<TEntity>> GetMultiple(
+        public IAsyncEnumerable<TEntity> GetMultipleAsync(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             IList<Expression<Func<TEntity, object>>> includeProperties = null,
@@ -48,7 +50,7 @@ namespace ChustaSoft.Tools.DBAccess
                 .TrySetOrder(orderBy)
                 .TrySetPagination(skippedBatches, batchSize);
 
-            return trackingEnabled ? await query.AsAsyncEnumerable() : await query.AsNoTracking().AsAsyncEnumerable();
+            return trackingEnabled ? query.AsAsyncEnumerable() : query.AsNoTracking().AsAsyncEnumerable();
         }
 
 #endif

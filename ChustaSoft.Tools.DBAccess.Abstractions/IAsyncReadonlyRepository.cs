@@ -1,4 +1,8 @@
 ﻿using ChustaSoft.Common.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace ChustaSoft.Tools.DBAccess
@@ -9,8 +13,8 @@ namespace ChustaSoft.Tools.DBAccess
 
         Task<TEntity> GetSingleAsync(TKey id);
 
-#if NETCOREAPP_31
-        Task<IAsyncEnumerable<TEntity>> GetMultipleAsync
+#if NETCOREAPP3_1
+        IAsyncEnumerable<TEntity> GetMultipleAsync
             (
                 Expression<Func<TEntity, bool>> filter = null,
                 Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
