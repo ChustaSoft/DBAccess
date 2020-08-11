@@ -33,6 +33,18 @@ namespace ChustaSoft.Tools.DBAccess
             return await _dbSet.FindAsync(id);
         }
 
+        public async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, SelectablePropertiesBuilder<TEntity> includedProperties = null)
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            query
+                .TryIncludeProperties(includedProperties)
+                .TrySetFilter(filter)
+                .TrySetOrder(orderBy);
+
+            return await query.FirstAsync();
+        }
+
 #if NETCOREAPP3_1
 
         public IAsyncEnumerable<TEntity> GetMultipleAsync(

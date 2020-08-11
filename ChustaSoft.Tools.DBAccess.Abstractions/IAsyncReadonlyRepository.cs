@@ -14,12 +14,12 @@ namespace ChustaSoft.Tools.DBAccess
 
         Task<TEntity> GetSingleAsync(TKey id);
 
-        //Task<TEntity> GetSingleAsync
-        //    (
-        //        Expression<Func<TEntity, bool>> filter = null,
-        //        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-        //        List<Expression<Func<TEntity, object>>> includedProperties = null
-        //    );
+        Task<TEntity> GetSingleAsync
+            (
+                Expression<Func<TEntity, bool>> filter,
+                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                SelectablePropertiesBuilder<TEntity> includedProperties = null
+            );
 
 #if NETCOREAPP3_1
         IAsyncEnumerable<TEntity> GetMultipleAsync

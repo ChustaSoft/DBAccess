@@ -13,12 +13,12 @@ namespace ChustaSoft.Tools.DBAccess
 
         TEntity GetSingle(TKey id);
 
-        //TEntity GetSingle
-        //    (
-        //        Expression<Func<TEntity, bool>> filter = null,
-        //        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-        //        List<Expression<Func<TEntity, object>>> includedProperties = null
-        //    );
+        TEntity GetSingle
+            (
+                Expression<Func<TEntity, bool>> filter,
+                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                SelectablePropertiesBuilder<TEntity> includedProperties = null
+            );
 
         IEnumerable<TEntity> GetMultiple
             (

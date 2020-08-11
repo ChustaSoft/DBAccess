@@ -38,6 +38,23 @@ namespace ChustaSoft.Tools.DBAccess
             return _dbSet.Find(id);
         }
 
+        public TEntity GetSingle
+            (
+                Expression<Func<TEntity, bool>> filter, 
+                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
+                SelectablePropertiesBuilder<TEntity> includedProperties = null
+            )
+        {
+            var query = _dbSet;
+
+            query
+                .TryIncludeProperties(includedProperties)
+                .TrySetFilter(filter)
+                .TrySetOrder(orderBy);
+
+            return query.FirstOrDefault();
+        }
+
         public IEnumerable<TEntity> GetMultiple
             (
                 Expression<Func<TEntity, bool>> filter = null,
