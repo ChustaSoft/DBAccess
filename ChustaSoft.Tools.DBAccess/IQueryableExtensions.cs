@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 #endif
 
 using System;
-using System.Collections.Generic;
+using ChustaSoft.Common.Builders;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -25,12 +25,12 @@ namespace ChustaSoft.Tools.DBAccess
             return query;
         }
 
-        public static IQueryable<TEntity> TryIncludeProperties<TEntity>(this IQueryable<TEntity> query, IList<Expression<Func<TEntity, object>>> includedProperties)
+        public static IQueryable<TEntity> TryIncludeProperties<TEntity>(this IQueryable<TEntity> query, SelectablePropertiesBuilder<TEntity> includedProperties)
             where TEntity : class
         {
             if (includedProperties != null)
-                foreach (var property in includedProperties)
-                    query = query.Include(property);
+                foreach (var includedProperty in includedProperties.GetSelection())
+                    query = query.Include(includedProperty.Name);
 
             return query;
         }

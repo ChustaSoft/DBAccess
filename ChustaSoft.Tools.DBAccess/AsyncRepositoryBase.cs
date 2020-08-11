@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System.Linq;
 using System;
+using ChustaSoft.Common.Builders;
 
 namespace ChustaSoft.Tools.DBAccess
 {
@@ -37,7 +38,7 @@ namespace ChustaSoft.Tools.DBAccess
         public IAsyncEnumerable<TEntity> GetMultipleAsync(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            IList<Expression<Func<TEntity, object>>> includeProperties = null,
+            SelectablePropertiesBuilder<TEntity> includedProperties = null,
             int? skippedBatches = null,
             int? batchSize = null,
             bool trackingEnabled = false)
@@ -45,7 +46,7 @@ namespace ChustaSoft.Tools.DBAccess
             IQueryable<TEntity> query = _dbSet;
 
             query
-                .TryIncludeProperties(includeProperties)
+                .TryIncludeProperties(includedProperties)
                 .TrySetFilter(filter)
                 .TrySetOrder(orderBy)
                 .TrySetPagination(skippedBatches, batchSize);

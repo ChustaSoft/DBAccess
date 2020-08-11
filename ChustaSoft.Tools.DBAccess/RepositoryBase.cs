@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using ChustaSoft.Common.Builders;
 
 namespace ChustaSoft.Tools.DBAccess
 {
@@ -19,10 +20,16 @@ namespace ChustaSoft.Tools.DBAccess
         protected DbContext _context;
         protected DbSet<TEntity> _dbSet;
 
+
         public RepositoryBase(DbContext context)
         {
             _context = context;
             _dbSet = context.Set<TEntity>();
+        }
+
+        internal RepositoryBase(DbSet<TEntity> dbSet) 
+        {
+            _dbSet = dbSet;
         }
 
 
@@ -31,20 +38,20 @@ namespace ChustaSoft.Tools.DBAccess
             return _dbSet.Find(id);
         }
 
-        public virtual IEnumerable<TEntity> GetMultiple
+        public IEnumerable<TEntity> GetMultiple
             (
                 Expression<Func<TEntity, bool>> filter = null,
                 Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                List<Expression<Func<TEntity, object>>> includeProperties = null,
+                SelectablePropertiesBuilder<TEntity> includedProperties = null,
                 int? skippedBatches = null,
                 int? batchSize = null,
                 bool trackingEnabled = false
             )
         {
-            IQueryable<TEntity> query = _dbSet;
+            var query = _dbSet;
 
             query
-                .TryIncludeProperties(includeProperties)
+                .TryIncludeProperties(includedProperties)
                 .TrySetFilter(filter)
                 .TrySetOrder(orderBy)
                 .TrySetPagination(skippedBatches, batchSize);

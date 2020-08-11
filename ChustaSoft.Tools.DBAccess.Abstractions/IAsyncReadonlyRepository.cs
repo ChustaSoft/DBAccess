@@ -1,4 +1,5 @@
-﻿using ChustaSoft.Common.Contracts;
+﻿using ChustaSoft.Common.Builders;
+using ChustaSoft.Common.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace ChustaSoft.Tools.DBAccess
             (
                 Expression<Func<TEntity, bool>> filter = null,
                 Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                IList<Expression<Func<TEntity, object>>> includedProperties = null,
+                SelectablePropertiesBuilder<TEntity> includedProperties = null,
                 int? skippedBatches = null,
                 int? batchSize = null,
                 bool trackingEnabled = false
