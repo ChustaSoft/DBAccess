@@ -12,11 +12,18 @@ namespace ChustaSoft.Tools.DBAccess
 
         TEntity GetSingle(TKey id);
 
+        //TEntity GetSingle
+        //    (
+        //        Expression<Func<TEntity, bool>> filter = null,
+        //        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+        //        List<Expression<Func<TEntity, object>>> includedProperties = null
+        //    );
+
         IEnumerable<TEntity> GetMultiple
             (
                 Expression<Func<TEntity, bool>> filter = null,
                 Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                IList<Expression<Func<TEntity, object>>> includedProperties = null,
+                List<Expression<Func<TEntity, object>>> includedProperties = null,
                 int? skippedBatches = null,
                 int? batchSize = null,
                 bool trackingEnabled = false

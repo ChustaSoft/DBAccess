@@ -31,13 +31,15 @@ namespace ChustaSoft.Tools.DBAccess
             return _dbSet.Find(id);
         }
 
-        public virtual IEnumerable<TEntity> GetMultiple(
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            IList<Expression<Func<TEntity, object>>> includeProperties = null,
-            int? skippedBatches = null,
-            int? batchSize = null,
-            bool trackingEnabled = false)
+        public virtual IEnumerable<TEntity> GetMultiple
+            (
+                Expression<Func<TEntity, bool>> filter = null,
+                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                List<Expression<Func<TEntity, object>>> includeProperties = null,
+                int? skippedBatches = null,
+                int? batchSize = null,
+                bool trackingEnabled = false
+            )
         {
             IQueryable<TEntity> query = _dbSet;
 

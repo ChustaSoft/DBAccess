@@ -11,8 +11,7 @@ namespace ChustaSoft.Tools.DBAccess
             where TContext : DbContext
         {
             services.AddScoped<IUnitOfWork, UnitOfWork<TContext>>();
-            services.AddScoped<IAsyncUnitOfWork, AsyncUnitOfWork<TContext>>();
-
+            
             return services;
         }
 
