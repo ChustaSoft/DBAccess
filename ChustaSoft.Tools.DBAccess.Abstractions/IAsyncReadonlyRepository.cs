@@ -17,7 +17,6 @@ namespace ChustaSoft.Tools.DBAccess
         Task<TEntity> GetSingleAsync
             (
                 Expression<Func<TEntity, bool>> filter,
-                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                 SelectablePropertiesBuilder<TEntity> includedProperties = null
             );
 

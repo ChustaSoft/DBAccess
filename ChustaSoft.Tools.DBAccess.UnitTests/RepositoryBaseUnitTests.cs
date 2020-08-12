@@ -38,8 +38,10 @@ namespace ChustaSoft.Tools.DBAccess.UnitTests
         [TestMethod]
         public void Given_Repository_When_GetMultiple_Then_MultipleDataRetrived()
         {
-            var data = _repositoryBase.GetMultiple(x => x.Id == 10, includedProperties: SelectablePropertiesBuilder<Person>.GetProperties().SelectProperty(x => x.Address)).ToList();
+            var numberOfRows = 10;
+            var data = _repositoryBase.GetMultiple(x => x.Id <= numberOfRows, includedProperties: SelectablePropertiesBuilder<Person>.GetProperties().SelectProperty(x => x.Address)).ToList();
 
+            Assert.AreEqual(data.Count(), numberOfRows);
             Assert.IsTrue(data.All(x => x.Address.Any()));
         }
     }

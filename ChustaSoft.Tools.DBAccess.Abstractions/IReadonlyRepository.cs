@@ -16,7 +16,6 @@ namespace ChustaSoft.Tools.DBAccess
         TEntity GetSingle
             (
                 Expression<Func<TEntity, bool>> filter,
-                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                 SelectablePropertiesBuilder<TEntity> includedProperties = null
             );
 

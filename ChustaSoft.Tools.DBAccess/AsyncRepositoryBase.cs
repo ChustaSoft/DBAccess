@@ -33,14 +33,15 @@ namespace ChustaSoft.Tools.DBAccess
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, SelectablePropertiesBuilder<TEntity> includedProperties = null)
+        public async Task<TEntity> GetSingleAsync
+            (
+                Expression<Func<TEntity, bool>> filter, 
+                SelectablePropertiesBuilder<TEntity> includedProperties = null
+            )
         {
-            IQueryable<TEntity> query = _dbSet;
-
-            query
+            var query = GetQueryable()
                 .TryIncludeProperties(includedProperties)
-                .TrySetFilter(filter)
-                .TrySetOrder(orderBy);
+                .TrySetFilter(filter);
 
             return await query.FirstAsync();
         }
@@ -55,9 +56,7 @@ namespace ChustaSoft.Tools.DBAccess
             int? batchSize = null,
             bool trackingEnabled = false)
         {
-            IQueryable<TEntity> query = _dbSet;
-
-            query
+            var query = GetQueryable()
                 .TryIncludeProperties(includedProperties)
                 .TrySetFilter(filter)
                 .TrySetOrder(orderBy)
@@ -85,6 +84,8 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
 #endif
+
+        protected IQueryable<TEntity> GetQueryable() => _dbSet;
 
     }
 

@@ -41,16 +41,12 @@ namespace ChustaSoft.Tools.DBAccess
         public TEntity GetSingle
             (
                 Expression<Func<TEntity, bool>> filter, 
-                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
                 SelectablePropertiesBuilder<TEntity> includedProperties = null
             )
         {
-            var query = _dbSet;
-
-            query
+            var query = GetQueryable()
                 .TryIncludeProperties(includedProperties)
-                .TrySetFilter(filter)
-                .TrySetOrder(orderBy);
+                .TrySetFilter(filter);
 
             return query.FirstOrDefault();
         }
@@ -65,9 +61,7 @@ namespace ChustaSoft.Tools.DBAccess
                 bool trackingEnabled = false
             )
         {
-            var query = _dbSet;
-
-            query
+            var query = GetQueryable()
                 .TryIncludeProperties(includedProperties)
                 .TrySetFilter(filter)
                 .TrySetOrder(orderBy)
@@ -108,6 +102,9 @@ namespace ChustaSoft.Tools.DBAccess
         {
             PerformSingleDelete(entity);
         }
+
+
+        protected IQueryable<TEntity> GetQueryable() => _dbSet;
 
 
         private void PerformSingleUpdate(TEntity entity)
