@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{DD58AB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{FBD999CA-AB5C-4375-870D-06909C95563F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChustaSoft.Tools.DBAccess.UnitTests", "ChustaSoft.Tools.DBAccess.UnitTests\ChustaSoft.Tools.DBAccess.UnitTests.csproj", "{690EFD3E-2DA5-40C1-94C2-328920050064}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.UnitTests", "ChustaSoft.Tools.DBAccess.UnitTests\ChustaSoft.Tools.DBAccess.UnitTests.csproj", "{690EFD3E-2DA5-40C1-94C2-328920050064}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
