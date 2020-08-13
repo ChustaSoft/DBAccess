@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess", "ChustaSoft.Tools.DBAccess\ChustaSoft.Tools.DBAccess.csproj", "{3F011468-5D25-4745-BFFE-35CEC610135D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.EntityFramework", "ChustaSoft.Tools.DBAccess.EntityFramework\ChustaSoft.Tools.DBAccess.EntityFramework.csproj", "{3F011468-5D25-4745-BFFE-35CEC610135D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.Abstractions", "ChustaSoft.Tools.DBAccess.Abstractions\ChustaSoft.Tools.DBAccess.Abstractions.csproj", "{F444F6D4-F554-4717-881C-50B5B67413DB}"
 EndProject
