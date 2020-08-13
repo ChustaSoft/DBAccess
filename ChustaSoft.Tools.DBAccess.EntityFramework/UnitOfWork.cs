@@ -4,18 +4,17 @@ using System.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 #endif
 
-using ChustaSoft.Common.Contracts;
 using System;
 using System.Collections;
 using System.Threading.Tasks;
 
 namespace ChustaSoft.Tools.DBAccess
 {
-    public class UnitOfWork<TContext> : IUnitOfWork
+    public class UnitOfWork<TContext, TKey> : IUnitOfWork<TKey>
         where TContext : DbContext
     {
 
-        private Hashtable _repositories = new Hashtable();
+        protected Hashtable _repositories = new Hashtable();
 
         private readonly TContext _context;
 
@@ -25,24 +24,25 @@ namespace ChustaSoft.Tools.DBAccess
             _context = context;
         }
 
-        public virtual IRepository<TEntity, TKey> GetRepository<TEntity, TKey>()
-            where TEntity : class, IKeyable<TKey>
+
+        public virtual IRepository<TEntity, TKey> GetRepository<TEntity>()
+            where TEntity : class
         {
             var entityName = typeof(TEntity).Name;
             var repositoryType = typeof(RepositoryBase<TEntity, TKey>);
 
-            CreateRepositoryInstance<TEntity, TKey>(entityName, repositoryType);
+            CreateRepositoryInstance<TEntity>(entityName, repositoryType);
 
             return (IRepository<TEntity, TKey>)_repositories[entityName];
         }
 
-        public virtual IAsyncRepository<TEntity, TKey> GetAsyncRepository<TEntity, TKey>()
-            where TEntity : class, IKeyable<TKey>
+        public virtual IAsyncRepository<TEntity, TKey> GetAsyncRepository<TEntity>()
+            where TEntity : class
         {
             var entityName = typeof(TEntity).Name;
-            var repositoryType = typeof(AsyncRepositoryBase<TEntity, TKey>);
+            var repositoryType = typeof(AsyncRepositoryBase<TEntity>);
 
-            CreateRepositoryInstance<TEntity, TKey>(entityName, repositoryType);
+            CreateRepositoryInstance<TEntity>(entityName, repositoryType);
 
             return (IAsyncRepository<TEntity, TKey>)_repositories[entityName];
         }
@@ -51,6 +51,7 @@ namespace ChustaSoft.Tools.DBAccess
         {
             return _context.SaveChanges() > 0;
         }
+
         public async Task<bool> CommitTransactionAsync()
         {
             return await _context.SaveChangesAsync() > 0;
@@ -63,8 +64,8 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
 
-        private void CreateRepositoryInstance<TEntity, TKey>(string entityName, Type repositoryType) 
-            where TEntity : class, IKeyable<TKey>
+        protected void CreateRepositoryInstance<TEntity>(string entityName, Type repositoryType)
+            where TEntity : class
         {
             if (!_repositories.ContainsKey(entityName))
             {
@@ -76,4 +77,38 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
     }
+
+
+
+    public class UnitOfWork<TContext> : UnitOfWork<TContext, Guid>, IUnitOfWork
+        where TContext : DbContext
+    {
+
+        public UnitOfWork(TContext context) 
+            : base(context)
+        { }
+
+
+        IRepository<TEntity> IUnitOfWork.GetRepository<TEntity>()
+        {
+            var entityName = typeof(TEntity).Name;
+            var repositoryType = typeof(RepositoryBase<TEntity>);
+
+            CreateRepositoryInstance<TEntity>(entityName, repositoryType);
+
+            return (IRepository<TEntity>)_repositories[entityName];
+        }
+
+        IAsyncRepository<TEntity> IUnitOfWork.GetAsyncRepository<TEntity>()
+        {
+            var entityName = typeof(TEntity).Name;
+            var repositoryType = typeof(AsyncRepositoryBase<TEntity>);
+
+            CreateRepositoryInstance<TEntity>(entityName, repositoryType);
+
+            return (IAsyncRepository<TEntity>)_repositories[entityName];
+        }
+
+    }
+
 }

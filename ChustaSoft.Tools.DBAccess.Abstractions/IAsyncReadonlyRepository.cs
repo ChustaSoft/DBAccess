@@ -1,5 +1,4 @@
 ﻿using ChustaSoft.Common.Builders;
-using ChustaSoft.Common.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 namespace ChustaSoft.Tools.DBAccess
 {
     public interface IAsyncReadonlyRepository<TEntity, TKey>
-        where TEntity : class, IKeyable<TKey>
+        where TEntity : class
     {
 
         Task<TEntity> GetSingleAsync(TKey id);
@@ -32,4 +31,11 @@ namespace ChustaSoft.Tools.DBAccess
             );
 #endif
     }
+
+
+
+    public interface IAsyncReadonlyRepository<TEntity> : IAsyncReadonlyRepository<TEntity, Guid>
+        where TEntity : class
+    { }
+
 }

@@ -4,7 +4,6 @@ using System.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 #endif
 
-using ChustaSoft.Common.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +13,7 @@ using ChustaSoft.Common.Builders;
 namespace ChustaSoft.Tools.DBAccess
 {
     public class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
-        where TEntity : class, IKeyable<TKey>
+        where TEntity : class
     {
 
         protected DbContext _context;
@@ -120,6 +119,22 @@ namespace ChustaSoft.Tools.DBAccess
 
             _dbSet.Remove(entity);
         }
+
+    }
+
+
+
+    public class RepositoryBase<TEntity> : RepositoryBase<TEntity, Guid>, IRepository<TEntity>
+        where TEntity : class
+    {
+
+        public RepositoryBase(DbContext context) 
+            : base(context)
+        { }
+
+        internal RepositoryBase(DbSet<TEntity> dbSet) 
+            : base(dbSet)
+        { }
 
     }
 }
