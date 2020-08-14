@@ -8,7 +8,6 @@
 
 
 ## Description
----
 
 ### DBAccess is a tool that provides default utilities for managing the Database infrastructure layer such as:
 - UnitOfWork
