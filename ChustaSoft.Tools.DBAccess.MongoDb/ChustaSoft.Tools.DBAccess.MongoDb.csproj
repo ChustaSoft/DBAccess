@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.1;netcoreapp2.2;netcoreapp3.1;net471</TargetFrameworks>
+    <PackageId>ChustaSoft.Tools.DBAccess.MongoDb</PackageId>
+    <RootNamespace>ChustaSoft.Tools.DBAccess</RootNamespace>
+    <Description>Utilities for managing access to MongoDb database through MongoDb client</Description>
+    <Copyright>ChustaSoft</Copyright>
+    <Authors>Xelit3</Authors>
+    <Company>ChustaSoft</Company>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <Version>1.0.0</Version>
+    <FileVersion>1.0.0</FileVersion>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <PackageProjectUrl>https://github.com/ChustaSoft/DBAccess</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/ChustaSoft/DBAccess/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageReleaseNotes>https://github.com/ChustaSoft/DBAccess/wiki/Release-notes</PackageReleaseNotes>
+    <RepositoryUrl>https://github.com/ChustaSoft/DBAccess.git</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+    <PackageTags>Utilities;Extensions;MongoDb,MongoDbClient;UnitOfWork;UoW</PackageTags>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.11.0" />
+  </ItemGroup>
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net471' ">
+    <PackageReference Include="Unity" Version="5.11.6" />
+  </ItemGroup>
+  
+  
+  <ItemGroup>
+    <ProjectReference Include="..\ChustaSoft.Tools.DBAccess.Abstractions\ChustaSoft.Tools.DBAccess.Abstractions.csproj" />
+  </ItemGroup>
+
+
+  <PropertyGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^net\d'))">
+    <DefineConstants>NETFRAMEWORK</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^netcoreapp\d'))">
+    <DefineConstants>NETCORE</DefineConstants>
+  </PropertyGroup>
+
+</Project>

@@ -13,7 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{FBD9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.UnitTests", "ChustaSoft.Tools.DBAccess.UnitTests\ChustaSoft.Tools.DBAccess.UnitTests.csproj", "{690EFD3E-2DA5-40C1-94C2-328920050064}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChustaSoft.Tools.DBAccess.Examples", "ChustaSoft.Tools.DBAccess.Examples\ChustaSoft.Tools.DBAccess.Examples.csproj", "{7F7A8DFE-CD53-4986-8707-75E1D48BC929}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.Examples", "ChustaSoft.Tools.DBAccess.Examples\ChustaSoft.Tools.DBAccess.Examples.csproj", "{7F7A8DFE-CD53-4986-8707-75E1D48BC929}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChustaSoft.Tools.DBAccess.MongoDb", "ChustaSoft.Tools.DBAccess.MongoDb\ChustaSoft.Tools.DBAccess.MongoDb.csproj", "{7200CDC8-2CC3-4991-B1C7-35419C523E79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{7F7A8DFE-CD53-4986-8707-75E1D48BC929}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F7A8DFE-CD53-4986-8707-75E1D48BC929}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F7A8DFE-CD53-4986-8707-75E1D48BC929}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7200CDC8-2CC3-4991-B1C7-35419C523E79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7200CDC8-2CC3-4991-B1C7-35419C523E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7200CDC8-2CC3-4991-B1C7-35419C523E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7200CDC8-2CC3-4991-B1C7-35419C523E79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{F444F6D4-F554-4717-881C-50B5B67413DB} = {DD58AB32-467C-4821-A112-900AD0E80BB0}
 		{690EFD3E-2DA5-40C1-94C2-328920050064} = {FBD999CA-AB5C-4375-870D-06909C95563F}
 		{7F7A8DFE-CD53-4986-8707-75E1D48BC929} = {FBD999CA-AB5C-4375-870D-06909C95563F}
+		{7200CDC8-2CC3-4991-B1C7-35419C523E79} = {DD58AB32-467C-4821-A112-900AD0E80BB0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7E9D275F-FD96-4A22-875F-FE41841CB089}
