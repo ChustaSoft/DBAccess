@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ChustaSoft.Tools.DBAccess\ChustaSoft.Tools.DBAccess.csproj" />
+    <ProjectReference Include="..\ChustaSoft.Tools.DBAccess.EntityFramework\ChustaSoft.Tools.DBAccess.EntityFramework.csproj" />
   </ItemGroup>
 
 </Project>

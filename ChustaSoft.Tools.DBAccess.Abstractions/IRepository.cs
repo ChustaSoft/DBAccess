@@ -1,10 +1,11 @@
 ﻿using ChustaSoft.Common.Contracts;
+using System;
 using System.Collections.Generic;
 
 namespace ChustaSoft.Tools.DBAccess
 {
     public interface IRepository<TEntity, TKey> : IReadonlyRepository<TEntity, TKey>
-        where TEntity : class, IKeyable<TKey>
+        where TEntity : class
     {
         void Insert(TEntity entity);
 
@@ -19,4 +20,10 @@ namespace ChustaSoft.Tools.DBAccess
         void Delete(TEntity entities);
 
     }
+
+
+    public interface IRepository<TEntity> : IRepository<TEntity, Guid> 
+        where TEntity : class 
+    { }
+
 }

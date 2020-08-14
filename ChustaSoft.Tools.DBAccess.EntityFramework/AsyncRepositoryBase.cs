@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 #endif
 
-using ChustaSoft.Common.Contracts;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System.Linq;
@@ -15,7 +14,7 @@ using ChustaSoft.Common.Builders;
 namespace ChustaSoft.Tools.DBAccess
 {
     public class AsyncRepositoryBase<TEntity, TKey> : IAsyncRepository<TEntity, TKey>
-        where TEntity : class, IKeyable<TKey>
+        where TEntity : class
     {
 
         protected DbContext _context;
@@ -87,6 +86,16 @@ namespace ChustaSoft.Tools.DBAccess
 
         protected IQueryable<TEntity> GetQueryable() => _dbSet;
 
+    }
+
+
+
+    public class AsyncRepositoryBase<TEntity> : AsyncRepositoryBase<TEntity, Guid>
+        where TEntity : class
+    {
+        public AsyncRepositoryBase(DbContext context) 
+            : base(context)
+        { }
     }
 
 }

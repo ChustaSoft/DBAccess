@@ -63,4 +63,6 @@ namespace ChustaSoft.Tools.DBAccess.UnitTests
         public int PersonId { get; set; }
         public string Line { get; set; }
     }
+
+    
 }

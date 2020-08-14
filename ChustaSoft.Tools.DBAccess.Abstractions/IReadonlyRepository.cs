@@ -1,5 +1,4 @@
 ﻿using ChustaSoft.Common.Builders;
-using ChustaSoft.Common.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Linq.Expressions;
 namespace ChustaSoft.Tools.DBAccess
 {
     public interface IReadonlyRepository<TEntity, TKey>
-        where TEntity : class, IKeyable<TKey>
+        where TEntity : class
     {
 
         TEntity GetSingle(TKey id);
@@ -29,4 +28,10 @@ namespace ChustaSoft.Tools.DBAccess
                 bool trackingEnabled = false
             );
     }
+
+
+    public interface IReadonlyRepository<TEntity> : IReadonlyRepository<TEntity, Guid>
+        where TEntity : class
+    { }
+
 }
