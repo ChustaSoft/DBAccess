@@ -90,7 +90,7 @@ namespace ChustaSoft.Tools.DBAccess
 
 
 
-    public class AsyncRepositoryBase<TEntity> : AsyncRepositoryBase<TEntity, Guid>
+    public class AsyncRepositoryBase<TEntity> : AsyncRepositoryBase<TEntity, Guid>, IAsyncRepository<TEntity>
         where TEntity : class
     {
         public AsyncRepositoryBase(DbContext context) 
