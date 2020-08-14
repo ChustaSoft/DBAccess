@@ -20,6 +20,7 @@ NuGet package is compatible with:
 - NET Core from version 2.1
 - NET Framework from version 4.7.1
 
+---
 
 - For getting started, visit the home page of our project [wiki](https://github.com/ChustaSoft/DBAccess/wiki)
 - To know how to use this version, take a look on the [provided examples](https://github.com/ChustaSoft/DBAccess/tree/master/ChustaSoft.Tools.DBAccess.Examples)
