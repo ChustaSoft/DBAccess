@@ -1,20 +1,13 @@
-﻿#if NETFRAMEWORK
-using System.Data.Entity;
-#elif NETCORE
-using Microsoft.EntityFrameworkCore;
-#endif
-
-using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace ChustaSoft.Tools.DBAccess
 {
     public class UnitOfWork<TContext, TKey> : UnitOfWorkBase<TContext>, IUnitOfWork<TKey>
-        where TContext : DbContext
+        where TContext : IMongoContext
     {
 
         public UnitOfWork(TContext context)
-            : base(context)
+           : base(context)
         { }
 
 
@@ -32,7 +25,7 @@ namespace ChustaSoft.Tools.DBAccess
             where TEntity : class
         {
             var repositoryTuple = GetRepositoryTuple<TEntity, AsyncRepositoryBase<TEntity, TKey>>();
-            
+
             CreateRepositoryInstance<TEntity>(repositoryTuple.EntityName, repositoryTuple.RepositoryType);
 
             return (IAsyncRepository<TEntity, TKey>)_repositories[repositoryTuple.EntityName];
@@ -40,7 +33,9 @@ namespace ChustaSoft.Tools.DBAccess
 
         public bool CommitTransaction()
         {
-            return _context.SaveChanges() > 0;
+            var task = Task.Run(() => CommitTransactionAsync());
+
+            return task.Result;
         }
 
         public async Task<bool> CommitTransactionAsync()
@@ -49,36 +44,4 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
     }
-
-
-
-    public class UnitOfWork<TContext> : UnitOfWork<TContext, Guid>, IUnitOfWork
-        where TContext : DbContext
-    {
-
-        public UnitOfWork(TContext context) 
-            : base(context)
-        { }
-
-
-        IRepository<TEntity> IUnitOfWork.GetRepository<TEntity>()
-        {
-            var repositoryTuple = GetRepositoryTuple<TEntity, RepositoryBase<TEntity>>();
-            
-            CreateRepositoryInstance<TEntity>(repositoryTuple.EntityName, repositoryTuple.RepositoryType);
-
-            return (IRepository<TEntity>)_repositories[repositoryTuple.EntityName];
-        }
-
-        IAsyncRepository<TEntity> IUnitOfWork.GetAsyncRepository<TEntity>()
-        {
-            var repositoryTuple = GetRepositoryTuple<TEntity, AsyncRepositoryBase<TEntity>>();
-
-            CreateRepositoryInstance<TEntity>(repositoryTuple.EntityName, repositoryTuple.RepositoryType);
-
-            return (IAsyncRepository<TEntity>)_repositories[repositoryTuple];
-        }
-
-    }
-
 }
