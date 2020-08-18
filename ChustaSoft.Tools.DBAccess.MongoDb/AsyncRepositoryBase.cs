@@ -28,29 +28,24 @@ namespace ChustaSoft.Tools.DBAccess
             throw new NotImplementedException();
         }
 
-        public Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> filter, SelectablePropertiesBuilder<TEntity> includedProperties = null)
+        public Task<TEntity> GetSingleAsync(Action<ISingleResultSearchParametersBuilder<TEntity>> searchCriteria)
         {
             throw new NotImplementedException();
         }
 
-
+        public Task<IEnumerable<TEntity>> GetMultipleAsync(Action<ISearchParametersBuilder<TEntity>> searchCriteria)
+        {
+            throw new NotImplementedException();
+        }
 
 #if NETCOREAPP3_1
 
-        public IAsyncEnumerable<TEntity> GetMultipleAsync(
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            SelectablePropertiesBuilder<TEntity> includedProperties = null,
-            int? skippedBatches = null,
-            int? batchSize = null,
-            bool trackingEnabled = false)
+        public IAsyncEnumerable<TEntity> GetMultiple(Action<ISearchParametersBuilder<TEntity>> searchCriteria)
         {
             throw new NotImplementedException();
         }
 
 #endif
-
-#if NETCORE
 
         public async Task<bool> InsertAsync(TEntity entity)
         {
@@ -72,10 +67,26 @@ namespace ChustaSoft.Tools.DBAccess
             });
         }
 
-#endif
+        public Task<bool> UpdateAsync(TEntity entity)
+        {
+            throw new NotImplementedException();
+        }
 
+        public Task<bool> UpdateAsync(IEnumerable<TEntity> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteAsync(TKey id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteAsync(TEntity entity)
+        {
+            throw new NotImplementedException();
+        }
         
-
     }
 
 }
