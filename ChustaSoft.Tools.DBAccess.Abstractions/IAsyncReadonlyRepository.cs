@@ -12,10 +12,10 @@ namespace ChustaSoft.Tools.DBAccess
 
         Task<TEntity> GetSingleAsync(Action<ISingleResultSearchParametersBuilder<TEntity>> searchCriteria);
 
-        Task<TEntity> GetMultiple(Action<ISearchParametersBuilder<TEntity>> searchCriteria);
+        Task<IEnumerable<TEntity>> GetMultipleAsync(Action<ISearchParametersBuilder<TEntity>> searchCriteria);
 
 #if NETCOREAPP3_1
-        IAsyncEnumerable<TEntity> GetMultipleAsAsync(Action<ISearchParametersBuilder<TEntity>> searchCriteria);
+        IAsyncEnumerable<TEntity> GetMultiple(Action<ISearchParametersBuilder<TEntity>> searchCriteria);
 #endif
     }
 

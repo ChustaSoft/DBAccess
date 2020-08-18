@@ -1,15 +1,16 @@
 ﻿#if NETFRAMEWORK
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 #elif NETCORE
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+using ChustaSoft.Common.Builders;
+using System.Linq.Expressions;
 #endif
 
 using System.Threading.Tasks;
-using System.Linq.Expressions;
 using System.Linq;
 using System;
-using ChustaSoft.Common.Builders;
+using System.Collections.Generic;
 
 namespace ChustaSoft.Tools.DBAccess
 {
@@ -27,62 +28,138 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
 
+
         public async Task<TEntity> GetSingleAsync(TKey id)
         {
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<TEntity> GetSingleAsync
-            (
-                Expression<Func<TEntity, bool>> filter, 
-                SelectablePropertiesBuilder<TEntity> includedProperties = null
-            )
+        public async Task<TEntity> GetSingleAsync(Action<ISingleResultSearchParametersBuilder<TEntity>> searchCriteria)
         {
+            var searchParams = EntityFrameworkSearchParametersBuilder<TEntity, EntityFrameworkSearchParameters<TEntity>>.GetParametersFromCriteria(searchCriteria);
+
             var query = GetQueryable()
-                .TryIncludeProperties(includedProperties)
-                .TrySetFilter(filter);
+                .TryIncludeProperties(searchParams.IncludedProperties)
+                .TrySetFilter(searchParams.Filter);
 
             return await query.FirstAsync();
         }
 
+        public async Task<IEnumerable<TEntity>> GetMultipleAsync(Action<ISearchParametersBuilder<TEntity>> searchCriteria)
+        {
+            return await Task.Run(() =>
+            {
+                var searchParams = EntityFrameworkSearchParametersBuilder<TEntity, EntityFrameworkSearchParameters<TEntity>>.GetParametersFromCriteria(searchCriteria);
+
+                var query = GetQueryable()
+                    .TryIncludeProperties(searchParams.IncludedProperties)
+                    .TrySetFilter(searchParams.Filter)
+                    .TrySetOrder(searchParams.Order)
+                    .TrySetPagination(searchParams.BatchSize, searchParams.SkippedBatches);
+
+                return searchParams.TrackingEnabled ? query : query.AsNoTracking();
+            });
+        }
+
 #if NETCOREAPP3_1
 
-        public IAsyncEnumerable<TEntity> GetMultipleAsync(
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            SelectablePropertiesBuilder<TEntity> includedProperties = null,
-            int? skippedBatches = null,
-            int? batchSize = null,
-            bool trackingEnabled = false)
+        public IAsyncEnumerable<TEntity> GetMultiple(Action<ISearchParametersBuilder<TEntity>> searchCriteria)
         {
-            var query = GetQueryable()
-                .TryIncludeProperties(includedProperties)
-                .TrySetFilter(filter)
-                .TrySetOrder(orderBy)
-                .TrySetPagination(skippedBatches, batchSize);
+            var searchParams = EntityFrameworkSearchParametersBuilder<TEntity, EntityFrameworkSearchParameters<TEntity>>.GetParametersFromCriteria(searchCriteria);
 
-            return trackingEnabled ? query.AsAsyncEnumerable() : query.AsNoTracking().AsAsyncEnumerable();
+            var query = GetQueryable()
+                .TryIncludeProperties(searchParams.IncludedProperties)
+                .TrySetFilter(searchParams.Filter)
+                .TrySetOrder(searchParams.Order)
+                .TrySetPagination(searchParams.BatchSize, searchParams.SkippedBatches);
+
+            return searchParams.TrackingEnabled ? query.AsAsyncEnumerable() : query.AsNoTracking().AsAsyncEnumerable();
         }
 
 #endif
 
-#if NETCORE
-
         public async Task<bool> InsertAsync(TEntity entity)
         {
+#if NETCORE
             await _dbSet.AddAsync(entity);
 
             return true;
+#else
+            return await Task.Run(() =>
+            {
+                _dbSet.Add(entity);
+
+                return true;
+            });
+#endif
         }
 
         public async Task<bool> InsertAsync(IEnumerable<TEntity> entities)
         {
+#if NETCORE
             await _dbSet.AddRangeAsync(entities);
+
+            return true;
+#else
+            return await Task.Run(() =>
+            {
+                _dbSet.AddRange(entities);
+
+                return true;
+            });
+#endif
+        }
+
+
+        public async Task<bool> UpdateAsync(TEntity entity)
+        {
+            return await Task.Run(() =>
+            {
+#if NETCORE
+                _dbSet.Update(entity);
+#else
+                _dbSet.AddOrUpdate(entity);
+#endif
+
+                return true;
+            });
+        }
+
+        public async Task<bool> UpdateAsync(IEnumerable<TEntity> entities)
+        {
+
+            return await Task.Run(() =>
+            {
+#if NETCORE
+                _dbSet.UpdateRange(entities);
+
+#else
+                foreach(var entity in entities)
+                    _dbSet.AddOrUpdate(entity);
+
+#endif
+                return true;
+            });
+        }
+
+        public async Task<bool> DeleteAsync(TKey id)
+        {
+            var entity = await _dbSet.FindAsync(id);
+            _dbSet.Remove(entity);
 
             return true;
         }
 
-#endif
+        public async Task<bool> DeleteAsync(TEntity entity)
+        {
+            return await Task.Run(() =>
+            {
+                _dbSet.Remove(entity);
+
+                return true;
+            });
+        }
+
 
         protected IQueryable<TEntity> GetQueryable() => _dbSet;
 
@@ -93,7 +170,7 @@ namespace ChustaSoft.Tools.DBAccess
     public class AsyncRepositoryBase<TEntity> : AsyncRepositoryBase<TEntity, Guid>, IAsyncRepository<TEntity>
         where TEntity : class
     {
-        public AsyncRepositoryBase(DbContext context) 
+        public AsyncRepositoryBase(DbContext context)
             : base(context)
         { }
     }

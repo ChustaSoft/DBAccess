@@ -7,8 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using ChustaSoft.Common.Builders;
 
 namespace ChustaSoft.Tools.DBAccess
 {
@@ -37,36 +35,29 @@ namespace ChustaSoft.Tools.DBAccess
             return _dbSet.Find(id);
         }
 
-        public TEntity GetSingle
-            (
-                Expression<Func<TEntity, bool>> filter, 
-                SelectablePropertiesBuilder<TEntity> includedProperties = null
-            )
+        public TEntity GetSingle(Action<ISingleResultSearchParametersBuilder<TEntity>> searchCriteria)
         {
+            var searchParams = EntityFrameworkSearchParametersBuilder<TEntity, EntityFrameworkSearchParameters<TEntity>>.GetParametersFromCriteria(searchCriteria);
+
             var query = GetQueryable()
-                .TryIncludeProperties(includedProperties)
-                .TrySetFilter(filter);
+                .TryIncludeProperties(searchParams.IncludedProperties)
+                .TrySetFilter(searchParams.Filter);
 
             return query.FirstOrDefault();
-        }
+        }       
 
-        public IEnumerable<TEntity> GetMultiple
-            (
-                Expression<Func<TEntity, bool>> filter = null,
-                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                SelectablePropertiesBuilder<TEntity> includedProperties = null,
-                int? skippedBatches = null,
-                int? batchSize = null,
-                bool trackingEnabled = false
-            )
+        public IEnumerable<TEntity> GetMultiple(Action<ISearchParametersBuilder<TEntity>> searchCriteria)
         {
-            var query = GetQueryable()
-                .TryIncludeProperties(includedProperties)
-                .TrySetFilter(filter)
-                .TrySetOrder(orderBy)
-                .TrySetPagination(skippedBatches, batchSize);
+            var searchParams = EntityFrameworkSearchParametersBuilder<TEntity, EntityFrameworkSearchParameters<TEntity>>.GetParametersFromCriteria(searchCriteria);
 
-            return trackingEnabled ? query : query.AsNoTracking();
+            var query = GetQueryable()
+                .TryIncludeProperties(searchParams.IncludedProperties)
+                .TrySetFilter(searchParams.Filter)
+                .TrySetOrder(searchParams.Order)
+                .TrySetPagination(searchParams.BatchSize, searchParams.SkippedBatches);
+
+            return searchParams.TrackingEnabled ? query : query.AsNoTracking();
+
         }
 
         public void Insert(TEntity entity)

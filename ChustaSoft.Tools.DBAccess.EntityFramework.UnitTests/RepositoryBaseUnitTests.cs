@@ -1,10 +1,10 @@
-using ChustaSoft.Common.Builders;
 using ChustaSoft.Common.Contracts;
 using ChustaSoft.Common.Helpers;
 using FizzWare.NBuilder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,12 +34,52 @@ namespace ChustaSoft.Tools.DBAccess.UnitTests
         }
 
 
+        [TestMethod]
+        public void Given_SearchParametersWithFilter_When_GetSingle_Then_SingleObjectRetrivedMatchingCriteria()
+        {
+            var filteredId = 5;
+            var data = _repositoryBase.GetSingle(x => x.FilterBy(y => y.Id == filteredId));
+
+            Assert.IsNotNull(data);
+            Assert.AreEqual(filteredId, data.Id);
+        }
 
         [TestMethod]
-        public void Given_Repository_When_GetMultiple_Then_MultipleDataRetrived()
+        public void Given_SearchParametersWithFilterAndIncludedProperties_When_GetSingle_Then_SingleObjectRetrivedMatchingCriteria()
+        {
+            var filteredId = 5;
+            var data = _repositoryBase.GetSingle(x => x
+                    .FilterBy(y => y.Id == filteredId)
+                    .IncludeProperties(y => y.SelectProperty(z => z.Address))
+                );
+
+            Assert.IsNotNull(data);
+            Assert.AreEqual(filteredId, data.Id);
+            Assert.IsTrue(data.Address.Any());
+        }
+
+        [TestMethod]
+        public void Given_SearchParametersWithFilterAndIncludedProperties_When_GetMultiple_Then_MultipleDataRetrivedMatchingCriteria()
+        {
+            var numberOfRows = 10;            
+            var data = _repositoryBase.GetMultiple(x => x
+                .FilterBy(y => y.Id <= numberOfRows)
+                .IncludeProperties(y => y.SelectProperty(z => z.Address))
+            );
+
+            Assert.AreEqual(data.Count(), numberOfRows);
+            Assert.IsTrue(data.All(x => x.Address.Any()));
+        }
+
+        [TestMethod]
+        public void Given_SearchParametersWithFilterAndIncludedPropertiesAndOrder_When_GetMultiple_Then_MultipleDataRetrivedMatchingCriteria()
         {
             var numberOfRows = 10;
-            var data = _repositoryBase.GetMultiple(x => x.Id <= numberOfRows, includedProperties: SelectablePropertiesBuilder<Person>.GetProperties().SelectProperty(x => x.Address)).ToList();
+            var data = _repositoryBase.GetMultiple(x => x
+                .FilterBy(y => y.Id <= numberOfRows)
+                .IncludeProperties(y => y.SelectProperty(z => z.Address))
+                .OrderBy(y => y.BirthDate)
+            );
 
             Assert.AreEqual(data.Count(), numberOfRows);
             Assert.IsTrue(data.All(x => x.Address.Any()));
@@ -52,6 +92,7 @@ namespace ChustaSoft.Tools.DBAccess.UnitTests
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public DateTime BirthDate { get; set; }
 
         public IEnumerable<Address> Address { get; set; }
     }

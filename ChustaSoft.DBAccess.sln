@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.EntityFramework", "ChustaSoft.Tools.DBAccess.EntityFramework\ChustaSoft.Tools.DBAccess.EntityFramework.csproj", "{3F011468-5D25-4745-BFFE-35CEC610135D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.Abstractions", "ChustaSoft.Tools.DBAccess.Abstractions\ChustaSoft.Tools.DBAccess.Abstractions.csproj", "{F444F6D4-F554-4717-881C-50B5B67413DB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{DD58AB32-467C-4821-A112-900AD0E80BB0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{FBD999CA-AB5C-4375-870D-06909C95563F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.UnitTests", "ChustaSoft.Tools.DBAccess.UnitTests\ChustaSoft.Tools.DBAccess.UnitTests.csproj", "{690EFD3E-2DA5-40C1-94C2-328920050064}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.Abstractions", "ChustaSoft.Tools.DBAccess.Abstractions\ChustaSoft.Tools.DBAccess.Abstractions.csproj", "{F444F6D4-F554-4717-881C-50B5B67413DB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.Examples", "ChustaSoft.Tools.DBAccess.Examples\ChustaSoft.Tools.DBAccess.Examples.csproj", "{7F7A8DFE-CD53-4986-8707-75E1D48BC929}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.EntityFramework", "ChustaSoft.Tools.DBAccess.EntityFramework\ChustaSoft.Tools.DBAccess.EntityFramework.csproj", "{3F011468-5D25-4745-BFFE-35CEC610135D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChustaSoft.Tools.DBAccess.MongoDb", "ChustaSoft.Tools.DBAccess.MongoDb\ChustaSoft.Tools.DBAccess.MongoDb.csproj", "{7200CDC8-2CC3-4991-B1C7-35419C523E79}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.EntityFramework.UnitTests", "ChustaSoft.Tools.DBAccess.EntityFramework.UnitTests\ChustaSoft.Tools.DBAccess.EntityFramework.UnitTests.csproj", "{690EFD3E-2DA5-40C1-94C2-328920050064}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.Examples", "ChustaSoft.Tools.DBAccess.Examples\ChustaSoft.Tools.DBAccess.Examples.csproj", "{7F7A8DFE-CD53-4986-8707-75E1D48BC929}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

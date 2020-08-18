@@ -14,7 +14,7 @@ namespace ChustaSoft.Tools.DBAccess
     public static class IQueryableExtensions
     {
 
-        public static IQueryable<TEntity> TrySetPagination<TEntity>(this IQueryable<TEntity> query, int? skippedBatches, int? batchSize)
+        public static IQueryable<TEntity> TrySetPagination<TEntity>(this IQueryable<TEntity> query, int? batchSize, int? skippedBatches)
             where TEntity : class
         {
             if (skippedBatches != null && batchSize != null)
@@ -40,6 +40,15 @@ namespace ChustaSoft.Tools.DBAccess
         {
             if (orderBy != null)
                 query = orderBy(query);
+
+            return query;
+        }
+
+        public static IQueryable<TEntity> TrySetOrder<TEntity>(this IQueryable<TEntity> query, Expression<Func<TEntity, object>> order)
+           where TEntity : class
+        {
+            if (order != null)
+                query = query.OrderBy(order);
 
             return query;
         }
