@@ -8,7 +8,7 @@ namespace ChustaSoft.Tools.DBAccess
         where TEntity : class
     {
                 
-        ISearchParametersBuilder<TEntity> OrderBy(Expression<Func<TEntity, object>> order);
+        ISearchParametersBuilder<TEntity> OrderBy(Expression<Func<TEntity, object>> order, OrderType orderType = OrderType.Ascending);
 
         ISearchParametersBuilder<TEntity> Paginate(int batchSize, int skippedBatches);
 

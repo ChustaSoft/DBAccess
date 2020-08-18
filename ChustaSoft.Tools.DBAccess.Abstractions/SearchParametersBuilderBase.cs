@@ -54,9 +54,10 @@ namespace ChustaSoft.Tools.DBAccess
             return this;
         }
 
-        public ISearchParametersBuilder<TEntity> OrderBy(Expression<Func<TEntity, object>> order)
+        public ISearchParametersBuilder<TEntity> OrderBy(Expression<Func<TEntity, object>> order, OrderType orderType = OrderType.Ascending)
         {
             _searchParameters.Order = order;
+            _searchParameters.OrderType = orderType;
 
             return this;
         }

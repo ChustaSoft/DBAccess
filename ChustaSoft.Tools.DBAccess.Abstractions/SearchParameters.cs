@@ -9,6 +9,7 @@ namespace ChustaSoft.Tools.DBAccess
     {
         public Expression<Func<TEntity, bool>> Filter { get; set; }
         public Expression<Func<TEntity, object>> Order { get; set; }
+        public OrderType? OrderType { get; set; }
         public SelectablePropertiesBuilder<TEntity> IncludedProperties { get; set; }
         public int? SkippedBatches { get; set; }
         public int? BatchSize { get; set; }
@@ -18,6 +19,7 @@ namespace ChustaSoft.Tools.DBAccess
         {
             Filter = null;
             Order = null;
+            OrderType = null;
             IncludedProperties = null;
             SkippedBatches = null;
             BatchSize = null;

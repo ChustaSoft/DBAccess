@@ -54,7 +54,7 @@ namespace ChustaSoft.Tools.DBAccess
                 var query = GetQueryable()
                     .TryIncludeProperties(searchParams.IncludedProperties)
                     .TrySetFilter(searchParams.Filter)
-                    .TrySetOrder(searchParams.Order)
+                    .TrySetOrder(searchParams.Order, searchParams.OrderType)
                     .TrySetPagination(searchParams.BatchSize, searchParams.SkippedBatches);
 
                 return searchParams.TrackingEnabled ? query : query.AsNoTracking();
@@ -70,7 +70,7 @@ namespace ChustaSoft.Tools.DBAccess
             var query = GetQueryable()
                 .TryIncludeProperties(searchParams.IncludedProperties)
                 .TrySetFilter(searchParams.Filter)
-                .TrySetOrder(searchParams.Order)
+                .TrySetOrder(searchParams.Order, searchParams.OrderType)
                 .TrySetPagination(searchParams.BatchSize, searchParams.SkippedBatches);
 
             return searchParams.TrackingEnabled ? query.AsAsyncEnumerable() : query.AsNoTracking().AsAsyncEnumerable();

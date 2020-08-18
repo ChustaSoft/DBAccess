@@ -44,11 +44,20 @@ namespace ChustaSoft.Tools.DBAccess
             return query;
         }
 
-        public static IQueryable<TEntity> TrySetOrder<TEntity>(this IQueryable<TEntity> query, Expression<Func<TEntity, object>> order)
+        public static IQueryable<TEntity> TrySetOrder<TEntity>(this IQueryable<TEntity> query, Expression<Func<TEntity, object>> order, OrderType? orderType)
            where TEntity : class
         {
-            if (order != null)
-                query = query.OrderBy(order);
+            if (order != null && orderType != null)
+                switch (orderType)
+                {
+                    case OrderType.Descending:
+                        query = query.OrderByDescending(order);
+                        break;
+                    case OrderType.Ascending:
+                    default:
+                        query = query.OrderBy(order);
+                        break;
+                }
 
             return query;
         }
