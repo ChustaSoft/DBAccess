@@ -10,7 +10,7 @@ namespace ChustaSoft.Tools.DBAccess
                 
         ISearchParametersBuilder<TEntity> OrderBy(Expression<Func<TEntity, object>> order, OrderType orderType = OrderType.Ascending);
 
-        ISearchParametersBuilder<TEntity> Paginate(int batchSize, int skippedBatches);
+        ISearchParametersBuilder<TEntity> Paginate(int? batchSize, int? skippedBatches);
 
         new ISearchParametersBuilder<TEntity> FilterBy(Expression<Func<TEntity, bool>> filter);
 

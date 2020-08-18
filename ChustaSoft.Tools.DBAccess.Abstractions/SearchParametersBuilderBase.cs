@@ -12,7 +12,7 @@ namespace ChustaSoft.Tools.DBAccess
         where TParameters : SearchParameters<TEntity>, new()
     {
 
-        private TParameters _searchParameters;
+        protected TParameters _searchParameters;
 
 
         public ICollection<ErrorMessage> Errors { get; set; }
@@ -62,7 +62,7 @@ namespace ChustaSoft.Tools.DBAccess
             return this;
         }
 
-        public ISearchParametersBuilder<TEntity> Paginate(int batchSize, int skippedBatches)
+        public ISearchParametersBuilder<TEntity> Paginate(int? batchSize, int? skippedBatches)
         {
             _searchParameters.BatchSize = batchSize;
             _searchParameters.SkippedBatches = skippedBatches;
