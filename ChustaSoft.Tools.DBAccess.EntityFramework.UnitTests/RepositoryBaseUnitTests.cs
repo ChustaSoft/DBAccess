@@ -14,7 +14,7 @@ namespace ChustaSoft.Tools.DBAccess.UnitTests
     public class RepositoryBaseUnitTests
     {
 
-        private RepositoryBase<Person, int> _repositoryBase;
+        private Repository<Person, int> _repositoryBase;
         
 
         [TestInitialize]
@@ -30,7 +30,7 @@ namespace ChustaSoft.Tools.DBAccess.UnitTests
             dbSet.As<IQueryable<Person>>().Setup(m => m.GetEnumerator()).Returns(queryable.GetEnumerator());
             dbSet.Setup(d => d.Add(It.IsAny<Person>())).Callback<Person>(persons.Add);
 
-            _repositoryBase = new RepositoryBase<Person, int>(dbSet.Object);
+            _repositoryBase = new Repository<Person, int>(dbSet.Object);
         }
 
 
