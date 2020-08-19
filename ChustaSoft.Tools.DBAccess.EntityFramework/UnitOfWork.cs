@@ -21,7 +21,7 @@ namespace ChustaSoft.Tools.DBAccess
         public virtual IRepository<TEntity, TKey> GetRepository<TEntity>()
             where TEntity : class
         {
-            var repositoryTuple = GetRepositoryTuple<TEntity, RepositoryBase<TEntity, TKey>>();
+            var repositoryTuple = GetRepositoryTuple<TEntity, Repository<TEntity, TKey>>();
 
             CreateRepositoryInstance<TEntity>(repositoryTuple.EntityName, repositoryTuple.RepositoryType);
 
@@ -31,7 +31,7 @@ namespace ChustaSoft.Tools.DBAccess
         public virtual IAsyncRepository<TEntity, TKey> GetAsyncRepository<TEntity>()
             where TEntity : class
         {
-            var repositoryTuple = GetRepositoryTuple<TEntity, AsyncRepositoryBase<TEntity, TKey>>();
+            var repositoryTuple = GetRepositoryTuple<TEntity, AsyncRepository<TEntity, TKey>>();
             
             CreateRepositoryInstance<TEntity>(repositoryTuple.EntityName, repositoryTuple.RepositoryType);
 
@@ -63,7 +63,7 @@ namespace ChustaSoft.Tools.DBAccess
 
         IRepository<TEntity> IUnitOfWork.GetRepository<TEntity>()
         {
-            var repositoryTuple = GetRepositoryTuple<TEntity, RepositoryBase<TEntity>>();
+            var repositoryTuple = GetRepositoryTuple<TEntity, Repository<TEntity>>();
             
             CreateRepositoryInstance<TEntity>(repositoryTuple.EntityName, repositoryTuple.RepositoryType);
 
@@ -72,7 +72,7 @@ namespace ChustaSoft.Tools.DBAccess
 
         IAsyncRepository<TEntity> IUnitOfWork.GetAsyncRepository<TEntity>()
         {
-            var repositoryTuple = GetRepositoryTuple<TEntity, AsyncRepositoryBase<TEntity>>();
+            var repositoryTuple = GetRepositoryTuple<TEntity, AsyncRepository<TEntity>>();
 
             CreateRepositoryInstance<TEntity>(repositoryTuple.EntityName, repositoryTuple.RepositoryType);
 

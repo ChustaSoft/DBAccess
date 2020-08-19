@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace ChustaSoft.Tools.DBAccess
 {
@@ -14,7 +15,7 @@ namespace ChustaSoft.Tools.DBAccess
         public virtual IRepository<TEntity, TKey> GetRepository<TEntity>()
             where TEntity : class
         {
-            var repositoryTuple = GetRepositoryTuple<TEntity, RepositoryBase<TEntity, TKey>>();
+            var repositoryTuple = GetRepositoryTuple<TEntity, Repository<TEntity, TKey>>();
 
             CreateRepositoryInstance<TEntity>(repositoryTuple.EntityName, repositoryTuple.RepositoryType);
 
@@ -24,7 +25,7 @@ namespace ChustaSoft.Tools.DBAccess
         public virtual IAsyncRepository<TEntity, TKey> GetAsyncRepository<TEntity>()
             where TEntity : class
         {
-            var repositoryTuple = GetRepositoryTuple<TEntity, AsyncRepositoryBase<TEntity, TKey>>();
+            var repositoryTuple = GetRepositoryTuple<TEntity, AsyncRepository<TEntity, TKey>>();
 
             CreateRepositoryInstance<TEntity>(repositoryTuple.EntityName, repositoryTuple.RepositoryType);
 
@@ -44,4 +45,35 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
     }
+
+
+    public class UnitOfWork<TContext> : UnitOfWork<TContext, Guid>, IUnitOfWork
+        where TContext : IMongoContext
+    {
+
+        public UnitOfWork(TContext context)
+            : base(context)
+        { }
+
+
+        IRepository<TEntity> IUnitOfWork.GetRepository<TEntity>()
+        {
+            var repositoryTuple = GetRepositoryTuple<TEntity, Repository<TEntity>>();
+
+            CreateRepositoryInstance<TEntity>(repositoryTuple.EntityName, repositoryTuple.RepositoryType);
+
+            return (IRepository<TEntity>)_repositories[repositoryTuple.EntityName];
+        }
+
+        IAsyncRepository<TEntity> IUnitOfWork.GetAsyncRepository<TEntity>()
+        {
+            var repositoryTuple = GetRepositoryTuple<TEntity, AsyncRepository<TEntity>>();
+
+            CreateRepositoryInstance<TEntity>(repositoryTuple.EntityName, repositoryTuple.RepositoryType);
+
+            return (IAsyncRepository<TEntity>)_repositories[repositoryTuple];
+        }
+
+    }
+
 }
