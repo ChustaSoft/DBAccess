@@ -3,8 +3,6 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 #elif NETCORE
 using Microsoft.EntityFrameworkCore;
-using ChustaSoft.Common.Builders;
-using System.Linq.Expressions;
 #endif
 
 using System.Threading.Tasks;
@@ -14,19 +12,18 @@ using System.Collections.Generic;
 
 namespace ChustaSoft.Tools.DBAccess
 {
-    public class AsyncRepositoryBase<TEntity, TKey> : IAsyncRepository<TEntity, TKey>
+    public class AsyncRepository<TEntity, TKey> : RepositoryBase<DbContext, TEntity>, IAsyncRepository<TEntity, TKey>
         where TEntity : class
     {
 
-        protected DbContext _context;
         protected DbSet<TEntity> _dbSet;
 
-        public AsyncRepositoryBase(DbContext context)
-        {
-            _context = context;
+
+        public AsyncRepository(DbContext context)
+            : base(context)
+        {        
             _dbSet = context.Set<TEntity>();
         }
-
 
 
         public async Task<TEntity> GetSingleAsync(TKey id)
@@ -161,18 +158,20 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
 
-        protected IQueryable<TEntity> GetQueryable() => _dbSet;
+        protected override IQueryable<TEntity> GetQueryable() => _dbSet;
 
     }
 
 
 
-    public class AsyncRepositoryBase<TEntity> : AsyncRepositoryBase<TEntity, Guid>, IAsyncRepository<TEntity>
+    public class AsyncRepository<TEntity> : AsyncRepository<TEntity, Guid>, IAsyncRepository<TEntity>
         where TEntity : class
     {
-        public AsyncRepositoryBase(DbContext context)
+
+        public AsyncRepository(DbContext context)
             : base(context)
         { }
+
     }
 
 }

@@ -10,21 +10,19 @@ using System.Linq;
 
 namespace ChustaSoft.Tools.DBAccess
 {
-    public class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
+    public class Repository<TEntity, TKey> : RepositoryBase<DbContext, TEntity>, IRepository<TEntity, TKey>
         where TEntity : class
     {
 
-        protected DbContext _context;
         protected DbSet<TEntity> _dbSet;
 
-
-        public RepositoryBase(DbContext context)
-        {
-            _context = context;
+        public Repository(DbContext context)
+            : base(context)
+        {   
             _dbSet = context.Set<TEntity>();
         }
 
-        internal RepositoryBase(DbSet<TEntity> dbSet) 
+        internal Repository(DbSet<TEntity> dbSet) 
         {
             _dbSet = dbSet;
         }
@@ -94,7 +92,7 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
 
-        protected IQueryable<TEntity> GetQueryable() => _dbSet;
+        protected override IQueryable<TEntity> GetQueryable() => _dbSet;
 
 
         private void PerformSingleUpdate(TEntity entity)
@@ -115,15 +113,15 @@ namespace ChustaSoft.Tools.DBAccess
 
 
 
-    public class RepositoryBase<TEntity> : RepositoryBase<TEntity, Guid>, IRepository<TEntity>
+    public class Repository<TEntity> : Repository<TEntity, Guid>, IRepository<TEntity>
         where TEntity : class
     {
 
-        public RepositoryBase(DbContext context) 
+        public Repository(DbContext context) 
             : base(context)
         { }
 
-        internal RepositoryBase(DbSet<TEntity> dbSet) 
+        internal Repository(DbSet<TEntity> dbSet) 
             : base(dbSet)
         { }
 
