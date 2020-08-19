@@ -44,7 +44,7 @@ namespace ChustaSoft.Tools.DBAccess.Examples
         /// <returns></returns>
         public Person GetEntity()
         {
-            return personRepository.GetSingle(x => x.Name == "John");
+            return personRepository.GetSingle(x => x.FilterBy(y => y.Name == "John"));
         }
 
 
@@ -54,9 +54,10 @@ namespace ChustaSoft.Tools.DBAccess.Examples
         /// <returns></returns>
         public IEnumerable<Person> GetFilteredWithDependantProperties() 
         {
-            return personRepository.GetMultiple(x => x.Name == "John", 
-                orderBy: x => x.OrderByDescending(x => x.BirthDate),
-                includedProperties: SelectablePropertiesBuilder<Person>.GetProperties().SelectProperty(x => x.Address)
+            return personRepository.GetMultiple(x => x
+                    .IncludeProperties(y => y.SelectProperty(x => x.Address).ThenSelectFromCollection(x => x.Address))
+                    .FilterBy(y => y.Name == "John")
+                    .OrderBy(y => y.BirthDate, OrderType.Descending)
                 )
                 .ToList();
         }
@@ -67,11 +68,10 @@ namespace ChustaSoft.Tools.DBAccess.Examples
         /// <returns></returns>
         public IEnumerable<Person> GetFilteredWithDependantPropertiesInCollection()
         {
-            return personRepository.GetMultiple(x => x.Name == "John",
-                orderBy: x => x.OrderByDescending(x => x.BirthDate),
-                includedProperties: SelectablePropertiesBuilder<Person>.GetProperties()
-                    .SelectProperty(x => x.Address)
-                    .ThenSelectFromCollection(x => x.Address).ThenSelectProperty(x => x.Country)
+            return personRepository.GetMultiple(x => x
+                    .IncludeProperties(y => y.SelectProperty(x => x.Address).ThenSelectFromCollection(x => x.Address).ThenSelectProperty(x => x.Country))
+                    .FilterBy(y => y.Name == "John")
+                    .OrderBy(y => y.BirthDate, OrderType.Descending)
                 )
                 .ToList();
         }
@@ -83,9 +83,10 @@ namespace ChustaSoft.Tools.DBAccess.Examples
         /// <returns></returns>
         public IEnumerable<Person> GetFilteredWithPagination()
         {
-            return personRepository.GetMultiple(x => x.Name == "John",
-                orderBy: x => x.OrderByDescending(x => x.BirthDate),
-                batchSize: 1000, skippedBatches: 2
+                return personRepository.GetMultiple(x => x
+                    .FilterBy(y => y.Name == "John")
+                    .OrderBy(y => y.BirthDate, OrderType.Descending)
+                    .Paginate(1000, 0)
                 )
                 .ToList();
         }
@@ -97,11 +98,12 @@ namespace ChustaSoft.Tools.DBAccess.Examples
         /// <returns></returns>
         public IEnumerable<Person> GetFilteredWithTrackingEnabled()
         {
-            return personRepository.GetMultiple(x => x.Name == "John",
-                orderBy: x => x.OrderByDescending(x => x.BirthDate),
-                trackingEnabled: true
-                )
-                .ToList();
+            return personRepository.GetMultiple(x => x
+                   .FilterBy(y => y.Name == "John")
+                   .OrderBy(y => y.BirthDate)
+                   .WithTracking(true)
+               )
+               .ToList();
         }
 
 
