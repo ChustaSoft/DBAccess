@@ -84,6 +84,21 @@ namespace ChustaSoft.Tools.DBAccess.UnitTests
             Assert.AreEqual(data.Count(), numberOfRows);
             Assert.IsTrue(data.All(x => x.Address.Any()));
         }
+
+        [TestMethod]
+        public void Given_SearchParametersWithFilterAndIncludedPropertiesAndOrderDescending_When_GetMultiple_Then_MultipleDataRetrivedMatchingCriteria()
+        {
+            var numberOfRows = 10;
+            var data = _repositoryBase.GetMultiple(x => x
+                .FilterBy(y => y.Id <= numberOfRows)
+                .IncludeProperties(y => y.SelectProperty(z => z.Address))
+                .OrderBy(y => y.BirthDate, OrderType.Descending)
+            );
+
+            Assert.AreEqual(data.Count(), numberOfRows);
+            Assert.IsTrue(data.All(x => x.Address.Any()));
+        }
+
     }
 
 
