@@ -25,26 +25,26 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
 
-        protected void CreateRepositoryInstance<TEntity>(string entityName, Type repositoryType)
+        protected void CreateRepositoryInstance<TEntity>(string repoKey, Type repositoryType)
             where TEntity : class
         {
-            if (!_repositories.ContainsKey(entityName))
+            if (!_repositories.ContainsKey(repoKey))
             {
                 if (repositoryType.IsGenericTypeDefinition)
-                    _repositories.Add(entityName, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _context));
+                    _repositories.Add(repoKey, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _context));
                 else
-                    _repositories.Add(entityName, Activator.CreateInstance(repositoryType, _context));
+                    _repositories.Add(repoKey, Activator.CreateInstance(repositoryType, _context));
             }
         }
 
-        protected (string EntityName, Type RepositoryType) GetRepositoryTuple<TEntity, TRepository>()
+        protected (string RepositoryKey, Type RepositoryType) GetRepositoryTuple<TEntity, TRepository>()
             where TEntity : class
             where TRepository : class
         {
-            var entityName = typeof(TEntity).Name;
             var repositoryType = typeof(TRepository);
+            var repoKey = $"{typeof(TEntity).Name}_{repositoryType.Name.Split('`')[0]}";
 
-            return (entityName, repositoryType);
+            return (repoKey, repositoryType);
         }
 
     }
