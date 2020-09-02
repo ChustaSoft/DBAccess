@@ -62,6 +62,14 @@ namespace ChustaSoft.Tools.DBAccess
             return this;
         }
 
+        public ISearchParametersBuilder<TEntity> TakeFrom(Expression<Func<TEntity, bool>> takeFrom, bool inclusive = true)
+        {
+            _searchParameters.TakeFrom = takeFrom;
+            _searchParameters.TakeFromInclusive = inclusive;
+
+            return this;
+        }
+
         public ISearchParametersBuilder<TEntity> Paginate(int? batchSize, int? skippedBatches)
         {
             _searchParameters.BatchSize = batchSize;

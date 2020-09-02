@@ -52,10 +52,10 @@ namespace ChustaSoft.Tools.DBAccess
                 .TryIncludeProperties(searchParams.IncludedProperties)
                 .TrySetFilter(searchParams.Filter)
                 .TrySetOrder(searchParams.Order, searchParams.OrderType)
+                .TrySetTakeFrom(searchParams.TakeFrom, searchParams.TakeFromInclusive)
                 .TrySetPagination(searchParams.BatchSize, searchParams.SkippedBatches);
 
             return searchParams.TrackingEnabled ? query : query.AsNoTracking();
-
         }
 
         public void Insert(TEntity entity)

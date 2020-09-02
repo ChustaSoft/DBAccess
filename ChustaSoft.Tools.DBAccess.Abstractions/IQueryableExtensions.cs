@@ -17,7 +17,19 @@ namespace ChustaSoft.Tools.DBAccess
 
             return query;
         }
-     
+
+        public static IQueryable<TEntity> TrySetTakeFrom<TEntity>(this IQueryable<TEntity> query, Expression<Func<TEntity, bool>> takeFrom, bool inclusive)
+           where TEntity : class
+        {
+            if (takeFrom != null)
+                query = query.SkipWhile(takeFrom);
+
+            if (!inclusive)
+                query = query.Skip(1);
+
+            return query;
+        }
+
         public static IQueryable<TEntity> TrySetOrder<TEntity>(this IQueryable<TEntity> query, Expression<Func<TEntity, object>> order, OrderType? orderType)
            where TEntity : class
         {
