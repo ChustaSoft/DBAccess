@@ -7,26 +7,26 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using ChustaSoft.Common.Builders;
 
 namespace ChustaSoft.Tools.DBAccess
 {
-    public class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
+    public class Repository<TEntity, TKey> : RepositoryBase<DbContext, TEntity>, IRepository<TEntity, TKey>
         where TEntity : class
     {
 
-        protected DbContext _context;
         protected DbSet<TEntity> _dbSet;
 
 
-        public RepositoryBase(DbContext context)
-        {
-            _context = context;
+        public IQueryable<TEntity> Query => GetQueryable();
+
+
+        public Repository(DbContext context)
+            : base(context)
+        {   
             _dbSet = context.Set<TEntity>();
         }
 
-        internal RepositoryBase(DbSet<TEntity> dbSet) 
+        internal Repository(DbSet<TEntity> dbSet) 
         {
             _dbSet = dbSet;
         }
@@ -37,36 +37,29 @@ namespace ChustaSoft.Tools.DBAccess
             return _dbSet.Find(id);
         }
 
-        public TEntity GetSingle
-            (
-                Expression<Func<TEntity, bool>> filter, 
-                SelectablePropertiesBuilder<TEntity> includedProperties = null
-            )
+        public TEntity GetSingle(Action<ISingleResultSearchParametersBuilder<TEntity>> searchCriteria)
         {
+            var searchParams = EntityFrameworkSearchParametersBuilder<TEntity, EntityFrameworkSearchParameters<TEntity>>.GetParametersFromCriteria(searchCriteria);
+
             var query = GetQueryable()
-                .TryIncludeProperties(includedProperties)
-                .TrySetFilter(filter);
+                .TryIncludeProperties(searchParams.IncludedProperties)
+                .TrySetFilter(searchParams.Filter);
 
             return query.FirstOrDefault();
-        }
+        }       
 
-        public IEnumerable<TEntity> GetMultiple
-            (
-                Expression<Func<TEntity, bool>> filter = null,
-                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                SelectablePropertiesBuilder<TEntity> includedProperties = null,
-                int? skippedBatches = null,
-                int? batchSize = null,
-                bool trackingEnabled = false
-            )
+        public IEnumerable<TEntity> GetMultiple(Action<ISearchParametersBuilder<TEntity>> searchCriteria)
         {
-            var query = GetQueryable()
-                .TryIncludeProperties(includedProperties)
-                .TrySetFilter(filter)
-                .TrySetOrder(orderBy)
-                .TrySetPagination(skippedBatches, batchSize);
+            var searchParams = EntityFrameworkSearchParametersBuilder<TEntity, EntityFrameworkSearchParameters<TEntity>>.GetParametersFromCriteria(searchCriteria);
 
-            return trackingEnabled ? query : query.AsNoTracking();
+            var query = GetQueryable()
+                .TryIncludeProperties(searchParams.IncludedProperties)
+                .TrySetFilter(searchParams.Filter)
+                .TrySetOrder(searchParams.Order, searchParams.OrderType)
+                .TrySetTakeFrom(searchParams.TakeFrom, searchParams.TakeFromInclusive)
+                .TrySetPagination(searchParams.BatchSize, searchParams.SkippedBatches);
+
+            return searchParams.TrackingEnabled ? query : query.AsNoTracking();
         }
 
         public void Insert(TEntity entity)
@@ -103,7 +96,7 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
 
-        protected IQueryable<TEntity> GetQueryable() => _dbSet;
+        protected override IQueryable<TEntity> GetQueryable() => _dbSet;
 
 
         private void PerformSingleUpdate(TEntity entity)
@@ -124,15 +117,15 @@ namespace ChustaSoft.Tools.DBAccess
 
 
 
-    public class RepositoryBase<TEntity> : RepositoryBase<TEntity, Guid>, IRepository<TEntity>
+    public class Repository<TEntity> : Repository<TEntity, Guid>, IRepository<TEntity>
         where TEntity : class
     {
 
-        public RepositoryBase(DbContext context) 
+        public Repository(DbContext context) 
             : base(context)
         { }
 
-        internal RepositoryBase(DbSet<TEntity> dbSet) 
+        internal Repository(DbSet<TEntity> dbSet) 
             : base(dbSet)
         { }
 

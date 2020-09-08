@@ -1,5 +1,4 @@
-﻿using ChustaSoft.Common.Contracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace ChustaSoft.Tools.DBAccess
@@ -11,13 +10,13 @@ namespace ChustaSoft.Tools.DBAccess
 
         void Insert(IEnumerable<TEntity> entities);
 
-        void Update(TEntity entityToUpdate);
+        void Update(TEntity entity);
 
         void Update(IEnumerable<TEntity> entities);
 
         void Delete(TKey id);
 
-        void Delete(TEntity entities);
+        void Delete(TEntity entity);
 
     }
 

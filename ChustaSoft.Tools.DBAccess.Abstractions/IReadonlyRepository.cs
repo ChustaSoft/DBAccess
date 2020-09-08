@@ -1,8 +1,6 @@
-﻿using ChustaSoft.Common.Builders;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace ChustaSoft.Tools.DBAccess
 {
@@ -10,23 +8,15 @@ namespace ChustaSoft.Tools.DBAccess
         where TEntity : class
     {
 
+        IQueryable<TEntity> Query { get; }
+
+
         TEntity GetSingle(TKey id);
 
-        TEntity GetSingle
-            (
-                Expression<Func<TEntity, bool>> filter,
-                SelectablePropertiesBuilder<TEntity> includedProperties = null
-            );
+        TEntity GetSingle(Action<ISingleResultSearchParametersBuilder<TEntity>> searchCriteria);
 
-        IEnumerable<TEntity> GetMultiple
-            (
-                Expression<Func<TEntity, bool>> filter = null,
-                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                SelectablePropertiesBuilder<TEntity> includedProperties = null,
-                int? skippedBatches = null,
-                int? batchSize = null,
-                bool trackingEnabled = false
-            );
+        IEnumerable<TEntity> GetMultiple(Action<ISearchParametersBuilder<TEntity>> searchCriteria);
+
     }
 
 

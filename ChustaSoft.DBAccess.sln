@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.EntityFramework", "ChustaSoft.Tools.DBAccess.EntityFramework\ChustaSoft.Tools.DBAccess.EntityFramework.csproj", "{3F011468-5D25-4745-BFFE-35CEC610135D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.Abstractions", "ChustaSoft.Tools.DBAccess.Abstractions\ChustaSoft.Tools.DBAccess.Abstractions.csproj", "{F444F6D4-F554-4717-881C-50B5B67413DB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{DD58AB32-467C-4821-A112-900AD0E80BB0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{FBD999CA-AB5C-4375-870D-06909C95563F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.UnitTests", "ChustaSoft.Tools.DBAccess.UnitTests\ChustaSoft.Tools.DBAccess.UnitTests.csproj", "{690EFD3E-2DA5-40C1-94C2-328920050064}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.Abstractions", "ChustaSoft.Tools.DBAccess.Abstractions\ChustaSoft.Tools.DBAccess.Abstractions.csproj", "{F444F6D4-F554-4717-881C-50B5B67413DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChustaSoft.Tools.DBAccess.Examples", "ChustaSoft.Tools.DBAccess.Examples\ChustaSoft.Tools.DBAccess.Examples.csproj", "{7F7A8DFE-CD53-4986-8707-75E1D48BC929}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.EntityFramework", "ChustaSoft.Tools.DBAccess.EntityFramework\ChustaSoft.Tools.DBAccess.EntityFramework.csproj", "{3F011468-5D25-4745-BFFE-35CEC610135D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.EntityFramework.UnitTests", "ChustaSoft.Tools.DBAccess.EntityFramework.UnitTests\ChustaSoft.Tools.DBAccess.EntityFramework.UnitTests.csproj", "{690EFD3E-2DA5-40C1-94C2-328920050064}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests", "ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests\ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests.csproj", "{1041C4A0-77EC-4B2F-AA25-A253A86831D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,31 +21,31 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3F011468-5D25-4745-BFFE-35CEC610135D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F011468-5D25-4745-BFFE-35CEC610135D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F011468-5D25-4745-BFFE-35CEC610135D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F011468-5D25-4745-BFFE-35CEC610135D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F444F6D4-F554-4717-881C-50B5B67413DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F444F6D4-F554-4717-881C-50B5B67413DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F444F6D4-F554-4717-881C-50B5B67413DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F444F6D4-F554-4717-881C-50B5B67413DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F011468-5D25-4745-BFFE-35CEC610135D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F011468-5D25-4745-BFFE-35CEC610135D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F011468-5D25-4745-BFFE-35CEC610135D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F011468-5D25-4745-BFFE-35CEC610135D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{690EFD3E-2DA5-40C1-94C2-328920050064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{690EFD3E-2DA5-40C1-94C2-328920050064}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{690EFD3E-2DA5-40C1-94C2-328920050064}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{690EFD3E-2DA5-40C1-94C2-328920050064}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7F7A8DFE-CD53-4986-8707-75E1D48BC929}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F7A8DFE-CD53-4986-8707-75E1D48BC929}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F7A8DFE-CD53-4986-8707-75E1D48BC929}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F7A8DFE-CD53-4986-8707-75E1D48BC929}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1041C4A0-77EC-4B2F-AA25-A253A86831D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1041C4A0-77EC-4B2F-AA25-A253A86831D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1041C4A0-77EC-4B2F-AA25-A253A86831D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1041C4A0-77EC-4B2F-AA25-A253A86831D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{3F011468-5D25-4745-BFFE-35CEC610135D} = {DD58AB32-467C-4821-A112-900AD0E80BB0}
 		{F444F6D4-F554-4717-881C-50B5B67413DB} = {DD58AB32-467C-4821-A112-900AD0E80BB0}
+		{3F011468-5D25-4745-BFFE-35CEC610135D} = {DD58AB32-467C-4821-A112-900AD0E80BB0}
 		{690EFD3E-2DA5-40C1-94C2-328920050064} = {FBD999CA-AB5C-4375-870D-06909C95563F}
-		{7F7A8DFE-CD53-4986-8707-75E1D48BC929} = {FBD999CA-AB5C-4375-870D-06909C95563F}
+		{1041C4A0-77EC-4B2F-AA25-A253A86831D6} = {FBD999CA-AB5C-4375-870D-06909C95563F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7E9D275F-FD96-4A22-875F-FE41841CB089}
