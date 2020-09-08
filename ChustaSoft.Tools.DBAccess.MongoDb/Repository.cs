@@ -8,6 +8,9 @@ namespace ChustaSoft.Tools.DBAccess
         where TEntity : class
     {
 
+        public IQueryable<TEntity> Query => throw new NotImplementedException();
+
+
         public Repository(IMongoContext context) 
             : base(context)
         { }
