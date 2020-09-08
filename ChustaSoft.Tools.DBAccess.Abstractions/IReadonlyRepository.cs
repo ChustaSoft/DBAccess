@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ChustaSoft.Tools.DBAccess
 {
@@ -7,11 +8,15 @@ namespace ChustaSoft.Tools.DBAccess
         where TEntity : class
     {
 
+        IQueryable<TEntity> Query { get; }
+
+
         TEntity GetSingle(TKey id);
 
         TEntity GetSingle(Action<ISingleResultSearchParametersBuilder<TEntity>> searchCriteria);
 
         IEnumerable<TEntity> GetMultiple(Action<ISearchParametersBuilder<TEntity>> searchCriteria);
+
     }
 
 
