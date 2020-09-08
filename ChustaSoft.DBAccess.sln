@@ -11,11 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.EntityFramework", "ChustaSoft.Tools.DBAccess.EntityFramework\ChustaSoft.Tools.DBAccess.EntityFramework.csproj", "{3F011468-5D25-4745-BFFE-35CEC610135D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.MongoDb", "ChustaSoft.Tools.DBAccess.MongoDb\ChustaSoft.Tools.DBAccess.MongoDb.csproj", "{7200CDC8-2CC3-4991-B1C7-35419C523E79}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.EntityFramework.UnitTests", "ChustaSoft.Tools.DBAccess.EntityFramework.UnitTests\ChustaSoft.Tools.DBAccess.EntityFramework.UnitTests.csproj", "{690EFD3E-2DA5-40C1-94C2-328920050064}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests", "ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests\ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests.csproj", "{1041C4A0-77EC-4B2F-AA25-A253A86831D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests", "ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests\ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests.csproj", "{1041C4A0-77EC-4B2F-AA25-A253A86831D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +29,6 @@ Global
 		{3F011468-5D25-4745-BFFE-35CEC610135D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F011468-5D25-4745-BFFE-35CEC610135D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F011468-5D25-4745-BFFE-35CEC610135D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7200CDC8-2CC3-4991-B1C7-35419C523E79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7200CDC8-2CC3-4991-B1C7-35419C523E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7200CDC8-2CC3-4991-B1C7-35419C523E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7200CDC8-2CC3-4991-B1C7-35419C523E79}.Release|Any CPU.Build.0 = Release|Any CPU
 		{690EFD3E-2DA5-40C1-94C2-328920050064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{690EFD3E-2DA5-40C1-94C2-328920050064}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{690EFD3E-2DA5-40C1-94C2-328920050064}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -50,7 +44,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F444F6D4-F554-4717-881C-50B5B67413DB} = {DD58AB32-467C-4821-A112-900AD0E80BB0}
 		{3F011468-5D25-4745-BFFE-35CEC610135D} = {DD58AB32-467C-4821-A112-900AD0E80BB0}
-		{7200CDC8-2CC3-4991-B1C7-35419C523E79} = {DD58AB32-467C-4821-A112-900AD0E80BB0}
 		{690EFD3E-2DA5-40C1-94C2-328920050064} = {FBD999CA-AB5C-4375-870D-06909C95563F}
 		{1041C4A0-77EC-4B2F-AA25-A253A86831D6} = {FBD999CA-AB5C-4375-870D-06909C95563F}
 	EndGlobalSection
