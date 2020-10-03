@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using Xunit;
 
 namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests.Base
