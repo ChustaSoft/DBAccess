@@ -1,15 +1,17 @@
 ﻿#if NETFRAMEWORK
 using System.Data.Entity;
 #elif NETCORE
+using ChustaSoft.Common.Contracts;
 using Microsoft.EntityFrameworkCore;
 #endif
 
 using System;
 using System.Threading.Tasks;
+using ChustaSoft.Common.Contracts;
 
 namespace ChustaSoft.Tools.DBAccess
 {
-    public class UnitOfWork<TContext, TKey> : UnitOfWorkBase<TContext>, IUnitOfWork<TKey>
+    public class UnitOfWork<TContext, TKey> : UnitOfWorkBase<TContext, TKey>, IUnitOfWork<TKey>
         where TContext : DbContext
     {
 
@@ -19,9 +21,9 @@ namespace ChustaSoft.Tools.DBAccess
 
 
         public virtual IRepository<TEntity, TKey> GetRepository<TEntity>()
-            where TEntity : class
+            where TEntity : class, IKeyable<TKey>
         {
-            var repositoryTuple = GetRepositoryTuple<TEntity, Repository<TEntity, TKey>>();
+            var repositoryTuple = GetRepositoryTuple<TEntity, Repository<TEntity>>();
 
             CreateRepositoryInstance<TEntity>(repositoryTuple.RepositoryKey, repositoryTuple.RepositoryType);
 
@@ -29,7 +31,7 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
         public virtual IAsyncRepository<TEntity, TKey> GetAsyncRepository<TEntity>()
-            where TEntity : class
+            where TEntity : class, IKeyable<TKey>
         {
             var repositoryTuple = GetRepositoryTuple<TEntity, AsyncRepository<TEntity, TKey>>();
             

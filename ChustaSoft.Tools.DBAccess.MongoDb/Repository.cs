@@ -5,7 +5,7 @@ using System.Linq;
 namespace ChustaSoft.Tools.DBAccess
 {
     public class Repository<TEntity, TKey> : RepositoryBase<IMongoContext, TEntity>, IRepository<TEntity, TKey>
-        where TEntity : class
+        where TEntity : class, IKeyable<TKey>
     {
 
         public IQueryable<TEntity> Query => throw new NotImplementedException();
@@ -73,7 +73,7 @@ namespace ChustaSoft.Tools.DBAccess
 
 
     public class Repository<TEntity> : Repository<TEntity, Guid>, IRepository<TEntity>
-        where TEntity : class
+        where TEntity : class, IKeyable<Guid>
     {
 
         public Repository(IMongoContext context)

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace ChustaSoft.Tools.DBAccess
 {
-    public class UnitOfWork<TContext, TKey> : UnitOfWorkBase<TContext>, IUnitOfWork<TKey>
+    public class UnitOfWork<TContext, TKey> : UnitOfWorkBase<TContext, TKey>, IUnitOfWork<TKey>
         where TContext : IMongoContext
     {
 
@@ -13,7 +13,7 @@ namespace ChustaSoft.Tools.DBAccess
 
 
         public virtual IRepository<TEntity, TKey> GetRepository<TEntity>()
-            where TEntity : class
+            where TEntity : class, IKeyable<TKey>
         {
             var repositoryTuple = GetRepositoryTuple<TEntity, Repository<TEntity, TKey>>();
 
@@ -23,7 +23,7 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
         public virtual IAsyncRepository<TEntity, TKey> GetAsyncRepository<TEntity>()
-            where TEntity : class
+            where TEntity : class, IKeyable<TKey>
         {
             var repositoryTuple = GetRepositoryTuple<TEntity, AsyncRepository<TEntity, TKey>>();
 
