@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests", "ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests\ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests.csproj", "{1041C4A0-77EC-4B2F-AA25-A253A86831D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests", "ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests\ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests.csproj", "{EB96CB72-C942-49E9-A8EA-9E04CDB420A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests", "ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests\ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests.csproj", "{EB96CB72-C942-49E9-A8EA-9E04CDB420A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,7 +48,6 @@ Global
 		{EB96CB72-C942-49E9-A8EA-9E04CDB420A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EB96CB72-C942-49E9-A8EA-9E04CDB420A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB96CB72-C942-49E9-A8EA-9E04CDB420A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB96CB72-C942-49E9-A8EA-9E04CDB420A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
