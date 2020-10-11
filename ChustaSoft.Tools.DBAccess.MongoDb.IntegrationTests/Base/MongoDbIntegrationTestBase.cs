@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
 using MongoDB.Driver;
-using System;
 using Xunit;
 
 namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests.Base
