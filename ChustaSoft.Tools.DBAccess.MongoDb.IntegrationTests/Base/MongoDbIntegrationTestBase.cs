@@ -7,13 +7,13 @@ using Xunit;
 namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests.Base
 {
     [Collection("non-parallel test collection")]
-    public class IntegrationTestBase
+    public class MongoDbIntegrationTestBase
     {
         private MongoClient client;
         protected readonly IUnitOfWork unitOfWork;
         private readonly MongoDatabaseConfiguration configuration;
 
-        public IntegrationTestBase()
+        public MongoDbIntegrationTestBase()
         {
             configuration = GetConfiguration();
             InitializeEmptyDatabase();
