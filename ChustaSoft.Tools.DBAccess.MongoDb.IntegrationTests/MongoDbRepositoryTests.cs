@@ -6,10 +6,10 @@ using Xunit;
 
 namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests
 {
-    public class RepositoryTests : IntegrationTestBase
+    public class MongoDbRepositoryTests : MongoDbIntegrationTestBase
     {
 
-        public RepositoryTests() 
+        public MongoDbRepositoryTests() 
             : base()
         {}
 
