@@ -194,6 +194,25 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests
             Assert.Equal(belgium.Id, belgiumRetrieved.Id);
         }
 
+        [Fact]
+        public void Given_UnitOfWork_When_GetSyncRepository_Then_CanReturnQueryables()
+        {
+            // Arrange
+            var syncRepository = unitOfWork.GetRepository<Country>();
+
+            InsertCountries(france, belgium, netherlands, sweden, switserland);
+
+            // Act
+            var countriesWithS = syncRepository.Query
+                .Where(c => c.Name.StartsWith("Sw"))
+                .Select(c => c.Name)
+                .Take(1);
+
+            // Assert
+            Assert.Equal(1, countriesWithS.Count());
+            Assert.Equal(new[] { "Sweden" }, countriesWithS);
+        }
+
         /// <summary>
         /// Inserts given countries and commits transaction
         /// </summary>
