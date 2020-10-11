@@ -21,7 +21,7 @@ namespace ChustaSoft.Tools.DBAccess
 
         public TEntity GetSingle(TKey id)
         {
-            var idFilter = CreateIdFilter(id);
+            var idFilter = CreateFilter(id);
 
             return _dbSet
                 .Find(idFilter)
@@ -54,7 +54,7 @@ namespace ChustaSoft.Tools.DBAccess
 
         public void Update(TEntity entity)
         {
-            var idFilter = CreateIdFilter(entity.Id);
+            var idFilter = CreateFilter(entity.Id);
 
             _dbSet.ReplaceOne(idFilter, entity);
         }
@@ -69,14 +69,14 @@ namespace ChustaSoft.Tools.DBAccess
 
         public void Delete(TKey id)
         {
-            var idFilter = CreateIdFilter(id);
+            var idFilter = CreateFilter(id);
 
             _dbSet.DeleteOne(idFilter);
         }
 
         public void Delete(TEntity entity)
         {
-            var idFilter = CreateIdFilter(entity.Id);
+            var idFilter = CreateFilter(entity.Id);
 
             _dbSet.DeleteOne(idFilter);
         }
@@ -87,7 +87,7 @@ namespace ChustaSoft.Tools.DBAccess
             return _dbSet.AsQueryable();
         }
 
-        private FilterDefinition<TEntity> CreateIdFilter<T>(T id)
+        private FilterDefinition<TEntity> CreateFilter<T>(T id)
             => Builders<TEntity>.Filter.Eq("_id", id);
 
         private MongoSearchParameters<TEntity> CreateSearchParameters(Action<ISearchParametersBuilder<TEntity>> searchCriteria)
