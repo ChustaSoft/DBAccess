@@ -11,7 +11,7 @@ namespace ChustaSoft.Tools.DBAccess
     {
         private readonly IMongoCollection<TEntity> _dbSet;
 
-        public IQueryable<TEntity> Query => throw new NotImplementedException();
+        public IQueryable<TEntity> Query => GetQueryable();
 
         public Repository(IMongoContext context) 
             : base(context)
