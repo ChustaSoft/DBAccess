@@ -13,7 +13,6 @@ namespace ChustaSoft.Tools.DBAccess
 
         public IQueryable<TEntity> Query => throw new NotImplementedException();
 
-
         public Repository(IMongoContext context) 
             : base(context)
         {
@@ -31,14 +30,14 @@ namespace ChustaSoft.Tools.DBAccess
 
         public TEntity GetSingle(Action<ISingleResultSearchParametersBuilder<TEntity>> searchCriteria)
         {
-            var searchParams = MongoSearchParametersBuilder<TEntity, MongoSearchParameters<TEntity>>.GetParametersFromCriteria(searchCriteria);
+            var searchParams = CreateSearchParameters(searchCriteria);
 
             return _dbSet.Find(searchParams.Filter).FirstOrDefault();
         }
 
         public IEnumerable<TEntity> GetMultiple(Action<ISearchParametersBuilder<TEntity>> searchCriteria)
         {
-            var searchParams = MongoSearchParametersBuilder<TEntity, MongoSearchParameters<TEntity>>.GetParametersFromCriteria(searchCriteria);
+            var searchParams = CreateSearchParameters(searchCriteria);
 
             return _dbSet.Find(searchParams.Filter).ToList();
         }
@@ -90,6 +89,11 @@ namespace ChustaSoft.Tools.DBAccess
 
         private FilterDefinition<TEntity> CreateIdFilter<T>(T id)
             => Builders<TEntity>.Filter.Eq("_id", id);
+
+        private MongoSearchParameters<TEntity> CreateSearchParameters(Action<ISearchParametersBuilder<TEntity>> searchCriteria)
+        {
+            return MongoSearchParametersBuilder<TEntity, MongoSearchParameters<TEntity>>.GetParametersFromCriteria(searchCriteria);
+        }
 
     }
 
