@@ -12,5 +12,9 @@
             DatabaseName = databaseName;
         }
 
+        public MongoDatabaseConfiguration()
+        {
+        }
+
     }
 }
