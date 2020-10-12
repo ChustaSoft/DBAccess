@@ -18,6 +18,7 @@ namespace ChustaSoft.Tools.DBAccess
 
         protected DbSet<TEntity> _dbSet;
 
+        public IQueryable<TEntity> Query => GetQueryable();
 
         public AsyncRepository(DbContext context)
             : base(context)
@@ -39,7 +40,7 @@ namespace ChustaSoft.Tools.DBAccess
                 .TryIncludeProperties(searchParams.IncludedProperties)
                 .TrySetFilter(searchParams.Filter);
 
-            return await query.FirstAsync();
+            return await query.FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<TEntity>> GetMultipleAsync(Action<ISearchParametersBuilder<TEntity>> searchCriteria)
