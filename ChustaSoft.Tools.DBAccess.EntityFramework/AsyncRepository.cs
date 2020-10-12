@@ -18,6 +18,7 @@ namespace ChustaSoft.Tools.DBAccess
 
         protected DbSet<TEntity> _dbSet;
 
+        public IQueryable<TEntity> Query => GetQueryable();
 
         public AsyncRepository(DbContext context)
             : base(context)
