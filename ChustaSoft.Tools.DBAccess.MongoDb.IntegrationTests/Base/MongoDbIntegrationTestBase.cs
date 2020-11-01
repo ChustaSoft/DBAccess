@@ -8,15 +8,12 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests.Base
     public class MongoDbIntegrationTestBase
     {
         private MongoClient client;
-        protected readonly IUnitOfWork unitOfWork;
-        private readonly MongoDatabaseConfiguration configuration;
+        protected readonly MongoDatabaseConfiguration configuration;
 
         public MongoDbIntegrationTestBase()
         {
             configuration = GetConfiguration();
             InitializeEmptyDatabase();
-
-            unitOfWork = CreateUnitOfWork();
         }
 
         private MongoDatabaseConfiguration GetConfiguration()
@@ -39,10 +36,5 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests.Base
             client.DropDatabase(configuration.DatabaseName);
         }
 
-        private IUnitOfWork CreateUnitOfWork()
-        {
-            var testContext = new MongoContext(configuration);
-            return new UnitOfWork<MongoContext>(testContext);
-        }
     }
 }
