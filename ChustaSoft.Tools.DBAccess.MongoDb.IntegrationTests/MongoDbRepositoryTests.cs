@@ -8,10 +8,13 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests
 {
     public class MongoDbRepositoryTests : MongoDbIntegrationTestBase
     {
+        private  readonly IUnitOfWork unitOfWork;
 
-        public MongoDbRepositoryTests() 
-            : base()
-        {}
+        public MongoDbRepositoryTests() : base()
+        {
+            var testContext = new MongoContext(configuration);
+            unitOfWork = new UnitOfWork<MongoContext>(testContext);
+        }
 
         private readonly Country france  = new Country { Id = Guid.NewGuid(), Name = "France" };
         private readonly Country belgium  = new Country { Id = Guid.NewGuid(), Name = "Belgium" };
