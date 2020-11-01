@@ -35,7 +35,7 @@ namespace ChustaSoft.Tools.DBAccess
 
         private Exception NoAttributeFoundMessage<TEntity>(TEntity entity)
         {
-            var message = $"Type '{entity.GetType()}' does not contain a property marked with the BsonId attribute. Please register an implementation of IKeyResolver that can process this type";
+            var message = $"Type '{entity.GetType()}' does not contain a property marked with the BsonId attribute. Please register an implementation of {nameof(IKeyResolver)} that can process this type";
             return new InvalidOperationException(message);
         }
     }
