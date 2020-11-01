@@ -11,7 +11,6 @@ namespace ChustaSoft.Tools.DBAccess
 
         protected readonly TContext _context;
 
-
         public UnitOfWorkBase(TContext context)
         {
             _context = context;
