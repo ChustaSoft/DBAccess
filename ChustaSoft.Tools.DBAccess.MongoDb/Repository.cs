@@ -1,5 +1,4 @@
-﻿using ChustaSoft.Common.Contracts;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +10,15 @@ namespace ChustaSoft.Tools.DBAccess
     {
         private readonly IMongoCollection<TEntity> _dbSet;
 
+        private readonly IKeyResolver _keyResolver;
+
         public IQueryable<TEntity> Query => GetQueryable();
 
         public Repository(IMongoContext context) 
             : base(context)
         {
             _dbSet = context.GetCollection<TEntity>();
+            _keyResolver = context.KeyResolver;
         }
 
         public TEntity GetSingle(TKey id)
@@ -54,7 +56,7 @@ namespace ChustaSoft.Tools.DBAccess
 
         public void Update(TEntity entity)
         {
-            var idFilter = CreateFilter(entity.Id);
+            var idFilter = CreateFilterOnId(entity);
 
             _dbSet.ReplaceOne(idFilter, entity);
         }
@@ -76,7 +78,7 @@ namespace ChustaSoft.Tools.DBAccess
 
         public void Delete(TEntity entity)
         {
-            var idFilter = CreateFilter(entity.Id);
+            var idFilter = CreateFilterOnId(entity);
 
             _dbSet.DeleteOne(idFilter);
         }
@@ -85,6 +87,12 @@ namespace ChustaSoft.Tools.DBAccess
         protected override IQueryable<TEntity> GetQueryable()
         {
             return _dbSet.AsQueryable();
+        }
+
+        private FilterDefinition<TEntity> CreateFilterOnId(TEntity entity)
+        {
+            var id = _keyResolver.GetKey<TEntity, TKey>(entity);
+            return CreateFilter(id);
         }
 
         private FilterDefinition<TEntity> CreateFilter<T>(T id)
