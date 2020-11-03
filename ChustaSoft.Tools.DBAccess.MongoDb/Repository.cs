@@ -7,7 +7,7 @@ using System.Linq;
 namespace ChustaSoft.Tools.DBAccess
 {
     public class Repository<TEntity, TKey> : RepositoryBase<IMongoContext, TEntity>, IRepository<TEntity, TKey>
-        where TEntity : class, IKeyable<TKey>
+        where TEntity : class
     {
         private readonly IMongoCollection<TEntity> _dbSet;
 
@@ -100,7 +100,7 @@ namespace ChustaSoft.Tools.DBAccess
 
 
     public class Repository<TEntity> : Repository<TEntity, Guid>, IRepository<TEntity>
-        where TEntity : class, IKeyable<Guid>
+        where TEntity : class
     {
 
         public Repository(IMongoContext context)

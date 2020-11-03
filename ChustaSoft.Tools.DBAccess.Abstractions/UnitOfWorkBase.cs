@@ -1,10 +1,9 @@
-﻿using ChustaSoft.Common.Contracts;
-using System;
+﻿using System;
 using System.Collections;
 
 namespace ChustaSoft.Tools.DBAccess
 {
-    public class UnitOfWorkBase<TContext, TKey> : IDisposable
+    public class UnitOfWorkBase<TContext> : IDisposable
         where TContext : IDisposable
     {
 
@@ -27,7 +26,7 @@ namespace ChustaSoft.Tools.DBAccess
 
 
         protected void CreateRepositoryInstance<TEntity>(string repoKey, Type repositoryType)
-            where TEntity : class, IKeyable<TKey>
+            where TEntity : class
         {
             if (!_repositories.ContainsKey(repoKey))
             {
@@ -39,7 +38,7 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
         protected (string RepositoryKey, Type RepositoryType) GetRepositoryTuple<TEntity, TRepository>()
-            where TEntity : class, IKeyable<TKey>
+            where TEntity : class
             where TRepository : class
         {
             var repositoryType = typeof(TRepository);

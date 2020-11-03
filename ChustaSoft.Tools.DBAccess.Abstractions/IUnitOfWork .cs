@@ -1,5 +1,4 @@
-﻿using ChustaSoft.Common.Contracts;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
 namespace ChustaSoft.Tools.DBAccess
@@ -7,10 +6,10 @@ namespace ChustaSoft.Tools.DBAccess
     public interface IUnitOfWork<TKey> : IDisposable
     {
         IRepository<TEntity, TKey> GetRepository<TEntity>() 
-            where TEntity : class, IKeyable<TKey>;
+            where TEntity : class;
 
         IAsyncRepository<TEntity, TKey> GetAsyncRepository<TEntity>()
-            where TEntity : class, IKeyable<TKey>;
+            where TEntity : class;
 
         bool CommitTransaction();
 
@@ -24,10 +23,10 @@ namespace ChustaSoft.Tools.DBAccess
     {
 
         new IRepository<TEntity> GetRepository<TEntity>()
-            where TEntity : class, IKeyable<Guid>;
+            where TEntity : class;
 
         new IAsyncRepository<TEntity> GetAsyncRepository<TEntity>()
-            where TEntity : class, IKeyable<Guid>;
+            where TEntity : class;
 
     }
 
