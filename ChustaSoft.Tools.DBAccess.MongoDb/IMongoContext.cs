@@ -10,5 +10,6 @@ namespace ChustaSoft.Tools.DBAccess
         IMongoCollection<T> GetCollection<T>();
         IMongoCollection<T> GetCollection<T>(string name);
         Task<int> SaveChangesAsync();
+        IKeyResolver KeyResolver { get; }
     }
 }

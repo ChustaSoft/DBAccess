@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,65 +8,99 @@ namespace ChustaSoft.Tools.DBAccess
     public class Repository<TEntity, TKey> : RepositoryBase<IMongoContext, TEntity>, IRepository<TEntity, TKey>
         where TEntity : class
     {
+        private readonly IMongoCollection<TEntity> _dbSet;
 
-        public IQueryable<TEntity> Query => throw new NotImplementedException();
+        private readonly IKeyResolver _keyResolver;
 
+        public IQueryable<TEntity> Query => GetQueryable();
 
         public Repository(IMongoContext context) 
             : base(context)
-        { }
-
-
+        {
+            _dbSet = context.GetCollection<TEntity>();
+            _keyResolver = context.KeyResolver;
+        }
 
         public TEntity GetSingle(TKey id)
         {
-            throw new NotImplementedException();
+            var idFilter = CreateFilter(id);
+
+            return _dbSet
+                .Find(idFilter)
+                .FirstOrDefault();
         }
 
         public TEntity GetSingle(Action<ISingleResultSearchParametersBuilder<TEntity>> searchCriteria)
         {
-            throw new NotImplementedException();
+            var searchParams = CreateSearchParameters(searchCriteria);
+
+            return _dbSet.Find(searchParams.Filter).FirstOrDefault();
         }
 
         public IEnumerable<TEntity> GetMultiple(Action<ISearchParametersBuilder<TEntity>> searchCriteria)
         {
-            throw new NotImplementedException();
+            var searchParams = CreateSearchParameters(searchCriteria);
+
+            return _dbSet.Find(searchParams.Filter).ToList();
         }
 
         public void Insert(TEntity entity)
         {
-            throw new NotImplementedException();
+            _dbSet.InsertOne(entity);
         }
 
         public void Insert(IEnumerable<TEntity> entities)
         {
-            throw new NotImplementedException();
+            _dbSet.InsertMany(entities);
         }
 
         public void Update(TEntity entity)
         {
-            throw new NotImplementedException();
+            var idFilter = CreateFilterOnId(entity);
+
+            _dbSet.ReplaceOne(idFilter, entity);
         }
 
         public void Update(IEnumerable<TEntity> entities)
         {
-            throw new NotImplementedException();
+            foreach (var entity in entities)
+            {
+                Update(entity);
+            }
         }
 
         public void Delete(TKey id)
         {
-            throw new NotImplementedException();
+            var idFilter = CreateFilter(id);
+
+            _dbSet.DeleteOne(idFilter);
         }
 
         public void Delete(TEntity entity)
         {
-            throw new NotImplementedException();
+            var idFilter = CreateFilterOnId(entity);
+
+            _dbSet.DeleteOne(idFilter);
         }
 
 
         protected override IQueryable<TEntity> GetQueryable()
         {
-            throw new NotImplementedException();
+            return _dbSet.AsQueryable();
+        }
+
+        private FilterDefinition<TEntity> CreateFilterOnId(TEntity entity)
+        {
+            var id = _keyResolver.GetKey<TEntity, TKey>(entity);
+            return CreateFilter(id);
+        }
+
+        private FilterDefinition<TEntity> CreateFilter<T>(T id)
+            => Builders<TEntity>.Filter.Eq("_id", id);
+
+        private MongoSearchParameters<TEntity> CreateSearchParameters(Action<ISearchParametersBuilder<TEntity>> searchCriteria)
+        {
+            return MongoSearchParametersBuilder<TEntity, MongoSearchParameters<TEntity>>.GetParametersFromCriteria(searchCriteria);
         }
 
     }
