@@ -20,7 +20,7 @@ namespace ChustaSoft.Tools.DBAccess.UnitTests
         [TestInitialize]
         public void TestInit()
         {
-            var persons = Builder<Person>.CreateListOfSize(50).All().With(x => x.Address = Builder<Address>.CreateListOfSize(2).Build()).Build();
+            //var persons = Builder<Person>.CreateListOfSize(50).All().With(x => x.Address = Builder<Address>.CreateListOfSize(2).Build()).Build();
             var queryable = persons.AsQueryable();
 
             var dbSet = new Mock<DbSet<Person>>();
@@ -102,23 +102,7 @@ namespace ChustaSoft.Tools.DBAccess.UnitTests
     }
 
 
-    public class Person : IKeyable<int>
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public DateTime BirthDate { get; set; }
-
-        public IEnumerable<Address> Address { get; set; }
-    }
-
-
-    public class Address : IKeyable<int>
-    {
-        public int Id { get; set; }
-        public int PersonId { get; set; }
-        public string Line { get; set; }
-    }
+  
 
     
 }

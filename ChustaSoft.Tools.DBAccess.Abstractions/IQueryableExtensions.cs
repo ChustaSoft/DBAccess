@@ -4,57 +4,36 @@ using System.Linq.Expressions;
 
 namespace ChustaSoft.Tools.DBAccess
 {
-    public static partial class IQueryableExtensions
+    public static class IQueryableExtensions
     {
 
-        public static IQueryable<TEntity> TrySetPagination<TEntity>(this IQueryable<TEntity> query, int? batchSize, int? skippedBatches)
-            where TEntity : class
+        public static SelectablePropertiesBuilder<TOrigin, TSelection> Including<TOrigin, TSelection>(this IQueryable<TOrigin> source, Expression<Func<TOrigin, TSelection>> navigationPropertyPath)
+            where TOrigin : class
         {
-            if (skippedBatches != null && batchSize != null)
-                query = query
-                    .Skip((skippedBatches.Value - 1) * batchSize.Value)
-                    .Take(batchSize.Value);
+            var propertyName = GetPropertyName(navigationPropertyPath);
 
-            return query;
+            var builder = new SelectablePropertiesBuilder<TOrigin, TSelection>(propertyName);
+
+            return builder;
         }
 
-        public static IQueryable<TEntity> TrySetTakeFrom<TEntity>(this IQueryable<TEntity> query, Expression<Func<TEntity, bool>> takeFrom, bool inclusive)
-           where TEntity : class
+        public static SelectablePropertiesBuilder<TOrigin, TParent, TSelection> Then<TOrigin, TParent, TSelection>(this SelectablePropertiesBuilder<TOrigin, TParent> builder, Expression<Func<TParent, TSelection>> navigationPropertyPath)
+            where TOrigin : class
+            where TParent : class
         {
-            if (takeFrom != null)
-                query = query.SkipWhile(takeFrom);
+            var propertyName = GetPropertyName(navigationPropertyPath);
 
-            if (!inclusive)
-                query = query.Skip(1);
-
-            return query;
+            return new SelectablePropertiesBuilder<TOrigin, TParent, TSelection>(propertyName, builder);
         }
 
-        public static IQueryable<TEntity> TrySetOrder<TEntity>(this IQueryable<TEntity> query, Expression<Func<TEntity, object>> order, OrderType? orderType)
-           where TEntity : class
+
+
+        private static string GetPropertyName<T, TProperty>(Expression<Func<T, TProperty>> navigationPropertyPath)
         {
-            if (order != null && orderType != null)
-                switch (orderType)
-                {
-                    case OrderType.Descending:
-                        query = query.OrderByDescending(order);
-                        break;
-                    case OrderType.Ascending:
-                    default:
-                        query = query.OrderBy(order);
-                        break;
-                }
+            var member = (MemberExpression)navigationPropertyPath.Body;
+            var propertyName = member.Member.Name;
 
-            return query;
-        }
-
-        public static IQueryable<TEntity> TrySetFilter<TEntity>(this IQueryable<TEntity> query, Expression<Func<TEntity, bool>> filter)
-            where TEntity : class
-        {
-            if (filter != null)
-                query = query.Where(filter);
-
-            return query;
+            return propertyName;
         }
 
     }
