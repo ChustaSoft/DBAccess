@@ -26,6 +26,24 @@ namespace ChustaSoft.Tools.DBAccess
             return new SelectablePropertiesBuilder<TOrigin, TParent, TSelection>(propertyName, builder);
         }
 
+        public static SelectablePropertiesBuilder<TOrigin, TParent> And<TOrigin, TParent, TSelection>(this SelectablePropertiesBuilder<TOrigin, TParent> builder, Expression<Func<TParent, TSelection>> navigationPropertyPath)
+        {
+            var propertyName = GetPropertyName(navigationPropertyPath);
+
+            builder.Add(typeof(TSelection), propertyName);
+
+            return builder;
+        }
+
+        public static SelectablePropertiesBuilder<TOrigin, TParent, TSelection> And<TOrigin, TParent, TSelection>(this SelectablePropertiesBuilder<TOrigin, TParent, TSelection> builder, Expression<Func<TParent, TSelection>> navigationPropertyPath) 
+        {
+            var propertyName = GetPropertyName(navigationPropertyPath);
+
+            builder.Add(typeof(TSelection), propertyName);
+
+            return builder;
+        }
+
 
 
         private static string GetPropertyName<T, TProperty>(Expression<Func<T, TProperty>> navigationPropertyPath)
