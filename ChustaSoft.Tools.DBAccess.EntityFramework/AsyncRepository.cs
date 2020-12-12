@@ -27,54 +27,10 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
 
-        public async Task<TEntity> GetSingleAsync(TKey id)
+        public async Task<TEntity> Find(TKey id)
         {
             return await _dbSet.FindAsync(id);
         }
-
-        public async Task<TEntity> GetSingleAsync(Action<ISingleResultSearchParametersBuilder<TEntity>> searchCriteria)
-        {
-            var searchParams = EntityFrameworkSearchParametersBuilder<TEntity, EntityFrameworkSearchParameters<TEntity>>.GetParametersFromCriteria(searchCriteria);
-
-            var query = GetQueryable()
-                .TryIncludeProperties(searchParams.IncludedProperties)
-                .TrySetFilter(searchParams.Filter);
-
-            return await query.FirstOrDefaultAsync();
-        }
-
-        public async Task<IEnumerable<TEntity>> GetMultipleAsync(Action<ISearchParametersBuilder<TEntity>> searchCriteria)
-        {
-            return await Task.Run(() =>
-            {
-                var searchParams = EntityFrameworkSearchParametersBuilder<TEntity, EntityFrameworkSearchParameters<TEntity>>.GetParametersFromCriteria(searchCriteria);
-
-                var query = GetQueryable()
-                    .TryIncludeProperties(searchParams.IncludedProperties)
-                    .TrySetFilter(searchParams.Filter)
-                    .TrySetOrder(searchParams.Order, searchParams.OrderType)
-                    .TrySetPagination(searchParams.BatchSize, searchParams.SkippedBatches);
-
-                return searchParams.TrackingEnabled ? query : query.AsNoTracking();
-            });
-        }
-
-#if NETCOREAPP3_1
-
-        public IAsyncEnumerable<TEntity> GetMultiple(Action<ISearchParametersBuilder<TEntity>> searchCriteria)
-        {
-            var searchParams = EntityFrameworkSearchParametersBuilder<TEntity, EntityFrameworkSearchParameters<TEntity>>.GetParametersFromCriteria(searchCriteria);
-
-            var query = GetQueryable()
-                .TryIncludeProperties(searchParams.IncludedProperties)
-                .TrySetFilter(searchParams.Filter)
-                .TrySetOrder(searchParams.Order, searchParams.OrderType)
-                .TrySetPagination(searchParams.BatchSize, searchParams.SkippedBatches);
-
-            return searchParams.TrackingEnabled ? query.AsAsyncEnumerable() : query.AsNoTracking().AsAsyncEnumerable();
-        }
-
-#endif
 
         public async Task<bool> InsertAsync(TEntity entity)
         {

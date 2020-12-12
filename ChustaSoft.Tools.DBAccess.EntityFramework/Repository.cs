@@ -32,34 +32,9 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
 
-        public TEntity GetSingle(TKey id)
+        public TEntity Find(TKey id)
         {
             return _dbSet.Find(id);
-        }
-
-        public TEntity GetSingle(Action<ISingleResultSearchParametersBuilder<TEntity>> searchCriteria)
-        {
-            var searchParams = EntityFrameworkSearchParametersBuilder<TEntity, EntityFrameworkSearchParameters<TEntity>>.GetParametersFromCriteria(searchCriteria);
-
-            var query = GetQueryable()
-                .TryIncludeProperties(searchParams.IncludedProperties)
-                .TrySetFilter(searchParams.Filter);
-
-            return query.FirstOrDefault();
-        }       
-
-        public IEnumerable<TEntity> GetMultiple(Action<ISearchParametersBuilder<TEntity>> searchCriteria)
-        {
-            var searchParams = EntityFrameworkSearchParametersBuilder<TEntity, EntityFrameworkSearchParameters<TEntity>>.GetParametersFromCriteria(searchCriteria);
-
-            var query = GetQueryable()
-                .TryIncludeProperties(searchParams.IncludedProperties)
-                .TrySetFilter(searchParams.Filter)
-                .TrySetOrder(searchParams.Order, searchParams.OrderType)
-                .TrySetTakeFrom(searchParams.TakeFrom, searchParams.TakeFromInclusive)
-                .TrySetPagination(searchParams.BatchSize, searchParams.SkippedBatches);
-
-            return searchParams.TrackingEnabled ? query : query.AsNoTracking();
         }
 
         public void Insert(TEntity entity)
