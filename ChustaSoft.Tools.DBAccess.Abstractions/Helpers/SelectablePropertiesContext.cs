@@ -6,6 +6,7 @@ namespace ChustaSoft.Tools.DBAccess
     public class SelectablePropertiesContext
     {
 
+        private int _currentDeepLevel = 0;
         private string _lastProperty;
 
         public string Property { get; private set; }
@@ -30,9 +31,22 @@ namespace ChustaSoft.Tools.DBAccess
 
         internal void AddDeepen(Type type, string selected)
         {
-            foreach (var nestedElement in Nested)
+            var currentDeepestNestedLevel = GetDeepestNestedLevel(selected);
+
+            foreach (var nestedElement in currentDeepestNestedLevel)
                 if (nestedElement.Property == _lastProperty)
                     nestedElement.AddFlush(type, selected);
+
+            _currentDeepLevel++;
+        }
+
+
+        private ICollection<SelectablePropertiesContext> GetDeepestNestedLevel(string property, int descendedLevels = 0) 
+        {
+            if (descendedLevels < _currentDeepLevel)
+                return GetDeepestNestedLevel(property, descendedLevels++);
+            else
+                return Nested;
         }
 
     }
