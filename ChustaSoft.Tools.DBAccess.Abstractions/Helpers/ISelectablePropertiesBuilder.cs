@@ -3,12 +3,15 @@
 namespace ChustaSoft.Tools.DBAccess
 {
 
-    public interface ISelectablePropertiesBuilder<TOrigin, TSelection>
+    public interface ISelectablePropertiesBuilder
     {
 
         SelectablePropertiesContext Build();
 
-        void Add(Type type, string propertyName);
+        void AddFlush(Type type, string propertyName);
+
+        void AddDeepen(Type type, string propertyName);
+
     }
 
 }

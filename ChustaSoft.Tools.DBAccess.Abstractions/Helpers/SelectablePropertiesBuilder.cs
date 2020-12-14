@@ -3,46 +3,52 @@
 namespace ChustaSoft.Tools.DBAccess
 {
 
-    public class SelectablePropertiesBuilder<TOrigin, TSelection> : ISelectablePropertiesBuilder<TOrigin, TSelection>
+    public abstract class SelectablePropertiesBuilderBase : ISelectablePropertiesBuilder
     {
 
         protected SelectablePropertiesContext _context;
 
+
+        public SelectablePropertiesContext Build() => _context;
+
+        public void AddFlush(Type type, string propertyName)
+        {
+            _context.AddFlush(type, propertyName);
+        }
+
+        public void AddDeepen(Type type, string propertyName)
+        {
+            _context.AddDeepen(type, propertyName);
+        }
+
+    }
+
+
+
+    public class SelectablePropertiesBuilder<TOrigin, TSelection> : SelectablePropertiesBuilderBase
+    {
 
         public SelectablePropertiesBuilder(string selection)
         {
             _context = new SelectablePropertiesContext(typeof(TSelection), selection);
         }
 
-        protected SelectablePropertiesBuilder() { }
-
-
-        public SelectablePropertiesContext Build() => _context;
-
-
-        public void Add(Type type, string propertyName)
-        {
-            _context.Add(type, propertyName);
-        }
-
     }
 
 
-    public class SelectablePropertiesBuilder<TOrigin, TParent, TSelection> : SelectablePropertiesBuilder<TOrigin, TParent>
+    public class SelectablePropertiesBuilder<TOrigin, TParent, TSelection> : SelectablePropertiesBuilderBase
     {
 
-        private ISelectablePropertiesBuilder<TOrigin, TParent> _parentBuilder;
-
-       
-        public SelectablePropertiesBuilder(string currentProperty, ISelectablePropertiesBuilder<TOrigin, TParent> parentBuilder)
+        public SelectablePropertiesBuilder(ISelectablePropertiesBuilder parentBuilder)
         {
-
-            parentBuilder.Add(typeof(TSelection), currentProperty);
-
-            _parentBuilder = parentBuilder;
+            _context = parentBuilder.Build();
         }
 
-        public new SelectablePropertiesContext Build() => _parentBuilder.Build();
+        public SelectablePropertiesBuilder(ISelectablePropertiesBuilder parentBuilder, string currentProperty)
+        {
+            parentBuilder.AddFlush(typeof(TSelection), currentProperty);
+            _context = parentBuilder.Build();
+        }
 
     }
 }

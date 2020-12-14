@@ -23,14 +23,26 @@ namespace ChustaSoft.Tools.DBAccess
         {
             var propertyName = GetPropertyName(navigationPropertyPath);
 
-            return new SelectablePropertiesBuilder<TOrigin, TParent, TSelection>(propertyName, builder);
+            return new SelectablePropertiesBuilder<TOrigin, TParent, TSelection>(builder, propertyName);
+        }
+
+        public static SelectablePropertiesBuilder<TOrigin, TParent, TSelection> Then<TOrigin, TPreviousParent, TParent, TSelection>(this SelectablePropertiesBuilder<TOrigin, TPreviousParent, TParent> builder, Expression<Func<TPreviousParent, TSelection>> navigationPropertyPath)
+            where TOrigin : class
+            where TPreviousParent : class
+        {
+            var propertyName = GetPropertyName(navigationPropertyPath);
+            var selectionBuilder = new SelectablePropertiesBuilder<TOrigin, TParent, TSelection>(builder);
+
+            selectionBuilder.AddDeepen(typeof(TSelection), propertyName);
+
+            return selectionBuilder;
         }
 
         public static SelectablePropertiesBuilder<TOrigin, TParent> And<TOrigin, TParent, TSelection>(this SelectablePropertiesBuilder<TOrigin, TParent> builder, Expression<Func<TParent, TSelection>> navigationPropertyPath)
         {
             var propertyName = GetPropertyName(navigationPropertyPath);
 
-            builder.Add(typeof(TSelection), propertyName);
+            builder.AddFlush(typeof(TSelection), propertyName);
 
             return builder;
         }
@@ -39,7 +51,7 @@ namespace ChustaSoft.Tools.DBAccess
         {
             var propertyName = GetPropertyName(navigationPropertyPath);
 
-            builder.Add(typeof(TSelection), propertyName);
+            builder.AddFlush(typeof(TSelection), propertyName);
 
             return builder;
         }
