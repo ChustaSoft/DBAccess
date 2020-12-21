@@ -24,12 +24,12 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
         {
             var data = SelectablePropertiesBuilderTestHelper.GetMockedData();
 
-            var builder = data.Including(x => x.Supervisor).Then(x => x.Address);
+            var builder = data.Including(x => x.Supervisor).Then(x => x.Addresses);
             var result = builder.Build();
 
             Assert.Equal(nameof(Employee.Supervisor), result.Property);
             Assert.Equal(typeof(Employee), result.Type);
-            Assert.Contains(nameof(Employee.Supervisor.Address), result.Nested.Select(x => x.Property));
+            Assert.Contains(nameof(Employee.Supervisor.Addresses), result.Nested.Select(x => x.Property));
             Assert.Contains(typeof(IEnumerable<Address>), result.Nested.Select(x => x.Type));
         }
 
@@ -52,13 +52,13 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
         {
             var data = SelectablePropertiesBuilderTestHelper.GetMockedData();
 
-            var builder = data.Including(x => x.Supervisor).And(x => x.BirthDate).Then(x => x.Address);
+            var builder = data.Including(x => x.Supervisor).And(x => x.BirthDate).Then(x => x.Addresses);
             var result = builder.Build();
 
             Assert.Equal(nameof(Employee.Supervisor), result.Property);
             Assert.Equal(typeof(Employee), result.Type);
             Assert.Contains(nameof(Employee.BirthDate), result.Nested.Select(x => x.Property));
-            Assert.Contains(nameof(Employee.Address), result.Nested.Select(x => x.Property));
+            Assert.Contains(nameof(Employee.Addresses), result.Nested.Select(x => x.Property));
             Assert.Contains(typeof(DateTime), result.Nested.Select(x => x.Type)); 
             Assert.Contains(typeof(IEnumerable<Address>), result.Nested.Select(x => x.Type));
         }
@@ -76,7 +76,7 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             Assert.Contains(nameof(Employee.Company), result.Nested.Select(x => x.Property));            
             Assert.Contains(typeof(Company), result.Nested.Select(x => x.Type));
             Assert.Contains(nameof(Address), result.Nested.First(x => x.Property == nameof(Employee.Company)).Nested.Select(x => x.Property));
-            Assert.Contains(typeof(IEnumerable<Address>), result.Nested.First(x => x.Property == nameof(Employee.Company)).Nested.Select(x => x.Type));
+            Assert.Contains(typeof(Address), result.Nested.First(x => x.Property == nameof(Employee.Company)).Nested.Select(x => x.Type));
         }
 
     }

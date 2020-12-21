@@ -11,7 +11,7 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
 
         public static IQueryable<Employee> GetMockedData()
             => Builder<Employee>.CreateListOfSize(50).All()
-                    .With(x => x.Address = Builder<Address>.CreateListOfSize(2).Build())
+                    .With(x => x.Addresses = Builder<Address>.CreateListOfSize(2).Build())
                 .Build()
                 .AsQueryable();
 
@@ -27,7 +27,7 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
         public Employee Supervisor { get; set; }
         public Company Company { get; set; }
 
-        public IEnumerable<Address> Address { get; set; }
+        public IEnumerable<Address> Addresses { get; set; }
     }
 
 

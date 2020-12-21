@@ -26,7 +26,7 @@ namespace ChustaSoft.Tools.DBAccess
             return new SelectablePropertiesBuilder<TOrigin, TParent, TSelection>(builder, propertyName);
         }
 
-        public static SelectablePropertiesBuilder<TOrigin, TParent, TSelection> Then<TOrigin, TPreviousParent, TParent, TSelection>(this SelectablePropertiesBuilder<TOrigin, TPreviousParent, TParent> builder, Expression<Func<TPreviousParent, TSelection>> navigationPropertyPath)
+        public static SelectablePropertiesBuilder<TOrigin, TParent, TSelection> Then<TOrigin, TPreviousParent, TParent, TSelection>(this SelectablePropertiesBuilder<TOrigin, TPreviousParent, TParent> builder, Expression<Func<TParent, TSelection>> navigationPropertyPath)
             where TOrigin : class
             where TPreviousParent : class
         {
