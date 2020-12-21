@@ -97,5 +97,21 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             Assert.Contains(typeof(DateTime), result.Nested.Select(x => x.Type));
         }
 
+        [Fact]
+        public void Given_Queryable_When_AndAfterThenWithDuplicatedProperty_Then_ExceptionThrown()
+        {
+            var data = SelectablePropertiesBuilderTestHelper.GetMockedData();
+
+            Assert.Throws<ArgumentException>(() => data.Including(x => x.Supervisor).Then(x => x.Company).And(x => x.Company).Then(x => x.Address));
+        }
+
+        [Fact]
+        public void Given_Queryable_When_AndAfterAndWithDuplicatedProperty_Then_ExceptionThrown()
+        {
+            var data = SelectablePropertiesBuilderTestHelper.GetMockedData();
+
+            Assert.Throws<ArgumentException>(() => data.Including(x => x.Supervisor).And(x => x.Company).And(x => x.Company));
+        }
+
     }
 }

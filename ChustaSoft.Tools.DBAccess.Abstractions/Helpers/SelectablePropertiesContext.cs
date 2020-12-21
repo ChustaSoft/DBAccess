@@ -31,7 +31,10 @@ namespace ChustaSoft.Tools.DBAccess
             if (rootSelection)
                 _lastRootedProperty = selected;
 
-            currentDeepestNestedLevel.Add(new SelectablePropertiesContext(type, selected));
+            if (currentDeepestNestedLevel.Any(x => x.Property == selected))
+                throw new ArgumentException($"Properties selection already contains {selected} property");
+            else
+                currentDeepestNestedLevel.Add(new SelectablePropertiesContext(type, selected));
         }
 
         internal void AddDeepen(Type type, string selected)
