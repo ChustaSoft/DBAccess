@@ -11,9 +11,9 @@ namespace ChustaSoft.Tools.DBAccess
 
         public SelectablePropertiesContext Build() => _context;
 
-        public void AddFlush(Type type, string propertyName)
+        public void AddFlush(Type type, string propertyName, bool rootSelection)
         {
-            _context.AddFlush(type, propertyName);
+            _context.AddFlush(type, propertyName, rootSelection);
         }
 
         public void AddDeepen(Type type, string propertyName)
@@ -46,7 +46,7 @@ namespace ChustaSoft.Tools.DBAccess
 
         public SelectablePropertiesBuilder(ISelectablePropertiesBuilder parentBuilder, string currentProperty)
         {
-            parentBuilder.AddFlush(typeof(TSelection), currentProperty);
+            parentBuilder.AddFlush(typeof(TSelection), currentProperty, true);
             _context = parentBuilder.Build();
         }
 

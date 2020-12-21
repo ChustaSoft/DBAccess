@@ -8,7 +8,7 @@ namespace ChustaSoft.Tools.DBAccess
 
         SelectablePropertiesContext Build();
 
-        void AddFlush(Type type, string propertyName);
+        void AddFlush(Type type, string propertyName, bool rootSelection);
 
         void AddDeepen(Type type, string propertyName);
 

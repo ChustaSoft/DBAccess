@@ -42,16 +42,16 @@ namespace ChustaSoft.Tools.DBAccess
         {
             var propertyName = GetPropertyName(navigationPropertyPath);
 
-            builder.AddFlush(typeof(TSelection), propertyName);
+            builder.AddFlush(typeof(TSelection), propertyName, false);
 
             return builder;
         }
 
-        public static SelectablePropertiesBuilder<TOrigin, TParent, TSelection> And<TOrigin, TParent, TSelection>(this SelectablePropertiesBuilder<TOrigin, TParent, TSelection> builder, Expression<Func<TParent, TSelection>> navigationPropertyPath) 
+        public static SelectablePropertiesBuilder<TOrigin, TParent, TPreviousSelection> And<TOrigin, TParent, TPreviousSelection, TSelection>(this SelectablePropertiesBuilder<TOrigin, TParent, TPreviousSelection> builder, Expression<Func<TParent, TSelection>> navigationPropertyPath) 
         {
             var propertyName = GetPropertyName(navigationPropertyPath);
 
-            builder.AddFlush(typeof(TSelection), propertyName);
+            builder.AddFlush(typeof(TSelection), propertyName, false);
 
             return builder;
         }

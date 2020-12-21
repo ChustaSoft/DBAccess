@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ChustaSoft.Tools.DBAccess
 {
@@ -7,7 +8,7 @@ namespace ChustaSoft.Tools.DBAccess
     {
 
         private int _currentDeepLevel = 0;
-        private string _lastProperty;
+        private string _lastRootedProperty;
 
         public string Property { get; private set; }
         public Type Type { get; private set; }
@@ -19,34 +20,38 @@ namespace ChustaSoft.Tools.DBAccess
             Nested = new List<SelectablePropertiesContext>();
             Type = type;
             Property = property;
-            _lastProperty = property;
+            _lastRootedProperty = property;
         }
 
 
-        internal void AddFlush(Type type, string selected)
+        internal void AddFlush(Type type, string selected, bool rootSelection)
         {
-            _lastProperty = selected;
-            Nested.Add(new SelectablePropertiesContext(type, selected));
+            var currentDeepestNestedLevel = GetDeepestNestedLevel(this, selected);
+
+            if (rootSelection)
+                _lastRootedProperty = selected;
+
+            currentDeepestNestedLevel.Add(new SelectablePropertiesContext(type, selected));
         }
 
         internal void AddDeepen(Type type, string selected)
         {
-            var currentDeepestNestedLevel = GetDeepestNestedLevel(selected);
+            var currentDeepestNestedLevel = GetDeepestNestedLevel(this, selected);
 
             foreach (var nestedElement in currentDeepestNestedLevel)
-                if (nestedElement.Property == _lastProperty)
-                    nestedElement.AddFlush(type, selected);
+                if (nestedElement.Property == _lastRootedProperty)
+                    nestedElement.AddFlush(type, selected, true);
 
             _currentDeepLevel++;
         }
 
 
-        private ICollection<SelectablePropertiesContext> GetDeepestNestedLevel(string property, int descendedLevels = 0) 
+        private ICollection<SelectablePropertiesContext> GetDeepestNestedLevel(SelectablePropertiesContext context, string property, int descendedLevels = 0)
         {
             if (descendedLevels < _currentDeepLevel)
-                return GetDeepestNestedLevel(property, descendedLevels++);
+                return GetDeepestNestedLevel(context.Nested.First(x => x.Property == _lastRootedProperty), property, ++descendedLevels);
             else
-                return Nested;
+                return context.Nested;
         }
 
     }

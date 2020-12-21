@@ -79,5 +79,23 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             Assert.Contains(typeof(Address), result.Nested.First(x => x.Property == nameof(Employee.Company)).Nested.Select(x => x.Type));
         }
 
+        [Fact]
+        public void Given_Queryable_When_DeepenThenAfterAndAfterThenAfterIncluding_Then_NestedPropertiesBothDeepenAndFlushAdded()
+        {
+            var data = SelectablePropertiesBuilderTestHelper.GetMockedData();
+
+            var builder = data.Including(x => x.Supervisor).Then(x => x.Company).And(x => x.BirthDate).Then(x => x.Address);
+            var result = builder.Build();
+
+            Assert.Equal(nameof(Employee.Supervisor), result.Property);
+            Assert.Equal(typeof(Employee), result.Type);
+            Assert.Contains(nameof(Employee.Company), result.Nested.Select(x => x.Property));
+            Assert.Contains(typeof(Company), result.Nested.Select(x => x.Type));
+            Assert.Contains(nameof(Company.Address), result.Nested.First(x => x.Property == nameof(Employee.Company)).Nested.Select(x => x.Property));
+            Assert.Contains(typeof(Address), result.Nested.First(x => x.Property == nameof(Employee.Company)).Nested.Select(x => x.Type));
+            Assert.Contains(nameof(Employee.BirthDate), result.Nested.Select(x => x.Property));
+            Assert.Contains(typeof(DateTime), result.Nested.Select(x => x.Type));
+        }
+
     }
 }
