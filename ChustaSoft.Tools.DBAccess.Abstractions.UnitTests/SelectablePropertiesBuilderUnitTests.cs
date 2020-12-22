@@ -113,5 +113,19 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             Assert.Throws<ArgumentException>(() => data.Including(x => x.Supervisor).And(x => x.Company).And(x => x.Company));
         }
 
+        [Fact]
+        public void Given_Queryable_When_XXThenAfterIncluding_Then_NestedPropertyAdded()
+        {
+            var data = SelectablePropertiesBuilderTestHelper.GetMockedData();
+
+            var builder = data.Including(x => x.Addresses).Then(x => x.City);
+            var result = builder.Build();
+
+            Assert.Equal(nameof(Employee.Addresses), result.Property);
+            Assert.Equal(typeof(IEnumerable<Address>), result.Type);
+            Assert.Contains(nameof(Address.City), result.Nested.Select(x => x.Property));
+            Assert.Contains(typeof(City), result.Nested.Select(x => x.Type));
+        }
+
     }
 }

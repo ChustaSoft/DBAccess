@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -18,6 +19,15 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
         public static SelectablePropertiesBuilder<TOrigin, TParent, TSelection> Then<TOrigin, TParent, TSelection>(this SelectablePropertiesBuilder<TOrigin, TParent> builder, Expression<Func<TParent, TSelection>> navigationPropertyPath)
+            where TOrigin : class
+            where TParent : class
+        {
+            var propertyName = GetPropertyName(navigationPropertyPath);
+
+            return new SelectablePropertiesBuilder<TOrigin, TParent, TSelection>(builder, propertyName);
+        }
+
+        public static SelectablePropertiesBuilder<TOrigin, TParent, TSelection> Then<TOrigin, TParent, TSelection>(this SelectablePropertiesBuilder<TOrigin, IEnumerable<TParent>> builder, Expression<Func<TParent, TSelection>> navigationPropertyPath)
             where TOrigin : class
             where TParent : class
         {

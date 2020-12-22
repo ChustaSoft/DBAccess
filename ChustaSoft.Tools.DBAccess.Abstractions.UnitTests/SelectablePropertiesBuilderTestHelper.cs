@@ -34,7 +34,7 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
     public class Address : IKeyable<int>
     {
         public int Id { get; set; }
-        public int PersonId { get; set; }
+        public City City { get; set; }
         public string Line { get; set; }
     }
 
@@ -43,6 +43,12 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
         public int Id { get; set; }
         public string Name { get; set; }
         public Address Address { get; set; }
+    }
+
+    public class City : IKeyable<int> 
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 
 }
