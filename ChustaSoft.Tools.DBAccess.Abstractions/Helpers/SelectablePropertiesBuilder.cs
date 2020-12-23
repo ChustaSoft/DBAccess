@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ChustaSoft.Tools.DBAccess
 {
@@ -6,21 +7,22 @@ namespace ChustaSoft.Tools.DBAccess
     public abstract class SelectablePropertiesBuilderBase : ISelectablePropertiesBuilder
     {
 
-        protected SelectablePropertiesContext _context;
+        public SelectablePropertiesContext Context { get; protected set; }
 
-
-        public SelectablePropertiesContext Build() => _context;
+        public IEnumerable<SelectablePropertiesNode> Build() => Context.GetAll();
 
         public void AddFlush(Type type, string propertyName, bool rootSelection)
         {
-            _context.AddFlush(type, propertyName, rootSelection);
+            Context.AddFlush(type, propertyName, rootSelection);
         }
 
         public void AddDeepen(Type type, string propertyName)
         {
-            _context.AddDeepen(type, propertyName);
+            Context.AddDeepen(type, propertyName);
         }
 
+        
+        
     }
 
 
@@ -30,7 +32,13 @@ namespace ChustaSoft.Tools.DBAccess
 
         public SelectablePropertiesBuilder(string selection)
         {
-            _context = new SelectablePropertiesContext(typeof(TSelection), selection);
+            Context = new SelectablePropertiesContext(typeof(TSelection), selection);
+        }
+
+        public SelectablePropertiesBuilder(ISelectablePropertiesBuilder currentBuilder, string currentProperty)
+        {
+            Context = currentBuilder.Context;
+            Context.AddSibling(typeof(TSelection), currentProperty);
         }
 
     }
@@ -41,13 +49,13 @@ namespace ChustaSoft.Tools.DBAccess
 
         public SelectablePropertiesBuilder(ISelectablePropertiesBuilder parentBuilder)
         {
-            _context = parentBuilder.Build();
+            Context = parentBuilder.Context;
         }
 
         public SelectablePropertiesBuilder(ISelectablePropertiesBuilder parentBuilder, string currentProperty)
         {
             parentBuilder.AddFlush(typeof(TSelection), currentProperty, true);
-            _context = parentBuilder.Build();
+            Context = parentBuilder.Context;
         }
 
     }

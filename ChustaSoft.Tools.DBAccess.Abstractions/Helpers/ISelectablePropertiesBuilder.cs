@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ChustaSoft.Tools.DBAccess
 {
@@ -6,7 +7,10 @@ namespace ChustaSoft.Tools.DBAccess
     public interface ISelectablePropertiesBuilder
     {
 
-        SelectablePropertiesContext Build();
+        SelectablePropertiesContext Context { get; }
+
+
+        IEnumerable<SelectablePropertiesNode> Build();
 
         void AddFlush(Type type, string propertyName, bool rootSelection);
 

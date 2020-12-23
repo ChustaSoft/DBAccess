@@ -1,60 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ChustaSoft.Tools.DBAccess
 {
     public class SelectablePropertiesContext
     {
 
-        private int _currentDeepLevel = 0;
-        private string _lastRootedProperty;
+        private SelectablePropertiesNode _currentNode;
 
-        public string Property { get; private set; }
-        public Type Type { get; private set; }
-        public ICollection<SelectablePropertiesContext> Nested { get; set; }
+
+        public string Property => _currentNode.Property;
+        public Type Type => _currentNode.Type;
+        public ICollection<SelectablePropertiesNode> Nested => _currentNode.Nested;
+        public ICollection<SelectablePropertiesNode> Siblings { get; private set; }
 
 
         public SelectablePropertiesContext(Type type, string property)
         {
-            Nested = new List<SelectablePropertiesContext>();
-            Type = type;
-            Property = property;
-            _lastRootedProperty = property;
+            Siblings = new List<SelectablePropertiesNode>();
+            _currentNode = new SelectablePropertiesNode(type, property);
         }
 
 
         internal void AddFlush(Type type, string selected, bool rootSelection)
         {
-            var currentDeepestNestedLevel = GetDeepestNestedLevel(this, selected);
-
-            if (rootSelection)
-                _lastRootedProperty = selected;
-
-            if (currentDeepestNestedLevel.Any(x => x.Property == selected))
-                throw new ArgumentException($"Properties selection already contains {selected} property");
-            else
-                currentDeepestNestedLevel.Add(new SelectablePropertiesContext(type, selected));
+            _currentNode.Add(type, selected, rootSelection);
         }
 
         internal void AddDeepen(Type type, string selected)
         {
-            var currentDeepestNestedLevel = GetDeepestNestedLevel(this, selected);
-
-            foreach (var nestedElement in currentDeepestNestedLevel)
-                if (nestedElement.Property == _lastRootedProperty)
-                    nestedElement.AddFlush(type, selected, true);
-
-            _currentDeepLevel++;
+            _currentNode.AddNested(type, selected);
         }
 
-
-        private ICollection<SelectablePropertiesContext> GetDeepestNestedLevel(SelectablePropertiesContext context, string property, int descendedLevels = 0)
+        internal void AddSibling(Type type, string property)
         {
-            if (descendedLevels < _currentDeepLevel)
-                return GetDeepestNestedLevel(context.Nested.First(x => x.Property == _lastRootedProperty), property, ++descendedLevels);
-            else
-                return context.Nested;
+            Siblings.Add(_currentNode.Clone());
+            _currentNode = new SelectablePropertiesNode(type, property);
+        }
+
+        internal ICollection<SelectablePropertiesNode> GetAll() 
+        {
+            Siblings.Add(_currentNode.Clone());
+
+            return Siblings;
         }
 
     }

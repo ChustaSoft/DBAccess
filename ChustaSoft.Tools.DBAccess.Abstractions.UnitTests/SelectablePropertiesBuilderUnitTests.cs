@@ -13,7 +13,7 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var data = SelectablePropertiesBuilderTestHelper.GetMockedData();
 
             var builder = data.Including(x => x.BirthDate);
-            var result = builder.Build();
+            var result = builder.Context;
 
             Assert.Equal(nameof(Employee.BirthDate), result.Property);
             Assert.Equal(typeof(DateTime), result.Type);
@@ -25,7 +25,7 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var data = SelectablePropertiesBuilderTestHelper.GetMockedData();
 
             var builder = data.Including(x => x.Supervisor).Then(x => x.Addresses);
-            var result = builder.Build();
+            var result = builder.Context;
 
             Assert.Equal(nameof(Employee.Supervisor), result.Property);
             Assert.Equal(typeof(Employee), result.Type);
@@ -39,7 +39,7 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var data = SelectablePropertiesBuilderTestHelper.GetMockedData();
 
             var builder = data.Including(x => x.Supervisor).And(x => x.BirthDate);
-            var result = builder.Build();
+            var result = builder.Context;
 
             Assert.Equal(nameof(Employee.Supervisor), result.Property);
             Assert.Equal(typeof(Employee), result.Type);
@@ -53,7 +53,7 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var data = SelectablePropertiesBuilderTestHelper.GetMockedData();
 
             var builder = data.Including(x => x.Supervisor).And(x => x.BirthDate).Then(x => x.Addresses);
-            var result = builder.Build();
+            var result = builder.Context;
 
             Assert.Equal(nameof(Employee.Supervisor), result.Property);
             Assert.Equal(typeof(Employee), result.Type);
@@ -69,7 +69,7 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var data = SelectablePropertiesBuilderTestHelper.GetMockedData();
 
             var builder = data.Including(x => x.Supervisor).Then(x => x.Company).Then(x => x.Address);
-            var result = builder.Build();
+            var result = builder.Context;
 
             Assert.Equal(nameof(Employee.Supervisor), result.Property);
             Assert.Equal(typeof(Employee), result.Type);
@@ -85,7 +85,7 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var data = SelectablePropertiesBuilderTestHelper.GetMockedData();
 
             var builder = data.Including(x => x.Supervisor).Then(x => x.Company).And(x => x.BirthDate).Then(x => x.Address);
-            var result = builder.Build();
+            var result = builder.Context;
 
             Assert.Equal(nameof(Employee.Supervisor), result.Property);
             Assert.Equal(typeof(Employee), result.Type);
@@ -119,7 +119,7 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var data = SelectablePropertiesBuilderTestHelper.GetMockedData();
 
             var builder = data.Including(x => x.Addresses).Then(x => x.City);
-            var result = builder.Build();
+            var result = builder.Context;
 
             Assert.Equal(nameof(Employee.Addresses), result.Property);
             Assert.Equal(typeof(IEnumerable<Address>), result.Type);
@@ -133,7 +133,7 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var data = SelectablePropertiesBuilderTestHelper.GetMockedData();
 
             var builder = data.Including(x => x.Supervisor).Then(x => x.Addresses).Then(x => x.City);
-            var result = builder.Build();
+            var result = builder.Context;
 
             Assert.Equal(nameof(Employee.Supervisor), result.Property);
             Assert.Equal(typeof(Employee), result.Type);
@@ -151,7 +151,7 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var data = SelectablePropertiesBuilderTestHelper.GetMockedData();
 
             var builder = data.Including(x => x.Supervisor).Then(x => x.Addresses).And(x => x.BirthDate);
-            var result = builder.Build();
+            var result = builder.Context;
 
             Assert.Equal(nameof(Employee.Supervisor), result.Property);
             Assert.Equal(typeof(Employee), result.Type);
@@ -161,6 +161,24 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
 
             Assert.Contains(nameof(Employee.BirthDate), result.Nested.Select(x => x.Property));
             Assert.Contains(typeof(DateTime), result.Nested.Select(x => x.Type));
+        }
+
+        [Fact]
+        public void Given_Queryable_When_MultipleInclude_Then_AllSiblingsRetrived()
+        {
+            var data = SelectablePropertiesBuilderTestHelper.GetMockedData();
+
+            var builder = data
+                .Including(x => x.Supervisor).Then(x => x.Addresses).And(x => x.BirthDate)
+                .Including(x => x.Company).And(x => x.Address);
+
+            var result = builder.Build();
+
+            Assert.Contains(result, x => x.Property == nameof(Employee.Company));
+            Assert.Contains(result, x => x.Property == nameof(Employee.Supervisor));
+            Assert.Contains(result.First(x => x.Property == nameof(Employee.Supervisor)).Nested, x => x.Property == nameof(Employee.Addresses));
+            Assert.Contains(result.First(x => x.Property == nameof(Employee.Supervisor)).Nested, x => x.Property == nameof(Employee.BirthDate));
+            Assert.Contains(result.First(x => x.Property == nameof(Employee.Company)).Nested, x => x.Property == nameof(Company.Address));
         }
 
     }

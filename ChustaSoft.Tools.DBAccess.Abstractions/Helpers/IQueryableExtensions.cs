@@ -18,6 +18,14 @@ namespace ChustaSoft.Tools.DBAccess
             return builder;
         }
 
+        public static SelectablePropertiesBuilder<TOrigin, TNewSelection> Including<TOrigin, TParent, TSelection, TNewSelection>(this SelectablePropertiesBuilder<TOrigin, TParent, TSelection> builder, Expression<Func<TOrigin, TNewSelection>> navigationPropertyPath)
+            where TOrigin : class
+        {
+            var propertyName = GetPropertyName(navigationPropertyPath);
+
+            return new SelectablePropertiesBuilder<TOrigin, TNewSelection>(builder, propertyName);
+        }
+
         public static SelectablePropertiesBuilder<TOrigin, TParent, TSelection> Then<TOrigin, TParent, TSelection>(this SelectablePropertiesBuilder<TOrigin, TParent> builder, Expression<Func<TParent, TSelection>> navigationPropertyPath)
             where TOrigin : class
             where TParent : class
