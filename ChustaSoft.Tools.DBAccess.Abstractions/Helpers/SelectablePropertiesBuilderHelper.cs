@@ -5,9 +5,10 @@ using System.Linq.Expressions;
 
 namespace ChustaSoft.Tools.DBAccess
 {
-    public static class IQueryableExtensions
+    public static class SelectablePropertiesBuilderHelper
     {
 
+#pragma warning disable IDE0060 // Remove unused parameter
         public static SelectablePropertiesBuilder<TOrigin, TSelection> Including<TOrigin, TSelection>(this IQueryable<TOrigin> source, Expression<Func<TOrigin, TSelection>> navigationPropertyPath)
             where TOrigin : class
         {
@@ -17,6 +18,7 @@ namespace ChustaSoft.Tools.DBAccess
 
             return builder;
         }
+#pragma warning restore IDE0060 // Remove unused parameter
 
         public static SelectablePropertiesBuilder<TOrigin, TNewSelection> Including<TOrigin, TParent, TSelection, TNewSelection>(this SelectablePropertiesBuilder<TOrigin, TParent, TSelection> builder, Expression<Func<TOrigin, TNewSelection>> navigationPropertyPath)
             where TOrigin : class

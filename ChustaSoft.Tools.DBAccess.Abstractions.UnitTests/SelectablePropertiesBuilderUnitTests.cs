@@ -15,8 +15,8 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var builder = data.Including(x => x.BirthDate);
             var result = builder.Context;
 
-            Assert.Equal(nameof(Employee.BirthDate), result.Property);
-            Assert.Equal(typeof(DateTime), result.Type);
+            Assert.Equal(nameof(Employee.BirthDate), result.CurrentNode.Property);
+            Assert.Equal(typeof(DateTime), result.CurrentNode.Type);
         }
 
         [Fact]
@@ -27,10 +27,10 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var builder = data.Including(x => x.Supervisor).Then(x => x.Addresses);
             var result = builder.Context;
 
-            Assert.Equal(nameof(Employee.Supervisor), result.Property);
-            Assert.Equal(typeof(Employee), result.Type);
-            Assert.Contains(nameof(Employee.Supervisor.Addresses), result.Nested.Select(x => x.Property));
-            Assert.Contains(typeof(IEnumerable<Address>), result.Nested.Select(x => x.Type));
+            Assert.Equal(nameof(Employee.Supervisor), result.CurrentNode.Property);
+            Assert.Equal(typeof(Employee), result.CurrentNode.Type);
+            Assert.Contains(nameof(Employee.Supervisor.Addresses), result.CurrentNode.Nested.Select(x => x.Property));
+            Assert.Contains(typeof(IEnumerable<Address>), result.CurrentNode.Nested.Select(x => x.Type));
         }
 
         [Fact]
@@ -41,10 +41,10 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var builder = data.Including(x => x.Supervisor).And(x => x.BirthDate);
             var result = builder.Context;
 
-            Assert.Equal(nameof(Employee.Supervisor), result.Property);
-            Assert.Equal(typeof(Employee), result.Type);
-            Assert.Contains(nameof(Employee.BirthDate), result.Nested.Select(x => x.Property));
-            Assert.Contains(typeof(DateTime), result.Nested.Select(x => x.Type));
+            Assert.Equal(nameof(Employee.Supervisor), result.CurrentNode.Property);
+            Assert.Equal(typeof(Employee), result.CurrentNode.Type);
+            Assert.Contains(nameof(Employee.BirthDate), result.CurrentNode.Nested.Select(x => x.Property));
+            Assert.Contains(typeof(DateTime), result.CurrentNode.Nested.Select(x => x.Type));
         }
 
         [Fact]
@@ -55,12 +55,12 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var builder = data.Including(x => x.Supervisor).And(x => x.BirthDate).Then(x => x.Addresses);
             var result = builder.Context;
 
-            Assert.Equal(nameof(Employee.Supervisor), result.Property);
-            Assert.Equal(typeof(Employee), result.Type);
-            Assert.Contains(nameof(Employee.BirthDate), result.Nested.Select(x => x.Property));
-            Assert.Contains(nameof(Employee.Addresses), result.Nested.Select(x => x.Property));
-            Assert.Contains(typeof(DateTime), result.Nested.Select(x => x.Type)); 
-            Assert.Contains(typeof(IEnumerable<Address>), result.Nested.Select(x => x.Type));
+            Assert.Equal(nameof(Employee.Supervisor), result.CurrentNode.Property);
+            Assert.Equal(typeof(Employee), result.CurrentNode.Type);
+            Assert.Contains(nameof(Employee.BirthDate), result.CurrentNode.Nested.Select(x => x.Property));
+            Assert.Contains(nameof(Employee.Addresses), result.CurrentNode.Nested.Select(x => x.Property));
+            Assert.Contains(typeof(DateTime), result.CurrentNode.Nested.Select(x => x.Type)); 
+            Assert.Contains(typeof(IEnumerable<Address>), result.CurrentNode.Nested.Select(x => x.Type));
         }
 
         [Fact]
@@ -71,12 +71,12 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var builder = data.Including(x => x.Supervisor).Then(x => x.Company).Then(x => x.Address);
             var result = builder.Context;
 
-            Assert.Equal(nameof(Employee.Supervisor), result.Property);
-            Assert.Equal(typeof(Employee), result.Type);
-            Assert.Contains(nameof(Employee.Company), result.Nested.Select(x => x.Property));            
-            Assert.Contains(typeof(Company), result.Nested.Select(x => x.Type));
-            Assert.Contains(nameof(Address), result.Nested.First(x => x.Property == nameof(Employee.Company)).Nested.Select(x => x.Property));
-            Assert.Contains(typeof(Address), result.Nested.First(x => x.Property == nameof(Employee.Company)).Nested.Select(x => x.Type));
+            Assert.Equal(nameof(Employee.Supervisor), result.CurrentNode.Property);
+            Assert.Equal(typeof(Employee), result.CurrentNode.Type);
+            Assert.Contains(nameof(Employee.Company), result.CurrentNode.Nested.Select(x => x.Property));            
+            Assert.Contains(typeof(Company), result.CurrentNode.Nested.Select(x => x.Type));
+            Assert.Contains(nameof(Address), result.CurrentNode.Nested.First(x => x.Property == nameof(Employee.Company)).Nested.Select(x => x.Property));
+            Assert.Contains(typeof(Address), result.CurrentNode.Nested.First(x => x.Property == nameof(Employee.Company)).Nested.Select(x => x.Type));
         }
 
         [Fact]
@@ -87,14 +87,14 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var builder = data.Including(x => x.Supervisor).Then(x => x.Company).And(x => x.BirthDate).Then(x => x.Address);
             var result = builder.Context;
 
-            Assert.Equal(nameof(Employee.Supervisor), result.Property);
-            Assert.Equal(typeof(Employee), result.Type);
-            Assert.Contains(nameof(Employee.Company), result.Nested.Select(x => x.Property));
-            Assert.Contains(typeof(Company), result.Nested.Select(x => x.Type));
-            Assert.Contains(nameof(Company.Address), result.Nested.First(x => x.Property == nameof(Employee.Company)).Nested.Select(x => x.Property));
-            Assert.Contains(typeof(Address), result.Nested.First(x => x.Property == nameof(Employee.Company)).Nested.Select(x => x.Type));
-            Assert.Contains(nameof(Employee.BirthDate), result.Nested.Select(x => x.Property));
-            Assert.Contains(typeof(DateTime), result.Nested.Select(x => x.Type));
+            Assert.Equal(nameof(Employee.Supervisor), result.CurrentNode.Property);
+            Assert.Equal(typeof(Employee), result.CurrentNode.Type);
+            Assert.Contains(nameof(Employee.Company), result.CurrentNode.Nested.Select(x => x.Property));
+            Assert.Contains(typeof(Company), result.CurrentNode.Nested.Select(x => x.Type));
+            Assert.Contains(nameof(Company.Address), result.CurrentNode.Nested.First(x => x.Property == nameof(Employee.Company)).Nested.Select(x => x.Property));
+            Assert.Contains(typeof(Address), result.CurrentNode.Nested.First(x => x.Property == nameof(Employee.Company)).Nested.Select(x => x.Type));
+            Assert.Contains(nameof(Employee.BirthDate), result.CurrentNode.Nested.Select(x => x.Property));
+            Assert.Contains(typeof(DateTime), result.CurrentNode.Nested.Select(x => x.Type));
         }
 
         [Fact]
@@ -121,10 +121,10 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var builder = data.Including(x => x.Addresses).Then(x => x.City);
             var result = builder.Context;
 
-            Assert.Equal(nameof(Employee.Addresses), result.Property);
-            Assert.Equal(typeof(IEnumerable<Address>), result.Type);
-            Assert.Contains(nameof(Address.City), result.Nested.Select(x => x.Property));
-            Assert.Contains(typeof(City), result.Nested.Select(x => x.Type));
+            Assert.Equal(nameof(Employee.Addresses), result.CurrentNode.Property);
+            Assert.Equal(typeof(IEnumerable<Address>), result.CurrentNode.Type);
+            Assert.Contains(nameof(Address.City), result.CurrentNode.Nested.Select(x => x.Property));
+            Assert.Contains(typeof(City), result.CurrentNode.Nested.Select(x => x.Type));
         }
 
         [Fact]
@@ -135,14 +135,14 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var builder = data.Including(x => x.Supervisor).Then(x => x.Addresses).Then(x => x.City);
             var result = builder.Context;
 
-            Assert.Equal(nameof(Employee.Supervisor), result.Property);
-            Assert.Equal(typeof(Employee), result.Type);
+            Assert.Equal(nameof(Employee.Supervisor), result.CurrentNode.Property);
+            Assert.Equal(typeof(Employee), result.CurrentNode.Type);
 
-            Assert.Contains(nameof(Employee.Addresses), result.Nested.Select(x => x.Property));
-            Assert.Contains(typeof(IEnumerable<Address>), result.Nested.Select(x => x.Type));
+            Assert.Contains(nameof(Employee.Addresses), result.CurrentNode.Nested.Select(x => x.Property));
+            Assert.Contains(typeof(IEnumerable<Address>), result.CurrentNode.Nested.Select(x => x.Type));
 
-            Assert.Contains(nameof(Address.City), result.Nested.First(x => x.Property == nameof(Employee.Addresses)).Nested.Select(x => x.Property));
-            Assert.Contains(typeof(City), result.Nested.First(x => x.Property == nameof(Employee.Addresses)).Nested.Select(x => x.Type));
+            Assert.Contains(nameof(Address.City), result.CurrentNode.Nested.First(x => x.Property == nameof(Employee.Addresses)).Nested.Select(x => x.Property));
+            Assert.Contains(typeof(City), result.CurrentNode.Nested.First(x => x.Property == nameof(Employee.Addresses)).Nested.Select(x => x.Type));
         }
 
         [Fact]
@@ -153,14 +153,14 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
             var builder = data.Including(x => x.Supervisor).Then(x => x.Addresses).And(x => x.BirthDate);
             var result = builder.Context;
 
-            Assert.Equal(nameof(Employee.Supervisor), result.Property);
-            Assert.Equal(typeof(Employee), result.Type);
+            Assert.Equal(nameof(Employee.Supervisor), result.CurrentNode.Property);
+            Assert.Equal(typeof(Employee), result.CurrentNode.Type);
 
-            Assert.Contains(nameof(Employee.Addresses), result.Nested.Select(x => x.Property));
-            Assert.Contains(typeof(IEnumerable<Address>), result.Nested.Select(x => x.Type));
+            Assert.Contains(nameof(Employee.Addresses), result.CurrentNode.Nested.Select(x => x.Property));
+            Assert.Contains(typeof(IEnumerable<Address>), result.CurrentNode.Nested.Select(x => x.Type));
 
-            Assert.Contains(nameof(Employee.BirthDate), result.Nested.Select(x => x.Property));
-            Assert.Contains(typeof(DateTime), result.Nested.Select(x => x.Type));
+            Assert.Contains(nameof(Employee.BirthDate), result.CurrentNode.Nested.Select(x => x.Property));
+            Assert.Contains(typeof(DateTime), result.CurrentNode.Nested.Select(x => x.Type));
         }
 
         [Fact]
