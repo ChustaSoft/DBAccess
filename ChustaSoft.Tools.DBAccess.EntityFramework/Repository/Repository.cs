@@ -17,9 +17,6 @@ namespace ChustaSoft.Tools.DBAccess
         protected DbSet<TEntity> _dbSet;
 
 
-        public IQueryable<TEntity> Query => GetQueryable();
-
-
         public Repository(DbContext context)
             : base(context)
         {   
@@ -31,6 +28,16 @@ namespace ChustaSoft.Tools.DBAccess
             _dbSet = dbSet;
         }
 
+
+        public IQueryable<TEntity> Query() => GetQueryable();
+
+        public IQueryable<TEntity> Query(Func<IQueryable<TEntity>, ISelectablePropertiesBuilder> includingProperties)
+        {
+            var queryable = GetQueryable()
+                .TryIncludeProperties(includingProperties);
+
+            return queryable;
+        }
 
         public TEntity Find(TKey id)
         {
