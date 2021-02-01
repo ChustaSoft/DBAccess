@@ -1,24 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace ChustaSoft.Tools.DBAccess
 {
-    public interface IRepository<TEntity, TKey> : IReadonlyRepository<TEntity, TKey>
+    public interface IRepository<TEntity, TKey> : ISyncRepository<TEntity, TKey>, IAsyncRepository<TEntity, TKey>
         where TEntity : class
-    {
-        void Insert(TEntity entity);
-
-        void Insert(IEnumerable<TEntity> entities);
-
-        void Update(TEntity entity);
-
-        void Update(IEnumerable<TEntity> entities);
-
-        void Delete(TKey id);
-
-        void Delete(TEntity entity);
-
-    }
+    { }
 
 
     public interface IRepository<TEntity> : IRepository<TEntity, Guid> 

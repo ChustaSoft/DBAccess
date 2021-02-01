@@ -28,16 +28,6 @@ namespace ChustaSoft.Tools.DBAccess
             return (IRepository<TEntity, TKey>)_repositories[repositoryTuple.RepositoryKey];
         }
 
-        public virtual IAsyncRepository<TEntity, TKey> GetAsyncRepository<TEntity>()
-            where TEntity : class
-        {
-            var repositoryTuple = GetRepositoryTuple<TEntity, AsyncRepository<TEntity, TKey>>();
-            
-            CreateRepositoryInstance<TEntity>(repositoryTuple.RepositoryKey, repositoryTuple.RepositoryType);
-
-            return (IAsyncRepository<TEntity, TKey>)_repositories[repositoryTuple.RepositoryKey];
-        }
-
         public bool CommitTransaction()
         {
             return _context.SaveChanges() > 0;
@@ -63,20 +53,11 @@ namespace ChustaSoft.Tools.DBAccess
 
         IRepository<TEntity> IUnitOfWork.GetRepository<TEntity>()
         {
-            var repositoryTuple = GetRepositoryTuple<TEntity, Repository<TEntity>>();
+            var (RepositoryKey, RepositoryType) = GetRepositoryTuple<TEntity, Repository<TEntity>>();
             
-            CreateRepositoryInstance<TEntity>(repositoryTuple.RepositoryKey, repositoryTuple.RepositoryType);
+            CreateRepositoryInstance<TEntity>(RepositoryKey, RepositoryType);
 
-            return (IRepository<TEntity>)_repositories[repositoryTuple.RepositoryKey];
-        }
-
-        IAsyncRepository<TEntity> IUnitOfWork.GetAsyncRepository<TEntity>()
-        {
-            var repositoryTuple = GetRepositoryTuple<TEntity, AsyncRepository<TEntity>>();
-
-            CreateRepositoryInstance<TEntity>(repositoryTuple.RepositoryKey, repositoryTuple.RepositoryType);
-
-            return (IAsyncRepository<TEntity>)_repositories[repositoryTuple.RepositoryKey];
+            return (IRepository<TEntity>)_repositories[RepositoryKey];
         }
 
     }

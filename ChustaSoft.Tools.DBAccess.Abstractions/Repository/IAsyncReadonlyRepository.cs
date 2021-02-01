@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ChustaSoft.Tools.DBAccess
@@ -8,9 +7,7 @@ namespace ChustaSoft.Tools.DBAccess
         where TEntity : class
     {
 
-        IQueryable<TEntity> Query { get; }
-
-        Task<TEntity> Find(TKey id);
+        Task<TEntity> FindAsync(TKey id);
 
     }
 

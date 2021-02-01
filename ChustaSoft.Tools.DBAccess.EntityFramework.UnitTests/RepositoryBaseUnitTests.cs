@@ -1,5 +1,3 @@
-using ChustaSoft.Common.Contracts;
-using ChustaSoft.Common.Helpers;
 using FizzWare.NBuilder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -20,7 +18,7 @@ namespace ChustaSoft.Tools.DBAccess.UnitTests
         [TestInitialize]
         public void TestInit()
         {
-            //var persons = Builder<Person>.CreateListOfSize(50).All().With(x => x.Address = Builder<Address>.CreateListOfSize(2).Build()).Build();
+            var persons = Builder<Person>.CreateListOfSize(50).All().With(x => x.Address = Builder<Address>.CreateListOfSize(2).Build()).Build();
             var queryable = persons.AsQueryable();
 
             var dbSet = new Mock<DbSet<Person>>();

@@ -1,5 +1,6 @@
 ﻿#if NETFRAMEWORK
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 #elif NETCORE
 using Microsoft.EntityFrameworkCore;
 #endif
@@ -7,10 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ChustaSoft.Tools.DBAccess
 {
-    public class Repository<TEntity, TKey> : RepositoryBase<DbContext, TEntity>, IRepository<TEntity, TKey>
+    public class Repository<TEntity, TKey> : RepositoryBase<DbContext, TEntity>, IRepository<TEntity, TKey>, IAsyncRepository<TEntity, TKey>
         where TEntity : class
     {
 
@@ -30,6 +32,9 @@ namespace ChustaSoft.Tools.DBAccess
 
 
         public IQueryable<TEntity> Query() => GetQueryable();
+
+
+        #region Sync Operations
 
         public IQueryable<TEntity> Query(Func<IQueryable<TEntity>, ISelectablePropertiesBuilder> includingProperties)
         {
@@ -77,6 +82,99 @@ namespace ChustaSoft.Tools.DBAccess
             PerformSingleDelete(entity);
         }
 
+        #endregion
+
+
+        #region Async Operations
+
+        public async Task<TEntity> FindAsync(TKey id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
+
+        public async Task<bool> InsertAsync(TEntity entity)
+        {
+#if NETCORE
+            await _dbSet.AddAsync(entity);
+
+            return true;
+#else
+            return await Task.Run(() =>
+            {
+                _dbSet.Add(entity);
+
+                return true;
+            });
+#endif
+        }
+
+        public async Task<bool> InsertAsync(IEnumerable<TEntity> entities)
+        {
+#if NETCORE
+            await _dbSet.AddRangeAsync(entities);
+
+            return true;
+#else
+            return await Task.Run(() =>
+            {
+                _dbSet.AddRange(entities);
+
+                return true;
+            });
+#endif
+        }
+
+
+        public async Task<bool> UpdateAsync(TEntity entity)
+        {
+            return await Task.Run(() =>
+            {
+#if NETCORE
+                _dbSet.Update(entity);
+#else
+                _dbSet.AddOrUpdate(entity);
+#endif
+
+                return true;
+            });
+        }
+
+        public async Task<bool> UpdateAsync(IEnumerable<TEntity> entities)
+        {
+
+            return await Task.Run(() =>
+            {
+#if NETCORE
+                _dbSet.UpdateRange(entities);
+
+#else
+                foreach(var entity in entities)
+                    _dbSet.AddOrUpdate(entity);
+
+#endif
+                return true;
+            });
+        }
+
+        public async Task<bool> DeleteAsync(TKey id)
+        {
+            var entity = await _dbSet.FindAsync(id);
+            _dbSet.Remove(entity);
+
+            return true;
+        }
+
+        public async Task<bool> DeleteAsync(TEntity entity)
+        {
+            return await Task.Run(() =>
+            {
+                _dbSet.Remove(entity);
+
+                return true;
+            });
+        }
+
+        #endregion
 
         protected override IQueryable<TEntity> GetQueryable() => _dbSet;
 
@@ -99,7 +197,7 @@ namespace ChustaSoft.Tools.DBAccess
 
 
 
-    public class Repository<TEntity> : Repository<TEntity, Guid>, IRepository<TEntity>
+    public class Repository<TEntity> : Repository<TEntity, Guid>, IRepository<TEntity>, IAsyncRepository<TEntity>
         where TEntity : class
     {
 

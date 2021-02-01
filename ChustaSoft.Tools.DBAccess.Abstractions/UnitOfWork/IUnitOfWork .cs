@@ -8,9 +8,6 @@ namespace ChustaSoft.Tools.DBAccess
         IRepository<TEntity, TKey> GetRepository<TEntity>() 
             where TEntity : class;
 
-        IAsyncRepository<TEntity, TKey> GetAsyncRepository<TEntity>()
-            where TEntity : class;
-
         bool CommitTransaction();
 
         Task<bool> CommitTransactionAsync();
@@ -23,9 +20,6 @@ namespace ChustaSoft.Tools.DBAccess
     {
 
         new IRepository<TEntity> GetRepository<TEntity>()
-            where TEntity : class;
-
-        new IAsyncRepository<TEntity> GetAsyncRepository<TEntity>()
             where TEntity : class;
 
     }

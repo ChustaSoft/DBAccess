@@ -2,6 +2,7 @@
 using ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests.Helpers;
 using ChustaSoft.Tools.DBAccess.Examples.Models;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests
@@ -70,42 +71,32 @@ namespace ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests
             Assert.Equal(9, data.Count());
         }
 
-        //[Fact]
-        //public async Task Given_Id_When_GetSingleAsync_Then_DataFiltered()
-        //{
-        //    var repository = _unitOfWork.GetAsyncRepository<Country>();
+        [Fact]
+        public async Task Given_Id_When_GetSingleAsync_Then_DataFiltered()
+        {
+            var repository = _unitOfWork.GetRepository<Country>();
 
-        //    var data = await repository.GetSingleAsync(MockDataHelper.STATIC_COUNTRY_ID);
+            var data = await repository.FindAsync(MockDataHelper.STATIC_COUNTRY_ID);
 
-        //    Assert.NotNull(data);
-        //}
+            Assert.NotNull(data);
+        }
 
-        //[Fact]
-        //public async Task Given_Filter_When_GetSingleAsync_Then_DataFiltered()
-        //{
-        //    var repository = _unitOfWork.GetAsyncRepository<Country>();
+        [Fact]
+        public void Given_FilterAndPagination_When_GetMultiple_Then_DataFiltered()
+        {
+            int batchSize = 10, page = 0;
+            var repository = _unitOfWork.GetRepository<Person>();
 
-        //    var data = await repository.GetSingleAsync(x => x.FilterBy(y => y.Id == MockDataHelper.STATIC_COUNTRY_ID));
+            var data = repository.Query()
+                .Where(x => x.Id != MockDataHelper.STATIC_PERSON_ID)
+                .OrderBy(y => y.BirthDate)
+                .Take(batchSize)
+                .Skip(page)
+                .ToList();
 
-        //    Assert.NotNull(data);
-        //}
-
-        //[Fact]
-        //public void Given_FilterAndPagination_When_GetMultiple_Then_DataFiltered()
-        //{
-        //    int batchSize = 10, page = 0;
-        //    var repository = _unitOfWork.GetRepository<Person>();
-
-        //    var data = repository.GetMultiple(x => x
-        //        .FilterBy(y => y.Id != MockDataHelper.STATIC_PERSON_ID)
-        //        .OrderBy(y => y.BirthDate)
-        //        .Paginate(batchSize, page)
-        //        )
-        //        .ToList();
-
-        //    Assert.NotNull(data);
-        //    Assert.Equal(batchSize, data.Count());
-        //}
+            Assert.NotNull(data);
+            Assert.Equal(batchSize, data.Count());
+        }
 
     }
 }
