@@ -11,6 +11,7 @@ namespace ChustaSoft.Tools.DBAccess
 
         public IEnumerable<SelectablePropertiesNode> Build() => Context.GetAll();
 
+
         public void AddFlush(Type type, string propertyName, bool rootSelection)
         {
             Context.AddFlush(type, propertyName, rootSelection);
@@ -20,11 +21,8 @@ namespace ChustaSoft.Tools.DBAccess
         {
             Context.AddDeepen(type, propertyName);
         }
-
-        
         
     }
-
 
 
     public class SelectablePropertiesBuilder<TOrigin, TSelection> : SelectablePropertiesBuilderBase

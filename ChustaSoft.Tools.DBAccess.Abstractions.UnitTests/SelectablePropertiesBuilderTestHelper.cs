@@ -10,10 +10,15 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
     {
 
         public static IQueryable<Employee> GetMockedData()
-            => Builder<Employee>.CreateListOfSize(50).All()
+        { 
+            var queryable = Builder<Employee>.CreateListOfSize(50).All()
                     .With(x => x.Addresses = Builder<Address>.CreateListOfSize(2).Build())
                 .Build()
                 .AsQueryable();
+
+            return queryable; 
+        }
+        
 
     }
 

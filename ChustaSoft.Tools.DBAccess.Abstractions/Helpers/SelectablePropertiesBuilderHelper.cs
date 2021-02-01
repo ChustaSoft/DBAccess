@@ -9,7 +9,7 @@ namespace ChustaSoft.Tools.DBAccess
     {
 
 #pragma warning disable IDE0060 // Remove unused parameter
-        public static SelectablePropertiesBuilder<TOrigin, TSelection> Including<TOrigin, TSelection>(this IQueryable<TOrigin> source, Expression<Func<TOrigin, TSelection>> navigationPropertyPath)
+        public static SelectablePropertiesBuilder<TOrigin, TSelection> Including<TOrigin, TSelection>(this IQueryable<TOrigin> originObj, Expression<Func<TOrigin, TSelection>> navigationPropertyPath)
             where TOrigin : class
         {
             var propertyName = GetPropertyName(navigationPropertyPath);

@@ -7,8 +7,9 @@ namespace ChustaSoft.Tools.DBAccess
         where TEntity : class
     {
 
-        IQueryable<TEntity> Query { get; }
+        IQueryable<TEntity> Query();
 
+        IQueryable<TEntity> Query(Func<IQueryable<TEntity>, ISelectablePropertiesBuilder> includingProperties);
 
         TEntity Find(TKey id);
 
