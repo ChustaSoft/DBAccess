@@ -1,10 +1,10 @@
 # DBAccess
 
 ## EntityFramework package: 
-[![Build Status](https://dev.azure.com/chustasoft/SocialNET/_apis/build/status/Release/DBAccess/%5BRELEASE%5D%20-%20ChustaSoft%20DBAccess%20(NuGet)?branchName=master)](https://dev.azure.com/chustasoft/SocialNET/_build/latest?definitionId=25&branchName=master) [![NuGet](https://img.shields.io/nuget/v/ChustaSoft.Tools.DBAccess.EntityFramework?label=NuGet%20Main%20package)](https://www.nuget.org/packages/ChustaSoft.Tools.DbAccess.EntityFramework) 
+[![Build Status](https://dev.azure.com/chustasoft/SocialNET/_apis/build/status/OpenStack/DBAccess/%5BRELEASE%5D%20-%20ChustaSoft%20DBAccess%20EntityFramework%20(NuGet)?branchName=master)](https://dev.azure.com/chustasoft/SocialNET/_build/latest?definitionId=25&branchName=master) [![NuGet](https://img.shields.io/nuget/v/ChustaSoft.Tools.DBAccess.EntityFramework?label=NuGet%20Main%20package)](https://www.nuget.org/packages/ChustaSoft.Tools.DbAccess.EntityFramework) 
 
 ## Abstractions package:
-[![Build Status](https://dev.azure.com/chustasoft/SocialNET/_apis/build/status/Release/DBAccess/%5BRELEASE%5D%20-%20ChustaSoft%20DBAccess%20Abstractions%20(NuGet)?branchName=master)](https://dev.azure.com/chustasoft/SocialNET/_build/latest?definitionId=26&branchName=master) [![NuGet](https://img.shields.io/nuget/v/ChustaSoft.Tools.DBAccess.Abstractions?label=%20Abstractions%20package)](https://www.nuget.org/packages/ChustaSoft.Tools.DBAccess.Abstractions)
+[![Build Status](https://dev.azure.com/chustasoft/SocialNET/_apis/build/status/OpenStack/DBAccess/%5BRELEASE%5D%20-%20ChustaSoft%20DBAccess%20Abstractions%20(NuGet)?branchName=master)](https://dev.azure.com/chustasoft/SocialNET/_build/latest?definitionId=26&branchName=master) [![NuGet](https://img.shields.io/nuget/v/ChustaSoft.Tools.DBAccess.Abstractions?label=%20Abstractions%20package)](https://www.nuget.org/packages/ChustaSoft.Tools.DBAccess.Abstractions)
 
 
 ## Description
