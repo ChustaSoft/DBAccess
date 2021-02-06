@@ -15,26 +15,31 @@ namespace ChustaSoft.Tools.DBAccess
     public class Repository<TEntity, TKey> : RepositoryBase<DbContext, TEntity>, IRepository<TEntity, TKey>, IAsyncRepository<TEntity, TKey>
         where TEntity : class
     {
+        #region Fields
 
         protected DbSet<TEntity> _dbSet;
 
+        #endregion
+
+
+        #region Constructors
 
         public Repository(DbContext context)
             : base(context)
-        {   
+        {
             _dbSet = context.Set<TEntity>();
         }
 
-        internal Repository(DbSet<TEntity> dbSet) 
+        internal Repository(DbSet<TEntity> dbSet)
         {
             _dbSet = dbSet;
         }
 
+        #endregion
 
+
+        #region Public Sync Operations
         public IQueryable<TEntity> Query() => GetQueryable();
-
-
-        #region Sync Operations
 
         public IQueryable<TEntity> Query(Func<IQueryable<TEntity>, ISelectablePropertiesBuilder> includingProperties)
         {
@@ -84,8 +89,7 @@ namespace ChustaSoft.Tools.DBAccess
 
         #endregion
 
-
-        #region Async Operations
+        #region Public Async Operations
 
         public async Task<TEntity> FindAsync(TKey id)
         {
@@ -123,7 +127,6 @@ namespace ChustaSoft.Tools.DBAccess
             });
 #endif
         }
-
 
         public async Task<bool> UpdateAsync(TEntity entity)
         {
@@ -176,8 +179,15 @@ namespace ChustaSoft.Tools.DBAccess
 
         #endregion
 
+        
+        #region Protected overritten methods
+
         protected override IQueryable<TEntity> GetQueryable() => _dbSet;
 
+        #endregion
+
+
+        #region Private methods
 
         private void PerformSingleUpdate(TEntity entity)
         {
@@ -192,6 +202,8 @@ namespace ChustaSoft.Tools.DBAccess
 
             _dbSet.Remove(entity);
         }
+
+        #endregion
 
     }
 
