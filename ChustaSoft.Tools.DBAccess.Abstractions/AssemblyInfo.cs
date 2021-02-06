@@ -16,4 +16,4 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM.
 
 [assembly: Guid("8bb46ec7-e7a8-46cf-8371-9a0799cb6014")]
-[assembly: InternalsVisibleTo("ChustaSoft.Tools.DBAccess.Abstractions.UnitTests")]
+[assembly: InternalsVisibleTo("ChustaSoft.Tools.DBAccess.Abstractions.Tests")]

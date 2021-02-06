@@ -5,9 +5,9 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.UnitTests
 {
     public class IdPropertyKeyResolverTests
     {
-        public IdPropertyKeyResolverTests()
-        {
-        }
+
+        public IdPropertyKeyResolverTests() { }
+
 
         [Fact]
         public void Given_Entity_When_ItHasAnId_Then_ItShouldRetrieveTheKey()

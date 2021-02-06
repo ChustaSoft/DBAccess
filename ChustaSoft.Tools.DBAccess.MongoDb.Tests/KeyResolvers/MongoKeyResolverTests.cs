@@ -4,25 +4,28 @@ using Xunit;
 
 namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests
 {
-    public class IdPropertyKeyResolverTests : MongoDbIntegrationTestBase
+    public class MongoKeyResolverTests : MongoDbIntegrationTestBase
     {
-        private readonly IUnitOfWork<string> unitOfWork;
 
-        public IdPropertyKeyResolverTests() : base()
+        private readonly IUnitOfWork<int> unitOfWork;
+
+        private readonly CountryWithMongoId france  = new CountryWithMongoId { WeirdId = 3, Name = "France" };
+        private readonly CountryWithMongoId netherlands  = new CountryWithMongoId { WeirdId = 4, Name = "The Netherlands" };
+
+
+        public MongoKeyResolverTests() 
+            : base()
         {
-            var testContext = new MongoContext(configuration, new IdPropertyKeyResolver());
-            unitOfWork = new UnitOfWork<MongoContext, string>(testContext);
+            var testContext = new MongoContext(configuration, new MongoKeyResolver());
+            unitOfWork = new UnitOfWork<MongoContext, int>(testContext);
         }
-
-        private readonly CountryWithIdProperty france  = new CountryWithIdProperty { Id = "F", Name = "France" };
-        private readonly CountryWithIdProperty netherlands  = new CountryWithIdProperty { Id = "NL", Name = "The Netherlands" };
 
 
         [Fact]
         public void Given_UnitOfWork_When_Getrepository_Then_CanUpdateEntity()
         {
             // Arrange
-            var repository = unitOfWork.GetRepository<CountryWithIdProperty>();
+            var repository = unitOfWork.GetRepository<CountryWithMongoId>();
             InsertCountries(france, netherlands);
 
             // Act
@@ -31,20 +34,21 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests
             repository.Update(france);
 
             // Assert
-            var currentFrance = repository.Find(france.Id);
-            var currentNeherlands = repository.Find(netherlands.Id);
+            var currentFrance = repository.Find(france.WeirdId);
+            var currentNeherlands = repository.Find(netherlands.WeirdId);
 
             Assert.Equal("République française", currentFrance.Name);
             Assert.Equal("The Netherlands", currentNeherlands.Name);
         }
 
+
         /// <summary>
         /// Inserts given countries and commits transaction
         /// </summary>
         /// <param name="countries"></param>
-        private void InsertCountries(params CountryWithIdProperty[] countries)
+        private void InsertCountries(params CountryWithMongoId[] countries)
         {
-            var repository = unitOfWork.GetRepository<CountryWithIdProperty>();
+            var repository = unitOfWork.GetRepository<CountryWithMongoId>();
             repository.Insert(countries);
             unitOfWork.CommitTransaction();
         }

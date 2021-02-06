@@ -13,13 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.MongoDb", "ChustaSoft.Tools.DBAccess.MongoDb\ChustaSoft.Tools.DBAccess.MongoDb.csproj", "{7200CDC8-2CC3-4991-B1C7-35419C523E79}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests", "ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests\ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests.csproj", "{1041C4A0-77EC-4B2F-AA25-A253A86831D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.EntityFramework.Tests", "ChustaSoft.Tools.DBAccess.EntityFramework.Tests\ChustaSoft.Tools.DBAccess.EntityFramework.Tests.csproj", "{1041C4A0-77EC-4B2F-AA25-A253A86831D6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.Abstractions.UnitTests", "ChustaSoft.Tools.DBAccess.Abstractions.UnitTests\ChustaSoft.Tools.DBAccess.Abstractions.UnitTests.csproj", "{6EB2256B-650A-4C18-994E-9CC599402679}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.Abstractions.Tests", "ChustaSoft.Tools.DBAccess.Abstractions.Tests\ChustaSoft.Tools.DBAccess.Abstractions.Tests.csproj", "{6EB2256B-650A-4C18-994E-9CC599402679}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests", "ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests\ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests.csproj", "{EB96CB72-C942-49E9-A8EA-9E04CDB420A3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.MongoDb.UnitTests", "ChustaSoft.Tools.DBAccess.MongoDb.UnitTests\ChustaSoft.Tools.DBAccess.MongoDb.UnitTests.csproj", "{97704D2D-8C48-464E-A260-FB2AF70D47BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.MongoDb.Tests", "ChustaSoft.Tools.DBAccess.MongoDb.Tests\ChustaSoft.Tools.DBAccess.MongoDb.Tests.csproj", "{EB96CB72-C942-49E9-A8EA-9E04CDB420A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,10 +48,6 @@ Global
 		{EB96CB72-C942-49E9-A8EA-9E04CDB420A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EB96CB72-C942-49E9-A8EA-9E04CDB420A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB96CB72-C942-49E9-A8EA-9E04CDB420A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97704D2D-8C48-464E-A260-FB2AF70D47BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97704D2D-8C48-464E-A260-FB2AF70D47BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97704D2D-8C48-464E-A260-FB2AF70D47BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97704D2D-8C48-464E-A260-FB2AF70D47BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,7 +59,6 @@ Global
 		{1041C4A0-77EC-4B2F-AA25-A253A86831D6} = {FBD999CA-AB5C-4375-870D-06909C95563F}
 		{6EB2256B-650A-4C18-994E-9CC599402679} = {FBD999CA-AB5C-4375-870D-06909C95563F}
 		{EB96CB72-C942-49E9-A8EA-9E04CDB420A3} = {FBD999CA-AB5C-4375-870D-06909C95563F}
-		{97704D2D-8C48-464E-A260-FB2AF70D47BD} = {FBD999CA-AB5C-4375-870D-06909C95563F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7E9D275F-FD96-4A22-875F-FE41841CB089}
