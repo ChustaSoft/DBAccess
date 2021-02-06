@@ -7,10 +7,10 @@ using Xunit;
 
 namespace ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests
 {
-    public class QueryTests : IntegrationTestBase
+    public class RepositoryTests : IntegrationTestBase
     {
 
-        public QueryTests() 
+        public RepositoryTests() 
             : base()
         {}
 

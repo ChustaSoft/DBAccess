@@ -9,22 +9,25 @@ namespace ChustaSoft.Tools.DBAccess
     public class Repository<TEntity, TKey> : RepositoryBase<IMongoContext, TEntity>, IRepository<TEntity, TKey>, IAsyncRepository<TEntity, TKey>
         where TEntity : class
     {
-        
+
         #region Fields
 
         private readonly IMongoCollection<TEntity> _dbSet;
 
+        private readonly IKeyResolver _keyResolver;
+
         #endregion
-        
-        
+
+
         #region Constructors
 
-        public Repository(IMongoContext mongoContext)
+        public Repository(IMongoContext mongoContext) 
             : base(mongoContext)
         {
             _dbSet = mongoContext.GetCollection<TEntity>();
+            _keyResolver = mongoContext.KeyResolver;
         }
-
+        
         #endregion
 
 
@@ -34,7 +37,9 @@ namespace ChustaSoft.Tools.DBAccess
 
         public IQueryable<TEntity> Query(Func<IQueryable<TEntity>, ISelectablePropertiesBuilder> includingProperties)
         {
-            throw new NotImplementedException();
+            //TODO: Manage includingProperties from collection
+
+            return GetQueryable();
         }
 
         public TEntity Find(TKey id)
@@ -46,32 +51,41 @@ namespace ChustaSoft.Tools.DBAccess
 
         public void Insert(TEntity entity)
         {
-            throw new NotImplementedException();
+            _dbSet.InsertOne(entity);
         }
 
         public void Insert(IEnumerable<TEntity> entities)
         {
-            throw new NotImplementedException();
+            _dbSet.InsertMany(entities);
         }
 
         public void Update(TEntity entity)
         {
-            throw new NotImplementedException();
+            var idFilter = CreateFilterOnId(entity);
+
+            _dbSet.ReplaceOne(idFilter, entity);
         }
 
         public void Update(IEnumerable<TEntity> entities)
         {
-            throw new NotImplementedException();
+            foreach (var entity in entities)
+            {
+                Update(entity);
+            }
         }
 
         public void Delete(TKey id)
         {
-            throw new NotImplementedException();
+            var idFilter = CreateFilter(id);
+
+            _dbSet.DeleteOne(idFilter);
         }
 
         public void Delete(TEntity entity)
         {
-            throw new NotImplementedException();
+            var idFilter = CreateFilterOnId(entity);
+
+            _dbSet.DeleteOne(idFilter);
         }
 
         #endregion
@@ -125,6 +139,16 @@ namespace ChustaSoft.Tools.DBAccess
             throw new NotImplementedException();
         }
 
+        private FilterDefinition<TEntity> CreateFilterOnId(TEntity entity)
+        {
+            var id = _keyResolver.GetKey<TEntity, TKey>(entity);
+            return CreateFilter(id);
+        }
+
+        private FilterDefinition<TEntity> CreateFilter<T>(T id)
+            => Builders<TEntity>.Filter.Eq("_id", id);
+
+        
         #endregion
 
         protected override IQueryable<TEntity> GetQueryable() => _dbSet.AsQueryable();

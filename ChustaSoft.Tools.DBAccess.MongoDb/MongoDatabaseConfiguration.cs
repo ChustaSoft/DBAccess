@@ -7,10 +7,12 @@
         public string DatabaseName { get; set; }
 
 
+        public MongoDatabaseConfiguration() { }
+
         public MongoDatabaseConfiguration(string connectionString, string databaseName)
         {
-            this.ConnectionString = connectionString;
-            this.DatabaseName = databaseName;
+            ConnectionString = connectionString;
+            DatabaseName = databaseName;
         }
 
     }

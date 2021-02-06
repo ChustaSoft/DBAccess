@@ -17,13 +17,14 @@ namespace ChustaSoft.Tools.DBAccess
         private readonly ICollection<Func<Task>> _commands;
         private readonly IMongoDatabase _database;
         private readonly MongoClient _mongoClient;
-
         private IClientSessionHandle _session;
 
+        public IKeyResolver KeyResolver { get; private set; }
 
-        public MongoContext(IDatabaseConfiguration dbConfiguration)
+        public MongoContext(IDatabaseConfiguration dbConfiguration, IKeyResolver keyResolver = null)
         {
             _commands = new List<Func<Task>>();
+            KeyResolver = keyResolver ?? new DefaultKeyResolver();
 
             RegisterConventions();
 
