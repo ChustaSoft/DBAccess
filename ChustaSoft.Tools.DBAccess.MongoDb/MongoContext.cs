@@ -21,6 +21,7 @@ namespace ChustaSoft.Tools.DBAccess
 
         public IKeyResolver KeyResolver { get; private set; }
 
+
         public MongoContext(IDatabaseConfiguration dbConfiguration, IKeyResolver keyResolver = null)
         {
             _commands = new List<Func<Task>>();
