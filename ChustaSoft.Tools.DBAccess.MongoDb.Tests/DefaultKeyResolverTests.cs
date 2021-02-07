@@ -34,10 +34,6 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
             var exception = Assert.Throws<InvalidOperationException>(
                 () => resolver.GetKey<NonKeyableGuidIdCountry, Guid>(entity)
             );
-
-            // Assert
-            var message = "Type 'ChustaSoft.Tools.DBAccess.MongoDb.UnitTests.DefaultKeyResolverTests+NonKeyableCountry' does not implement IKeyable. Please register an implementation of IKeyResolver that can process this type";
-            Assert.Equal(message, exception.Message);
         }
        
     }

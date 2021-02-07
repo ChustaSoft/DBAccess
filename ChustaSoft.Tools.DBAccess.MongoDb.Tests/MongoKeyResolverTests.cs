@@ -58,10 +58,6 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
             var exception = Assert.Throws<InvalidOperationException>(
                 () => resolver.GetKey<NonKeyableIntIdCountry, int>(entity)
             );
-
-            // Assert
-            var message = "Type 'ChustaSoft.Tools.DBAccess.MongoDb.UnitTests.MongoKeyResolverTests+NoBsonIdCountry' does not contain a property marked with the BsonId attribute. Please register an implementation of IKeyResolver that can process this type";
-            Assert.Equal(message, exception.Message);
         }
 
         [Fact]
