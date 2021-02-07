@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ChustaSoft.Tools.DBAccess.Examples.Models
+namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
 {
     public class Country : IKeyable<Guid>
     {

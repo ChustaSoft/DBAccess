@@ -1,8 +1,7 @@
-﻿using ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests.Context;
-using System;
+﻿using System;
 using TestSupport.EfHelpers;
 
-namespace ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests.Base
+namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
 {
     public class IntegrationTestBase : IDisposable
     {

@@ -1,7 +1,7 @@
 ﻿using ChustaSoft.Common.Contracts;
 using System;
 
-namespace ChustaSoft.Tools.DBAccess.Examples.Models
+namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
 {
     public class Address : IKeyable<Guid>
     {

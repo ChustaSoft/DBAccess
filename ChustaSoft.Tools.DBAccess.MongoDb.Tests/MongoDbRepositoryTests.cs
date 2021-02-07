@@ -1,43 +1,33 @@
-﻿using ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests.Base;
-using ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests.Models;
-using System;
+﻿using System;
 using System.Linq;
 using Xunit;
 
-namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests
+namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
 {
-    public class MongoDbRepositoryTests : MongoDbIntegrationTestBase
+    public class MongoDbRepositoryTests : IntegrationTestBase
     {
 
-        private  readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;
 
-        private readonly Country france  = new Country { Id = Guid.NewGuid(), Name = "France" };
-        private readonly Country belgium  = new Country { Id = Guid.NewGuid(), Name = "Belgium" };
-        private readonly Country netherlands  = new Country { Id = Guid.NewGuid(), Name = "The Netherlands" };
-        private readonly Country sweden = new Country { Id = Guid.NewGuid(), Name = "Sweden" };
-        private readonly Country switserland = new Country { Id = Guid.NewGuid(), Name = "Switserland" };
+        private readonly KeyableCountry france  = new KeyableCountry { Id = Guid.NewGuid(), Name = "France" };
+        private readonly KeyableCountry belgium  = new KeyableCountry { Id = Guid.NewGuid(), Name = "Belgium" };
+        private readonly KeyableCountry netherlands  = new KeyableCountry { Id = Guid.NewGuid(), Name = "The Netherlands" };
+        private readonly KeyableCountry sweden = new KeyableCountry { Id = Guid.NewGuid(), Name = "Sweden" };
+        private readonly KeyableCountry switserland = new KeyableCountry { Id = Guid.NewGuid(), Name = "Switserland" };
 
 
-        public MongoDbRepositoryTests() : base()
+        public MongoDbRepositoryTests() 
+            : base()
         {
-            var testContext = new MongoContext(configuration);
-            unitOfWork = new UnitOfWork<MongoContext>(testContext);
+            unitOfWork = GetUoW();
         }
 
-
-        [Fact]
-        public void Given_UnitOfWork_When_GetRepository_Then_RepositoryIsNotNull() 
-        {
-            var repository = unitOfWork.GetRepository<Country>();
-
-            Assert.NotNull(repository);
-        }
         
         [Fact]
         public void Given_UnitOfWork_When_GetRepository_Then_CanInsertAndRetrieveEntity()
         {
             // Arrange
-            var repository = unitOfWork.GetRepository<Country>();
+            var repository = unitOfWork.GetRepository<KeyableCountry>();
 
             // Act
             InsertCountries(france);
@@ -52,7 +42,7 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests
         public void Given_UnitOfWork_When_GetRepository_Then_CanInsertMultipleEntities()
         {
             // Arrange
-            var repository = unitOfWork.GetRepository<Country>();
+            var repository = unitOfWork.GetRepository<KeyableCountry>();
 
             // Act
             InsertCountries(france, belgium);
@@ -72,7 +62,7 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests
         {
             // Arrange
             InsertCountries(france, belgium);
-            var repository = unitOfWork.GetRepository<Country>();
+            var repository = unitOfWork.GetRepository<KeyableCountry>();
 
             // Act
             var belgiumRetrieved = repository.Query()
@@ -87,7 +77,7 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests
         public void Given_UnitOfWork_When_GetRepository_Then_CanGetEntitiesBasedOnFilter()
         {
             // Arrange
-            var repository = unitOfWork.GetRepository<Country>();
+            var repository = unitOfWork.GetRepository<KeyableCountry>();
 
             InsertCountries(france, belgium, netherlands, sweden, switserland);
 
@@ -104,7 +94,7 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests
         public void Given_UnitOfWork_When_GetRepository_Then_CanUpdateEntity()
         {
             // Arrange
-            var repository = unitOfWork.GetRepository<Country>();
+            var repository = unitOfWork.GetRepository<KeyableCountry>();
             InsertCountries(france, netherlands);
 
             // Act
@@ -126,14 +116,14 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests
         public void Given_UnitOfWork_When_GetRepository_Then_CanUpdateMultipleEntity()
         {
             // Arrange
-            var repository = unitOfWork.GetRepository<Country>();
+            var repository = unitOfWork.GetRepository<KeyableCountry>();
 
             InsertCountries(france, belgium, netherlands);
 
             // Act
             france.Name = "République française";
             belgium.Name = "Koninkrijk België";
-            repository.Update(new Country[] { france, belgium });
+            repository.Update(new KeyableCountry[] { france, belgium });
 
             // Assert
             var franceRetrievedAfterChange = repository.Find(france.Id);
@@ -149,7 +139,7 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests
         public void Given_UnitOfWork_When_GetRepository_Then_CanDeleteEntityById()
         {
             // Arrange
-            var repository = unitOfWork.GetRepository<Country>();
+            var repository = unitOfWork.GetRepository<KeyableCountry>();
 
             InsertCountries(france, belgium);
 
@@ -168,7 +158,7 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests
         public void Given_UnitOfWork_When_GetRepository_Then_CanDeleteEntity()
         {
             // Arrange
-            var repository = unitOfWork.GetRepository<Country>();
+            var repository = unitOfWork.GetRepository<KeyableCountry>();
 
             InsertCountries(france, belgium);
 
@@ -187,7 +177,7 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests
         public void Given_UnitOfWork_When_GetRepository_Then_CanReturnQueryables()
         {
             // Arrange
-            var repository = unitOfWork.GetRepository<Country>();
+            var repository = unitOfWork.GetRepository<KeyableCountry>();
 
             InsertCountries(france, belgium, netherlands, sweden, switserland);
 
@@ -207,9 +197,9 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.IntegrationTests
         /// Inserts given countries and commits transaction
         /// </summary>
         /// <param name="countries"></param>
-        private void InsertCountries(params Country[] countries)
+        private void InsertCountries(params KeyableCountry[] countries)
         {
-            var repository = unitOfWork.GetRepository<Country>();
+            var repository = unitOfWork.GetRepository<KeyableCountry>();
             repository.Insert(countries);
             unitOfWork.CommitTransaction();
         }

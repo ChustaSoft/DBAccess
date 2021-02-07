@@ -1,8 +1,6 @@
-﻿using ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests.Base;
-using ChustaSoft.Tools.DBAccess.Examples.Models;
-using Xunit;
+﻿using Xunit;
 
-namespace ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests
+namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
 {
     public class UnitOfWorkTests : IntegrationTestBase
     {

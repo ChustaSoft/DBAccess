@@ -1,8 +1,6 @@
-﻿using ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests.Helpers;
-using ChustaSoft.Tools.DBAccess.Examples.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests.Context
+namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
 {
     public class TestContext : DbContext
     {

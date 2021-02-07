@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace ChustaSoft.Tools.DBAccess.MongoDb.UnitTests
+namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
 {
     public class IdPropertyKeyResolverTests
     {
@@ -14,10 +14,10 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.UnitTests
         {
             // Arrange
             var resolver = new IdPropertyKeyResolver();
-            var entity = new Country { Id = 4 , Name = "France" };
+            var entity = new NonKeyableIntIdCountry { Id = 4 , Name = "France" };
 
             // Act
-            var id = resolver.GetKey<Country, int>(entity);
+            var id = resolver.GetKey<NonKeyableIntIdCountry, int>(entity);
 
             // Assert
             Assert.Equal(4, id);
@@ -28,10 +28,10 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.UnitTests
         {
             // Arrange
             var resolver = new IdPropertyKeyResolver();
-            var entity = new Country { Name = "France" };
+            var entity = new NonKeyableIntIdCountry { Name = "France" };
 
             // Act
-            var id = resolver.GetKey<Country, int>(entity);
+            var id = resolver.GetKey<NonKeyableIntIdCountry, int>(entity);
 
             // Assert
             Assert.Equal(0, id);
@@ -42,11 +42,11 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.UnitTests
         {
             // Arrange
             var resolver = new IdPropertyKeyResolver();
-            var entity = new CountryWithoutId { Name = "France" };
+            var entity = new IdLessCountry { Name = "France" };
 
             // Act
             var exception = Assert.Throws<InvalidOperationException>(
-                () => resolver.GetKey<CountryWithoutId, Guid>(entity)
+                () => resolver.GetKey<IdLessCountry, Guid>(entity)
             );
 
             // Assert
@@ -59,34 +59,17 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.UnitTests
         {
             // Arrange
             var resolver = new IdPropertyKeyResolver();
-            var entity = new CountryWithWrongIdType { Id = "F", Name = "France" };
+            var entity = new StringIdCountry { Id = "F", Name = "France" };
 
             // Act
             var exception = Assert.Throws<InvalidOperationException>(
-                () => resolver.GetKey<CountryWithWrongIdType, Guid>(entity)
+                () => resolver.GetKey<StringIdCountry, Guid>(entity)
             );
 
             // Assert
             var message = "Type 'ChustaSoft.Tools.DBAccess.MongoDb.UnitTests.CountryWithWrongIdType' has an Id property, but it is not of the expected type. Please register an implementation of IKeyResolver that can process this type";
             Assert.Equal(message, exception.Message);
         }
-    }
 
-    public class Country
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
     }
-
-    public class CountryWithWrongIdType
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class CountryWithoutId
-    {
-        public string Name { get; set; }
-    }
-
 }

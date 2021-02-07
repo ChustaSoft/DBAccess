@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChustaSoft.Tools.DBAccess.Abstractions.UnitTests
+namespace ChustaSoft.Tools.DBAccess.Abstractions.Tests
 {
     public static class SelectablePropertiesBuilderTestHelper
     {

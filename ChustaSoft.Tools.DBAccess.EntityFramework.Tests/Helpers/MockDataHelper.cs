@@ -1,11 +1,10 @@
 ﻿using ChustaSoft.Common.Contracts;
-using ChustaSoft.Tools.DBAccess.Examples.Models;
 using FizzWare.NBuilder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChustaSoft.Tools.DBAccess.EntityFramework.IntegrationTests.Helpers
+namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
 {
     public class MockDataHelper
     {
