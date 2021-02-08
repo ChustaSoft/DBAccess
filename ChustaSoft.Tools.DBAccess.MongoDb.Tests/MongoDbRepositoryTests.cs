@@ -103,7 +103,7 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
             repository.Update(france);
 
             // Assert
-            var franceByOriginalName = repository.Query().First(c => c.Name == "France");
+            var franceByOriginalName = repository.Query().FirstOrDefault(c => c.Name == "France");
             var franceByNewName = repository.Query().First(c => c.Name == "République française");
             var unmodifiedCountry = repository.Find(netherlands.Id);
 

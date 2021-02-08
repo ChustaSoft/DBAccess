@@ -61,7 +61,7 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
         }
 
         [Fact]
-        public void Given_UnitOfWork_When_Getrepository_Then_CanUpdateEntity()
+        public void Given_UnitOfWork_When_GetRepository_Then_CanUpdateEntity()
         {
             // Arrange
             var repository = unitOfWork.GetRepository<BsonPropertyIdCountry>();

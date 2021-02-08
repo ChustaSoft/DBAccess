@@ -30,7 +30,7 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
 
         protected IUnitOfWork<TKey> GetUoW<TKey>()
         {
-            var testContext = new MongoContext(configuration);
+            var testContext = new MongoContext(configuration, new MongoKeyResolver());
 
             return new UnitOfWork<MongoContext, TKey>(testContext);
         }
