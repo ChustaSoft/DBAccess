@@ -39,9 +39,9 @@ namespace ChustaSoft.Tools.DBAccess
 
 
         #region Public Sync Operations
-        public IQueryable<TEntity> Query() => GetQueryable();
+        public IQueryable<TEntity> GetAll() => GetQueryable();
 
-        public IQueryable<TEntity> Query(Func<IQueryable<TEntity>, ISelectablePropertiesBuilder> includingProperties)
+        public IQueryable<TEntity> GetMultiple(Func<IQueryable<TEntity>, ISelectablePropertiesBuilder> includingProperties)
         {
             var queryable = GetQueryable()
                 .TryIncludeProperties(includingProperties);
@@ -49,7 +49,7 @@ namespace ChustaSoft.Tools.DBAccess
             return queryable;
         }
 
-        public TEntity Find(TKey id)
+        public TEntity GetSingle(TKey id)
         {
             return _dbSet.Find(id);
         }

@@ -7,11 +7,11 @@ namespace ChustaSoft.Tools.DBAccess
         where TEntity : class
     {
 
-        IQueryable<TEntity> Query();
+        TEntity GetSingle(TKey id);
 
-        IQueryable<TEntity> Query(Func<IQueryable<TEntity>, ISelectablePropertiesBuilder> includingProperties);
+        IQueryable<TEntity> GetAll();
 
-        TEntity Find(TKey id);
+        IQueryable<TEntity> GetMultiple(Func<IQueryable<TEntity>, ISelectablePropertiesBuilder> includingProperties);
 
     }
 
