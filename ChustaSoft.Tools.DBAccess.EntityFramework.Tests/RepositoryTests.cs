@@ -17,7 +17,7 @@ namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
         {
             var repository = _unitOfWork.GetRepository<Country>();
             
-            var data = repository.GetSingle(MockDataHelper.STATIC_COUNTRY_ID);
+            var data = repository.Find(MockDataHelper.STATIC_COUNTRY_ID);
 
             Assert.NotNull(data);
         }
@@ -27,7 +27,7 @@ namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
         {
             var repository = _unitOfWork.GetRepository<Country>();
 
-            var data = repository.GetAll().First(x => x.Id == MockDataHelper.STATIC_COUNTRY_ID);
+            var data = repository.FromAll().First(x => x.Id == MockDataHelper.STATIC_COUNTRY_ID);
 
             Assert.NotNull(data);
         }
@@ -37,7 +37,7 @@ namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
         {
             var repository = _unitOfWork.GetRepository<City>();
 
-            var data = repository.GetMultiple(x => x.Including(y => y.Country))
+            var data = repository.FromQuery(x => x.Including(y => y.Country))
                 .First(x => x.Id == MockDataHelper.STATIC_CITY_ID);
 
             Assert.NotNull(data);
@@ -49,7 +49,7 @@ namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
         {
             var repository = _unitOfWork.GetRepository<Address>();
 
-            var data = repository.GetMultiple(x => x.Including(y => y.City).And(y => y.Country))
+            var data = repository.FromQuery(x => x.Including(y => y.City).And(y => y.Country))
                 .First(x => x.CityId == MockDataHelper.STATIC_CITY_ID);
 
             Assert.NotNull(data);
@@ -62,7 +62,7 @@ namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
         {
             var repository = _unitOfWork.GetRepository<Country>();
 
-            var data = repository.GetAll().Where(x => x.Id != MockDataHelper.STATIC_COUNTRY_ID).ToList();
+            var data = repository.FromAll().Where(x => x.Id != MockDataHelper.STATIC_COUNTRY_ID).ToList();
 
             Assert.NotNull(data);
             Assert.Equal(9, data.Count());
@@ -84,7 +84,7 @@ namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
             int batchSize = 10, page = 0;
             var repository = _unitOfWork.GetRepository<Person>();
 
-            var data = repository.GetAll()
+            var data = repository.FromAll()
                 .Where(x => x.Id != MockDataHelper.STATIC_PERSON_ID)
                 .OrderBy(y => y.BirthDate)
                 .Take(batchSize)

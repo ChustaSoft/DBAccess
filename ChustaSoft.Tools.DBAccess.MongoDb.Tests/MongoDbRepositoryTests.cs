@@ -31,7 +31,7 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
 
             // Act
             InsertCountries(france);
-            var retrievedCountry = repository.GetSingle(france.Id);
+            var retrievedCountry = repository.Find(france.Id);
 
             // Assert
             Assert.Equal(france.Id, retrievedCountry.Id);
@@ -48,8 +48,8 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
             InsertCountries(france, belgium);
 
             // Assert
-            var franceRetrieved = repository.GetSingle(france.Id);
-            var belgiumRetrieved = repository.GetSingle(belgium.Id);
+            var franceRetrieved = repository.Find(france.Id);
+            var belgiumRetrieved = repository.Find(belgium.Id);
 
             Assert.Equal(france.Id, franceRetrieved.Id);
             Assert.Equal(france.Name, franceRetrieved.Name);
@@ -65,7 +65,7 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
             var repository = unitOfWork.GetRepository<KeyableCountry>();
 
             // Act
-            var belgiumRetrieved = repository.GetAll()
+            var belgiumRetrieved = repository.FromAll()
                 .First(c => c.Name == "Belgium");
 
             // Assert
@@ -82,7 +82,7 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
             InsertCountries(france, belgium, netherlands, sweden, switserland);
 
             // Act
-            var countriesWithS = repository.GetAll()
+            var countriesWithS = repository.FromAll()
                 .Where(c => c.Name.StartsWith("S"));
 
             // Assert
@@ -103,9 +103,9 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
             repository.Update(france);
 
             // Assert
-            var franceByOriginalName = repository.GetAll().FirstOrDefault(c => c.Name == "France");
-            var franceByNewName = repository.GetAll().First(c => c.Name == "République française");
-            var unmodifiedCountry = repository.GetSingle(netherlands.Id);
+            var franceByOriginalName = repository.FromAll().FirstOrDefault(c => c.Name == "France");
+            var franceByNewName = repository.FromAll().First(c => c.Name == "République française");
+            var unmodifiedCountry = repository.Find(netherlands.Id);
 
             Assert.Null(franceByOriginalName);
             Assert.Equal(france.Id, franceByNewName.Id);
@@ -126,9 +126,9 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
             repository.Update(new KeyableCountry[] { france, belgium });
 
             // Assert
-            var franceRetrievedAfterChange = repository.GetSingle(france.Id);
-            var belgiumRetrievedAfterChange = repository.GetSingle(belgium.Id);
-            var netherlandsRetrieved = repository.GetSingle(netherlands.Id);
+            var franceRetrievedAfterChange = repository.Find(france.Id);
+            var belgiumRetrievedAfterChange = repository.Find(belgium.Id);
+            var netherlandsRetrieved = repository.Find(netherlands.Id);
 
             Assert.Equal("République française", franceRetrievedAfterChange.Name);
             Assert.Equal("Koninkrijk België", belgiumRetrievedAfterChange.Name);
@@ -147,8 +147,8 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
             repository.Delete(france.Id);
 
             // Assert
-            var franceRetrieved = repository.GetSingle(france.Id);
-            var belgiumRetrieved = repository.GetSingle(belgium.Id);
+            var franceRetrieved = repository.Find(france.Id);
+            var belgiumRetrieved = repository.Find(belgium.Id);
 
             Assert.Null(franceRetrieved);
             Assert.Equal(belgium.Id, belgiumRetrieved.Id);
@@ -166,8 +166,8 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
             repository.Delete(france);
 
             // Assert
-            var franceRetrieved = repository.GetSingle(france.Id);
-            var belgiumRetrieved = repository.GetSingle(belgium.Id);
+            var franceRetrieved = repository.Find(france.Id);
+            var belgiumRetrieved = repository.Find(belgium.Id);
 
             Assert.Null(franceRetrieved);
             Assert.Equal(belgium.Id, belgiumRetrieved.Id);
@@ -182,7 +182,7 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
             InsertCountries(france, belgium, netherlands, sweden, switserland);
 
             // Act
-            var countriesWithS = repository.GetAll()
+            var countriesWithS = repository.FromAll()
                 .Where(c => c.Name.StartsWith("Sw"))
                 .Select(c => c.Name)
                 .Take(1);

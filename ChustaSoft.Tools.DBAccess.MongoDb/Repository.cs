@@ -33,16 +33,16 @@ namespace ChustaSoft.Tools.DBAccess
 
         #region Sync Operations
 
-        public IQueryable<TEntity> GetAll() => GetQueryable();
+        public IQueryable<TEntity> FromAll() => GetQueryable();
 
-        public IQueryable<TEntity> GetMultiple(Func<IQueryable<TEntity>, ISelectablePropertiesBuilder> includingProperties)
+        public IQueryable<TEntity> FromQuery(Func<IQueryable<TEntity>, ISelectablePropertiesBuilder> includingProperties)
         {
             //TODO: Manage includingProperties from collection
 
             return GetQueryable();
         }
 
-        public TEntity GetSingle(TKey id)
+        public TEntity Find(TKey id)
         {
             var entityFilter = _dbSet.Find<TEntity>(Builders<TEntity>.Filter.Eq("_id", id));
 

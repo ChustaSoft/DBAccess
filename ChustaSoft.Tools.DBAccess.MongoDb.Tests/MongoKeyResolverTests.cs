@@ -73,8 +73,8 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
             repository.Update(france);
 
             // Assert
-            var currentFrance = repository.GetSingle(france.Id);
-            var currentNeherlands = repository.GetSingle(netherlands.Id);
+            var currentFrance = repository.Find(france.Id);
+            var currentNeherlands = repository.Find(netherlands.Id);
 
             Assert.Equal("République française", currentFrance.Name);
             Assert.Equal("The Netherlands", currentNeherlands.Name);
