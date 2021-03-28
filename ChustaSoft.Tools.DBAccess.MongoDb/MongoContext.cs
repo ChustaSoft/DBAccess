@@ -16,29 +16,37 @@ namespace ChustaSoft.Tools.DBAccess
 
         private readonly ICollection<Func<Task>> _commands;
         private readonly IMongoDatabase _database;
-        private readonly MongoClient _mongoClient;
+        private readonly IMongoClient _mongoClient;
         private IClientSessionHandle _session;
 
         public IKeyResolver KeyResolver { get; private set; }
 
 
-        public MongoContext(IDatabaseConfiguration dbConfiguration, IKeyResolver keyResolver = null)
+        public MongoContext(IDatabaseConfiguration dbConfiguration, IKeyResolver keyResolver = null) : this(keyResolver)
+        {
+            _mongoClient = new MongoClient(dbConfiguration.ConnectionString);
+            _database = _mongoClient.GetDatabase(dbConfiguration.DatabaseName);
+        }
+
+        public MongoContext(IMongoClient mongoClient, IMongoDatabase mongoDatabase, IKeyResolver keyResolver = null) : this(keyResolver)
+        {
+            _mongoClient = mongoClient;
+            _database = mongoDatabase;
+        }
+
+        private MongoContext(IKeyResolver keyResolver = null)
         {
             _commands = new List<Func<Task>>();
             KeyResolver = keyResolver ?? new DefaultKeyResolver();
 
             RegisterConventions();
-
-            _mongoClient = new MongoClient(dbConfiguration.ConnectionString);
-            _database = _mongoClient.GetDatabase(dbConfiguration.DatabaseName);
         }
-
 
         public async Task<int> SaveChangesAsync()
         {
             using (_session = await _mongoClient.StartSessionAsync())
             {
-                _session.StartTransaction();
+                TryStartTransaction();
 
                 var commandTasks = _commands.Select(c => c());
 
@@ -84,5 +92,22 @@ namespace ChustaSoft.Tools.DBAccess
             ConventionRegistry.Register(CUSTOM_CONVENTION, pack, t => true);
         }
 
+        private void TryStartTransaction()
+        {
+            try
+            {
+                _session.StartTransaction();
+            }
+            catch (NotSupportedException exception) when (exception.Message == "Standalone servers do not support transactions.")
+            {
+                var helpLink = "https://github.com/ChustaSoft/DBAccess/wiki#using-the-mongodb-implementation";
+                var message = $"Transactions are not supported on standalone MongoDb servers. For available options, please refer to {helpLink}";
+
+                throw new NotSupportedException(message, exception)
+                {
+                    HelpLink = helpLink
+                };
+            }
+        }
     }
 }
