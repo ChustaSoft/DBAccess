@@ -1,6 +1,6 @@
 ﻿#if NETFRAMEWORK
 using System.Data.Entity;
-#elif NETCORE
+#else
 using Microsoft.EntityFrameworkCore;
 #endif
 

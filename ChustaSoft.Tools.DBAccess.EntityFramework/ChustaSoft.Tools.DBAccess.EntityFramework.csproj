@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.1;netcoreapp2.2;netcoreapp3.1;net471</TargetFrameworks>
+    <TargetFrameworks>net471;netcoreapp3.1;net5.0</TargetFrameworks>
     <PackageId>ChustaSoft.Tools.DBAccess.EntityFramework</PackageId>
     <RootNamespace>ChustaSoft.Tools.DBAccess</RootNamespace>
     <Description>Utilities for managing access to SQLServer database with EntityFramework</Description>
@@ -19,22 +19,16 @@
     <RepositoryType>GIT</RepositoryType>
     <PackageTags>Utilities;Extensions;EFCore,EntityFramework;EF6;UnitOfWork;UoW</PackageTags>
   </PropertyGroup>
-
   
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.14" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.2' ">
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
-  </ItemGroup>
+ 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.15" />  
   </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
+  </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net471' ">
     <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="Unity" Version="5.11.7" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Unity" Version="5.11.10" />
   </ItemGroup>
   <ItemGroup>
@@ -42,11 +36,14 @@
   </ItemGroup>
 
   
-  <PropertyGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^net\d'))">
+  <PropertyGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^net4\d'))">
     <DefineConstants>NETFRAMEWORK</DefineConstants>
   </PropertyGroup>  
   <PropertyGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^netcoreapp\d'))">
     <DefineConstants>NETCORE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^net5\d'))">
+    <DefineConstants>NET5</DefineConstants>
   </PropertyGroup>
 
 </Project>

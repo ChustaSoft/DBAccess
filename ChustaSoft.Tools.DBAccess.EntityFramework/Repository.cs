@@ -1,7 +1,7 @@
 ﻿#if NETFRAMEWORK
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
-#elif NETCORE
+#else
 using Microsoft.EntityFrameworkCore;
 #endif
 
@@ -133,10 +133,10 @@ namespace ChustaSoft.Tools.DBAccess
         {
             return await Task.Run(() =>
             {
-#if NETCORE
-                _dbSet.Update(entity);
-#else
+#if NETFRAMEWORK
                 _dbSet.AddOrUpdate(entity);
+#else
+                _dbSet.Update(entity);
 #endif
 
                 return true;
@@ -148,13 +148,11 @@ namespace ChustaSoft.Tools.DBAccess
 
             return await Task.Run(() =>
             {
-#if NETCORE
-                _dbSet.UpdateRange(entities);
-
-#else
-                foreach(var entity in entities)
+#if NETFRAMEWORK
+                foreach (var entity in entities)
                     _dbSet.AddOrUpdate(entity);
-
+#else
+                _dbSet.UpdateRange(entities);
 #endif
                 return true;
             });
