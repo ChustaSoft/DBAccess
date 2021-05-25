@@ -39,6 +39,7 @@ namespace ChustaSoft.Tools.DBAccess
 
 
         #region Public Sync Operations
+
         public IQueryable<TEntity> FromAll() => GetQueryable();
 
         public IQueryable<TEntity> FromQuery(Func<IQueryable<TEntity>, ISelectablePropertiesBuilder> includingProperties)
