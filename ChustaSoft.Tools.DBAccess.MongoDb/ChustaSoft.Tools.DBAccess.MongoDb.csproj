@@ -4,7 +4,7 @@
     <TargetFrameworks>net471;netcoreapp3.1;net5.0</TargetFrameworks>
     <PackageId>ChustaSoft.Tools.DBAccess.MongoDb</PackageId>
     <RootNamespace>ChustaSoft.Tools.DBAccess</RootNamespace>
-    <Description>Utilities for managing access to MongoDb database through MongoDb client</Description>
+    <Description>Utilities for managing access to MongoDb database through MongoDb client. Packate still on POC and alpha stage</Description>
     <Copyright>ChustaSoft</Copyright>
     <Authors>Xelit3</Authors>
     <Company>ChustaSoft</Company>

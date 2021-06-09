@@ -119,24 +119,49 @@ namespace ChustaSoft.Tools.DBAccess
             });
         }
 
-        public Task<bool> UpdateAsync(TEntity entity)
+        public async Task<bool> UpdateAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            return await Task.Run(() =>
+            {
+                PerformSingleReplace(entity);
+
+                return true;
+            });
         }
 
-        public Task<bool> UpdateAsync(IEnumerable<TEntity> entities)
+        public async Task<bool> UpdateAsync(IEnumerable<TEntity> entities)
         {
-            throw new NotImplementedException();
+            return await Task.Run(() =>
+            {
+                foreach (var entity in entities)                 
+                    PerformSingleReplace(entity);
+                
+                return true;
+            });
         }
 
-        public Task<bool> DeleteAsync(TKey id)
+        public async Task<bool> DeleteAsync(TKey id)
         {
-            throw new NotImplementedException();
+            return await Task.Run(() =>
+            {
+                var idFilter = CreateFilter(id);
+
+                _context.AddCommand(async () => await _dbSet.DeleteOneAsync(idFilter));
+
+                return true;
+            });
         }
 
-        public Task<bool> DeleteAsync(TEntity entity)
+        public async Task<bool> DeleteAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            return await Task.Run(() =>
+            {
+                var idFilter = CreateFilterOnId(entity);
+
+                _context.AddCommand(async () => await _dbSet.DeleteOneAsync(idFilter));
+
+                return true;
+            });
         }
 
         private FilterDefinition<TEntity> CreateFilterOnId(TEntity entity)
@@ -152,6 +177,14 @@ namespace ChustaSoft.Tools.DBAccess
         #endregion
 
         protected override IQueryable<TEntity> GetQueryable() => _dbSet.AsQueryable();
+
+
+        private void PerformSingleReplace(TEntity entity)
+        {
+            var idFilter = CreateFilterOnId(entity);
+
+            _context.AddCommand(async () => await _dbSet.ReplaceOneAsync(idFilter, entity));
+        }
 
     }
 
