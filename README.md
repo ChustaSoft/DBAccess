@@ -1,10 +1,18 @@
 # DBAccess
 
-## EntityFramework package: 
-[![Build Status](https://dev.azure.com/chustasoft/SocialNET/_apis/build/status/OpenStack/DBAccess/%5BRELEASE%5D%20-%20ChustaSoft%20DBAccess%20EntityFramework%20(NuGet)?branchName=master)](https://dev.azure.com/chustasoft/SocialNET/_build/latest?definitionId=25&branchName=master) [![NuGet](https://img.shields.io/nuget/v/ChustaSoft.Tools.DBAccess.EntityFramework?label=NuGet%20Main%20package)](https://www.nuget.org/packages/ChustaSoft.Tools.DbAccess.EntityFramework) 
+![GitHub](https://img.shields.io/github/license/ChustaSoft/DBAccess)
 
-## Abstractions package:
-[![Build Status](https://dev.azure.com/chustasoft/SocialNET/_apis/build/status/OpenStack/DBAccess/%5BRELEASE%5D%20-%20ChustaSoft%20DBAccess%20Abstractions%20(NuGet)?branchName=master)](https://dev.azure.com/chustasoft/SocialNET/_build/latest?definitionId=26&branchName=master) [![NuGet](https://img.shields.io/nuget/v/ChustaSoft.Tools.DBAccess.Abstractions?label=%20Abstractions%20package)](https://www.nuget.org/packages/ChustaSoft.Tools.DBAccess.Abstractions)
+## Packages table
+
+| Package                                           | Pipeline                                                                                                                                                                                                                                                                                     |  NuGet version                                                                                                                                                                               |    Downloads                                                                                                      |
+|---------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| ChustaSoft.Tools.DBAccess.Abstractions            | [![Build Status](https://dev.azure.com/chustasoft/SocialNET/_apis/build/status/OpenStack/DBAccess/%5BRELEASE%5D%20-%20ChustaSoft%20DBAccess%20Abstractions%20(NuGet)?branchName=version3)](https://dev.azure.com/chustasoft/SocialNET/_build/latest?definitionId=26&branchName=version3)     | [![NuGet](https://img.shields.io/nuget/v/ChustaSoft.Tools.DBAccess.Abstractions?label=%20Abstractions%20package)](https://www.nuget.org/packages/ChustaSoft.Tools.DBAccess.Abstractions)     | ![Nuget](https://img.shields.io/nuget/dt/ChustaSoft.Tools.DBAccess.Abstractions?style=for-the-badge)              |
+| ChustaSoft.Tools.DBAccess.EntityFramework         | [![Build Status](https://dev.azure.com/chustasoft/SocialNET/_apis/build/status/OpenStack/DBAccess/%5BRELEASE%5D%20-%20ChustaSoft%20DBAccess%20EntityFramework%20(NuGet)?branchName=version3)](https://dev.azure.com/chustasoft/SocialNET/_build/latest?definitionId=25&branchName=version3)  | [![NuGet](https://img.shields.io/nuget/v/ChustaSoft.Tools.DBAccess.EntityFramework?label=NuGet%20Main%20package)](https://www.nuget.org/packages/ChustaSoft.Tools.DbAccess.EntityFramework)  | ![Nuget](https://img.shields.io/nuget/dt/ChustaSoft.Tools.DBAccess.EntityFramework?style=for-the-badge)           |
+| ChustaSoft.Tools.DBAccess.MongoDb                 | [![Build Status](https://dev.azure.com/chustasoft/SocialNET/_apis/build/status/OpenStack/DBAccess/%5BRELEASE%5D%20-%20ChustaSoft%20DBAccess%20MongoDb%20(NuGet)?branchName=version3)](https://dev.azure.com/chustasoft/SocialNET/_build/latest?definitionId=34&branchName=version3)          | [![NuGet](https://img.shields.io/nuget/v/ChustaSoft.Tools.DBAccess.MongoDb?label=NuGet%20Main%20package)](https://www.nuget.org/packages/ChustaSoft.Tools.DbAccess.MongoDb)                  | ![Nuget](https://img.shields.io/nuget/dt/ChustaSoft.Tools.DBAccess.MongoDb?style=for-the-badge)                   |
+
+### Packages compatibility table
+- NET Core from version 2.1
+- NET Framework from version 4.7.1
 
 
 ## Description
@@ -16,9 +24,7 @@
 - Flexibility for any type of query
 - Ease of configuration
 
-### NuGet package is compatible with:
-- NET Core from version 2.1
-- NET Framework from version 4.7.1
+
 
 ---
 
