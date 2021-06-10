@@ -11,8 +11,14 @@
 | ChustaSoft.Tools.DBAccess.MongoDb                 | ![](https://img.shields.io/badge/-alpha--poc-yellow)                      | [![Build Status](https://dev.azure.com/chustasoft/SocialNET/_apis/build/status/OpenStack/DBAccess/%5BRELEASE%5D%20-%20ChustaSoft%20DBAccess%20MongoDb%20(NuGet)?branchName=version3)](https://dev.azure.com/chustasoft/SocialNET/_build/latest?definitionId=34&branchName=version3)          | [![NuGet](https://img.shields.io/nuget/v/ChustaSoft.Tools.DBAccess.MongoDb)](https://www.nuget.org/packages/ChustaSoft.Tools.DbAccess.MongoDb)                  | ![Nuget](https://img.shields.io/nuget/dt/ChustaSoft.Tools.DBAccess.MongoDb?style=for-the-badge)                   |
 
 ### Packages compatibility table
-- NET Core from version 2.1
-- NET Framework from version 4.7.1
+
+| Framework              | EFCore From   | Latest  | Current support    |
+|------------------------|---------------|---------|--------------------|
+| .Net Framework 4.7.1   | 1.0.0         | Current | :heavy_check_mark: |
+| .Net Core 2.1          | 1.0.0         | 2.0.2   | :x:                |
+| .Net Core 2.2          | 1.0.0         | 2.0.2   | :x:                |
+| .Net Core 3.1          | 1.0.0         | Current | :heavy_check_mark: |
+| .Net 5.0               | 3.0.0         | Current | :heavy_check_mark: |
 
 
 ## Description
@@ -22,8 +28,7 @@
 - Synchronous repositories
 - Asynchronous repositories
 - Flexibility for any type of query
-- Ease of configuration
-
+- Easy to configure
 
 
 ---
