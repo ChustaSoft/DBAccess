@@ -1,20 +1,14 @@
-﻿#if NETFRAMEWORK
-using System.Data.Entity;
-#else
-using Microsoft.EntityFrameworkCore;
-#endif
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
 namespace ChustaSoft.Tools.DBAccess
 {
     public class UnitOfWork<TContext, TKey> : UnitOfWorkBase<TContext>, IUnitOfWork<TKey>
-        where TContext : DbContext
+        where TContext : IMongoContext
     {
 
         public UnitOfWork(TContext context)
-            : base(context)
+           : base(context)
         { }
 
 
@@ -30,7 +24,9 @@ namespace ChustaSoft.Tools.DBAccess
 
         public bool CommitTransaction()
         {
-            return _context.SaveChanges() > 0;
+            var task = Task.Run(() => CommitTransactionAsync());
+
+            return task.Result;
         }
 
         public async Task<bool> CommitTransactionAsync()
@@ -41,23 +37,22 @@ namespace ChustaSoft.Tools.DBAccess
     }
 
 
-
     public class UnitOfWork<TContext> : UnitOfWork<TContext, Guid>, IUnitOfWork
-        where TContext : DbContext
+        where TContext : IMongoContext
     {
 
-        public UnitOfWork(TContext context) 
+        public UnitOfWork(TContext context)
             : base(context)
         { }
 
 
         IRepository<TEntity> IUnitOfWork.GetRepository<TEntity>()
         {
-            var (RepositoryKey, RepositoryType) = GetRepositoryTuple<TEntity, Repository<TEntity>>();
-            
-            CreateRepositoryInstance<TEntity>(RepositoryKey, RepositoryType);
+            var repositoryTuple = GetRepositoryTuple<TEntity, Repository<TEntity>>();
 
-            return (IRepository<TEntity>)_repositories[RepositoryKey];
+            CreateRepositoryInstance<TEntity>(repositoryTuple.RepositoryKey, repositoryTuple.RepositoryType);
+
+            return (IRepository<TEntity>)_repositories[repositoryTuple.RepositoryKey];
         }
 
     }

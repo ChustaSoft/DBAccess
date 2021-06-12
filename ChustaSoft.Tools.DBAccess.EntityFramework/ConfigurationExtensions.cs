@@ -1,11 +1,10 @@
 ﻿namespace ChustaSoft.Tools.DBAccess
 {
 
-#if NETCORE
+#if NETCORE || NET5
 
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
-    using System;
 
     public static class ConfigurationExtensions
     {
