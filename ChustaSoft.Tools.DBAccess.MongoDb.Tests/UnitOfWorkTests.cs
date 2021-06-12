@@ -2,13 +2,15 @@
 
 namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
 {
+#if DEBUG
+
     public class UnitOfWorkTests : IntegrationTestBase
     {
 
         private readonly IUnitOfWork unitOfWork;
 
 
-        public UnitOfWorkTests() 
+        public UnitOfWorkTests()
             : base()
         {
             unitOfWork = GetUoW();
@@ -24,4 +26,6 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
         }
 
     }
+
+#endif
 }

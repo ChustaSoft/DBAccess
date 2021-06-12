@@ -6,6 +6,8 @@ using Xunit;
 
 namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
 {
+#if DEBUG
+
     public class MongoContextTests
     {
         private const string transactionsNotSupportedMessage = "Standalone servers do not support transactions.";
@@ -47,4 +49,6 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
             context = new MongoContext(mongoClientMock.Object, mongoDatabaseMock.Object);
         }
     }
+
+#endif
 }

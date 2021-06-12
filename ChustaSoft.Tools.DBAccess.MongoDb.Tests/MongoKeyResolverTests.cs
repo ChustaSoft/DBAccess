@@ -3,11 +3,13 @@ using Xunit;
 
 namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
 {
+#if DEBUG
+
     public class MongoKeyResolverTests : IntegrationTestBase
     {
 
-        private readonly BsonPropertyIdCountry france  = new BsonPropertyIdCountry { Id = 3, Name = "France" };
-        private readonly BsonPropertyIdCountry netherlands  = new BsonPropertyIdCountry { Id = 4, Name = "The Netherlands" };
+        private readonly BsonPropertyIdCountry france = new BsonPropertyIdCountry { Id = 3, Name = "France" };
+        private readonly BsonPropertyIdCountry netherlands = new BsonPropertyIdCountry { Id = 4, Name = "The Netherlands" };
 
         protected readonly IUnitOfWork<int> unitOfWork;
 
@@ -93,4 +95,6 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
         }
 
     }
+
+#endif
 }

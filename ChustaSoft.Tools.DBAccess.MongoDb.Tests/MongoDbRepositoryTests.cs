@@ -4,25 +4,27 @@ using Xunit;
 
 namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
 {
+#if DEBUG
+
     public class MongoDbRepositoryTests : IntegrationTestBase
     {
 
         private readonly IUnitOfWork unitOfWork;
 
-        private readonly KeyableCountry france  = new KeyableCountry { Id = Guid.NewGuid(), Name = "France" };
-        private readonly KeyableCountry belgium  = new KeyableCountry { Id = Guid.NewGuid(), Name = "Belgium" };
-        private readonly KeyableCountry netherlands  = new KeyableCountry { Id = Guid.NewGuid(), Name = "The Netherlands" };
+        private readonly KeyableCountry france = new KeyableCountry { Id = Guid.NewGuid(), Name = "France" };
+        private readonly KeyableCountry belgium = new KeyableCountry { Id = Guid.NewGuid(), Name = "Belgium" };
+        private readonly KeyableCountry netherlands = new KeyableCountry { Id = Guid.NewGuid(), Name = "The Netherlands" };
         private readonly KeyableCountry sweden = new KeyableCountry { Id = Guid.NewGuid(), Name = "Sweden" };
         private readonly KeyableCountry switserland = new KeyableCountry { Id = Guid.NewGuid(), Name = "Switserland" };
 
 
-        public MongoDbRepositoryTests() 
+        public MongoDbRepositoryTests()
             : base()
         {
             unitOfWork = GetUoW();
         }
 
-        
+
         [Fact]
         public void Given_UnitOfWork_When_GetRepository_Then_CanInsertAndRetrieveEntity()
         {
@@ -205,4 +207,6 @@ namespace ChustaSoft.Tools.DBAccess.MongoDb.Tests
         }
 
     }
+
+#endif
 }
