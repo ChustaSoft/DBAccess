@@ -17,8 +17,7 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.Tests
                 .AsQueryable();
 
             return queryable; 
-        }
-        
+        }       
 
     }
 
@@ -31,7 +30,6 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.Tests
         public DateTime BirthDate { get; set; }
         public Employee Supervisor { get; set; }
         public Company Company { get; set; }
-
         public IEnumerable<Address> Addresses { get; set; }
     }
 
@@ -48,6 +46,7 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.Tests
         public int Id { get; set; }
         public string Name { get; set; }
         public Address Address { get; set; }
+        public IEnumerable<Employee> Employees { get; set; }
     }
 
     public class City : IKeyable<int> 
