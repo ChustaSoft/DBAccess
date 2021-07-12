@@ -9,7 +9,7 @@
     <Authors>Xelit3</Authors>
     <Company>ChustaSoft</Company>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    <Version>3.1.0-alpha.1</Version>
+    <Version>3.1.0-alpha.2</Version>
     <FileVersion>3.1.0</FileVersion>
     <AssemblyVersion>3.1.0</AssemblyVersion>
     <PackageProjectUrl>https://github.com/ChustaSoft/DBAccess</PackageProjectUrl>
