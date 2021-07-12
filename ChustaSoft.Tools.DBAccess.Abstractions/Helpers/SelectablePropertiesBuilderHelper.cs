@@ -20,6 +20,14 @@ namespace ChustaSoft.Tools.DBAccess
         }
 #pragma warning restore IDE0060 // Remove unused parameter
 
+        public static SelectablePropertiesBuilder<TOrigin, TSelection> Including<TOrigin, TParent, TSelection>(this SelectablePropertiesBuilder<TOrigin, TParent> builder, Expression<Func<TOrigin, TSelection>> navigationPropertyPath)
+            where TOrigin : class
+        {
+            var propertyName = GetPropertyName(navigationPropertyPath);
+
+            return new SelectablePropertiesBuilder<TOrigin, TSelection>(builder, propertyName);
+        }
+
         public static SelectablePropertiesBuilder<TOrigin, TNewSelection> Including<TOrigin, TParent, TSelection, TNewSelection>(this SelectablePropertiesBuilder<TOrigin, TParent, TSelection> builder, Expression<Func<TOrigin, TNewSelection>> navigationPropertyPath)
             where TOrigin : class
         {
