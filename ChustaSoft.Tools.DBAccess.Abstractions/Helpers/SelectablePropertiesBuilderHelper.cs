@@ -54,6 +54,15 @@ namespace ChustaSoft.Tools.DBAccess
             return new SelectablePropertiesBuilder<TOrigin, TParent, TSelection>(builder, propertyName);
         }
 
+        public static SelectablePropertiesBuilder<TOrigin, TParent, TSelection> Then<TOrigin, TParent, TSelection>(this SelectablePropertiesBuilder<TOrigin, ICollection<TParent>> builder, Expression<Func<TParent, TSelection>> navigationPropertyPath)
+            where TOrigin : class
+            where TParent : class
+        {
+            var propertyName = GetPropertyName(navigationPropertyPath);
+
+            return new SelectablePropertiesBuilder<TOrigin, TParent, TSelection>(builder, propertyName);
+        }
+
         public static SelectablePropertiesBuilder<TOrigin, TParent, TSelection> Then<TOrigin, TPreviousParent, TParent, TSelection>(this SelectablePropertiesBuilder<TOrigin, TPreviousParent, TParent> builder, Expression<Func<TParent, TSelection>> navigationPropertyPath)
             where TOrigin : class
             where TPreviousParent : class
@@ -67,6 +76,18 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
         public static SelectablePropertiesBuilder<TOrigin, TParent, TSelection> Then<TOrigin, TPreviousParent, TParent, TSelection>(this SelectablePropertiesBuilder<TOrigin, TPreviousParent, IEnumerable<TParent>> builder, Expression<Func<TParent, TSelection>> navigationPropertyPath)
+            where TOrigin : class
+            where TPreviousParent : class
+        {
+            var propertyName = GetPropertyName(navigationPropertyPath);
+            var selectionBuilder = new SelectablePropertiesBuilder<TOrigin, TParent, TSelection>(builder);
+
+            selectionBuilder.AddDeepen(typeof(TSelection), propertyName);
+
+            return selectionBuilder;
+        }
+
+        public static SelectablePropertiesBuilder<TOrigin, TParent, TSelection> Then<TOrigin, TPreviousParent, TParent, TSelection>(this SelectablePropertiesBuilder<TOrigin, TPreviousParent, ICollection<TParent>> builder, Expression<Func<TParent, TSelection>> navigationPropertyPath)
             where TOrigin : class
             where TPreviousParent : class
         {
@@ -97,6 +118,15 @@ namespace ChustaSoft.Tools.DBAccess
         }
 
         public static SelectablePropertiesBuilder<TOrigin, TParent, IEnumerable<TPreviousSelection>> And<TOrigin, TParent, TPreviousSelection, TSelection>(this SelectablePropertiesBuilder<TOrigin, TParent, IEnumerable<TPreviousSelection>> builder, Expression<Func<TParent, TSelection>> navigationPropertyPath)
+        {
+            var propertyName = GetPropertyName(navigationPropertyPath);
+
+            builder.AddFlush(typeof(TSelection), propertyName, false);
+
+            return builder;
+        }
+
+        public static SelectablePropertiesBuilder<TOrigin, TParent, ICollection<TPreviousSelection>> And<TOrigin, TParent, TPreviousSelection, TSelection>(this SelectablePropertiesBuilder<TOrigin, TParent, ICollection<TPreviousSelection>> builder, Expression<Func<TParent, TSelection>> navigationPropertyPath)
         {
             var propertyName = GetPropertyName(navigationPropertyPath);
 
