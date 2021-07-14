@@ -95,5 +95,34 @@ namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
             Assert.Equal(batchSize, data.Count());
         }
 
+
+        [Fact]
+        public void Given_Repository_When_MultipleIncludeWithoutDeepNavigationAndToList_Then_AllPropertiesRetrived()
+        {
+            var repository = _unitOfWork.GetRepository<Person>();
+
+            var data = repository.FromQuery(x => x.Including(y => y.Origin).Including(y => y.Addresses).Including(y => y.Posts))
+                .Where(x => x.Id == MockDataHelper.STATIC_PERSON_ID)
+                .OrderByDescending(x => x.BirthDate)
+                .ToList();
+
+            Assert.NotNull(data.First().Origin);
+            Assert.NotNull(data.First().Addresses);
+            Assert.NotNull(data.First().Posts);
+        }
+
+        [Fact]
+        public void Given_Repository_When_MultipleIncludeWithoutDeepNavigationAndSelect_Then_AllPropertiesRetrived()
+        {
+            var repository = _unitOfWork.GetRepository<Person>();
+
+            var data = repository.FromQuery(x => x.Including(y => y.Origin).Including(y => y.Addresses).Including(y => y.Posts))
+                .Where(x => x.Id == MockDataHelper.STATIC_PERSON_ID)
+                .OrderByDescending(x => x.BirthDate)
+                .Select(x => new { Name = x.Name, CountryOrigin = x.Origin.Name });
+
+            Assert.NotNull(data);
+        }
+
     }
 }

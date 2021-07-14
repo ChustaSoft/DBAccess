@@ -181,5 +181,22 @@ namespace ChustaSoft.Tools.DBAccess.Abstractions.Tests
             Assert.Contains(result.First(x => x.Property == nameof(Employee.Company)).Nested, x => x.Property == nameof(Company.Address));
         }
 
+        [Fact]
+        public void Given_Queryable_When_MultipleIncludeWithoutDeepNavigation_Then_AllSiblingsRetrived()
+        {
+            var data = SelectablePropertiesBuilderTestHelper.GetMockedData();
+
+            var builder = data
+                .Including(x => x.Supervisor)
+                .Including(x => x.Company)
+                .Including(x => x.Addresses);
+
+            var result = builder.Build();
+
+            Assert.Contains(result, x => x.Property == nameof(Employee.Company));
+            Assert.Contains(result, x => x.Property == nameof(Employee.Supervisor));
+            Assert.Contains(result, x => x.Property == nameof(Employee.Addresses));
+        }
+
     }
 }

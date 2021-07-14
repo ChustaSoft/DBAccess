@@ -9,6 +9,7 @@ namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<Post> Posts { get; set; }
 
 
         public TestContext(DbContextOptions options) 
@@ -50,7 +51,16 @@ namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
                 entity.ToTable(nameof(Persons));
                 entity.HasData(mockedData.Persons);
 
+                entity.HasOne(x => x.Origin).WithMany(x => x.Citizens).HasForeignKey(x => x.OriginId);
                 entity.HasMany(x => x.Addresses).WithOne(x => x.Person).HasForeignKey(x => x.PersonId);
+                entity.HasMany(x => x.Posts).WithOne(x => x.Author).HasForeignKey(x => x.AuthorId);
+            });
+
+            modelBuilder.Entity<Post>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.ToTable(nameof(Posts));
+                entity.HasData(mockedData.Posts);
             });
         }
 
