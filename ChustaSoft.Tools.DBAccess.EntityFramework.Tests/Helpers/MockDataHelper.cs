@@ -18,6 +18,7 @@ namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
         internal IList<City> Cities { get; private set; } = new List<City>();
         internal IList<Person> Persons { get; private set; } = new List<Person>();
         internal IList<Address> Addresses { get; private set; } = new List<Address>();
+        internal IList<Post> Posts { get; private set; } = new List<Post>();
 
 
         public MockDataHelper()
@@ -31,7 +32,8 @@ namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
                 .All().With(x => x.CountryId = GetRandomId(Countries)).Build();
 
             Persons = Builder<Person>.CreateListOfSize(2000)
-                .TheFirst(1).With(x => x.Id = STATIC_PERSON_ID)
+                .TheFirst(1)
+                    .With(x => x.Id = STATIC_PERSON_ID)
                 .Build();
 
             foreach (var person in Persons) 
@@ -41,10 +43,21 @@ namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
                 ((List<Address>)Addresses).AddRange(Builder<Address>.CreateListOfSize(GetRandom(1, 5))
                     .All()
                         .With(x => x.Id = Guid.NewGuid())
-                        .With(x => x.Sequence == sequenceNumber++)
+                        .With(x => x.Sequence == sequenceNumber)
                         .With(x => x.CityId = GetRandomId(Cities))
                         .With(x => x.PersonId = person.Id)
                     .Build());
+
+                ((List<Post>)Posts).AddRange(Builder<Post>.CreateListOfSize(GetRandom(1, 5))
+                    .All()
+                        .With(x => x.Id = Guid.NewGuid())
+                        .With(x => x.Text = $"Test text {sequenceNumber}")
+                        .With(x => x.AuthorId = person.Id)
+                    .Build());
+
+                person.OriginId = GetRandomId(Countries);
+
+                sequenceNumber++;
             }        
         }
 

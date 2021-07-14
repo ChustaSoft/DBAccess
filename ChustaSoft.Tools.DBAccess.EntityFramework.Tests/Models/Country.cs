@@ -10,5 +10,6 @@ namespace ChustaSoft.Tools.DBAccess.EntityFramework.Tests
         public string Name { get; set; }
 
         public ICollection<City> Cities { get; set; }
+        public ICollection<Person> Citizens { get; set; }
     }
 }
