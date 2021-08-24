@@ -1,7 +1,7 @@
 ﻿namespace ChustaSoft.Tools.DBAccess
 {
 
-#if NETCORE || NET5
+#if (NETCORE || NET5_0)
 
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
