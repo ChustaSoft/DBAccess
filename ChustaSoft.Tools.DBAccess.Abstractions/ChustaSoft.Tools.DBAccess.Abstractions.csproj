@@ -1,33 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net471;netcoreapp3.1;net5.0</TargetFrameworks>
-    <PackageId>ChustaSoft.Tools.DBAccess.Abstractions</PackageId>
-    <RootNamespace>ChustaSoft.Tools.DBAccess</RootNamespace>
-    <Description>Utilities for managing access to a Database</Description>
-    <Copyright>ChustaSoft</Copyright>
-    <Authors>Xelit3</Authors>
-    <Company>ChustaSoft</Company>
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    <Version>3.1.0</Version>
-    <FileVersion>3.1.0</FileVersion>
-    <AssemblyVersion>3.1.0</AssemblyVersion>
-    <PackageProjectUrl>https://github.com/ChustaSoft/DBAccess</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/ChustaSoft/DBAccess/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageReleaseNotes>https://github.com/ChustaSoft/DBAccess/wiki/Release-notes</PackageReleaseNotes>
-    <RepositoryUrl>https://github.com/ChustaSoft/DBAccess.git</RepositoryUrl>
-    <RepositoryType>GIT</RepositoryType>
-    <PackageTags>Utilities;Extensions;EFCore,EntityFramework;EF6;UnitOfWork;UoW;MongoDb;MongoDriver</PackageTags>
-    <LangVersion>preview</LangVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net471;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+		<PackageId>ChustaSoft.Tools.DBAccess.Abstractions</PackageId>
+		<RootNamespace>ChustaSoft.Tools.DBAccess</RootNamespace>
+		<Description>Utilities for managing access to a Database</Description>
+		<Copyright>ChustaSoft</Copyright>
+		<Authors>Xelit3</Authors>
+		<Company>ChustaSoft</Company>
+		<RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+		<Version>3.1.0</Version>
+		<FileVersion>3.1.0</FileVersion>
+		<AssemblyVersion>3.1.0</AssemblyVersion>
+		<PackageProjectUrl>https://github.com/ChustaSoft/DBAccess</PackageProjectUrl>
+		<PackageLicenseUrl>https://github.com/ChustaSoft/DBAccess/blob/master/LICENSE</PackageLicenseUrl>
+		<PackageReleaseNotes>https://github.com/ChustaSoft/DBAccess/wiki/Release-notes</PackageReleaseNotes>
+		<RepositoryUrl>https://github.com/ChustaSoft/DBAccess.git</RepositoryUrl>
+		<RepositoryType>GIT</RepositoryType>
+		<PackageTags>Utilities;Extensions;EFCore,EntityFramework;EF6;UnitOfWork;UoW;MongoDb;MongoDriver</PackageTags>
+		<LangVersion>preview</LangVersion>
+	</PropertyGroup>
 
 
-  <PropertyGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^net\d'))">
-    <DefineConstants>NETFRAMEWORK</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^netcoreapp\d'))">
-    <DefineConstants>NETCORE</DefineConstants>
-  </PropertyGroup>
+	<PropertyGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^net\d'))">
+		<DefineConstants>NETFRAMEWORK</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^netcoreapp\d'))">
+		<DefineConstants>NETCORE</DefineConstants>
+	</PropertyGroup>
 
 </Project>
 
