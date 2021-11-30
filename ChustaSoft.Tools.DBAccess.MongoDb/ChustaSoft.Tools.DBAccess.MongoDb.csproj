@@ -1,47 +1,47 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net471;netcoreapp3.1;net5.0</TargetFrameworks>
-    <PackageId>ChustaSoft.Tools.DBAccess.MongoDb</PackageId>
-    <RootNamespace>ChustaSoft.Tools.DBAccess</RootNamespace>
-    <Description>Utilities for managing access to MongoDb database through MongoDb client. Packate still on POC and alpha stage</Description>
-    <Copyright>ChustaSoft</Copyright>
-    <Authors>Xelit3</Authors>
-    <Company>ChustaSoft</Company>
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    <Version>3.0.0-alpha.3</Version>
-    <FileVersion>3.0.0</FileVersion>
-    <AssemblyVersion>3.0.0</AssemblyVersion>
-    <PackageProjectUrl>https://github.com/ChustaSoft/DBAccess</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/ChustaSoft/DBAccess/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageReleaseNotes>https://github.com/ChustaSoft/DBAccess/wiki/Release-notes</PackageReleaseNotes>
-    <RepositoryUrl>https://github.com/ChustaSoft/DBAccess.git</RepositoryUrl>
-    <RepositoryType>GIT</RepositoryType>
-    <PackageTags>Utilities;Extensions;MongoDb,MongoDbClient;UnitOfWork;UoW</PackageTags>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net471;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+		<PackageId>ChustaSoft.Tools.DBAccess.MongoDb</PackageId>
+		<RootNamespace>ChustaSoft.Tools.DBAccess</RootNamespace>
+		<Description>Utilities for managing access to MongoDb database through MongoDb client. Packate still on POC and alpha stage</Description>
+		<Copyright>ChustaSoft</Copyright>
+		<Authors>Xelit3</Authors>
+		<Company>ChustaSoft</Company>
+		<RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+		<Version>3.0.0-alpha.4</Version>
+		<FileVersion>3.0.0</FileVersion>
+		<AssemblyVersion>3.0.0</AssemblyVersion>
+		<PackageProjectUrl>https://github.com/ChustaSoft/DBAccess</PackageProjectUrl>
+		<PackageLicenseUrl>https://github.com/ChustaSoft/DBAccess/blob/master/LICENSE</PackageLicenseUrl>
+		<PackageReleaseNotes>https://github.com/ChustaSoft/DBAccess/wiki/Release-notes</PackageReleaseNotes>
+		<RepositoryUrl>https://github.com/ChustaSoft/DBAccess.git</RepositoryUrl>
+		<RepositoryType>GIT</RepositoryType>
+		<PackageTags>Utilities;Extensions;MongoDb,MongoDbClient;UnitOfWork;UoW</PackageTags>
+	</PropertyGroup>
 
 
-  <ItemGroup>
-    <PackageReference Include="ChustaSoft.Common" Version="2.0.2" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="MongoDB.Driver" Version="2.12.4" />
-  </ItemGroup>
-  
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net471' ">
-    <PackageReference Include="Unity" Version="5.11.10" />
-  </ItemGroup>
-  
-  
-  <ItemGroup>
-    <ProjectReference Include="..\ChustaSoft.Tools.DBAccess.Abstractions\ChustaSoft.Tools.DBAccess.Abstractions.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="ChustaSoft.Common" Version="2.3.0" />
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+		<PackageReference Include="MongoDB.Driver" Version="2.14.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net471' ">
+		<PackageReference Include="Unity" Version="5.11.10" />
+	</ItemGroup>
 
 
-  <PropertyGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^net\d'))">
-    <DefineConstants>NETFRAMEWORK</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^netcoreapp\d'))">
-    <DefineConstants>NETCORE</DefineConstants>
-  </PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ChustaSoft.Tools.DBAccess.Abstractions\ChustaSoft.Tools.DBAccess.Abstractions.csproj" />
+	</ItemGroup>
+
+
+	<PropertyGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^net\d'))">
+		<DefineConstants>NETFRAMEWORK</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^netcoreapp\d'))">
+		<DefineConstants>NETCORE</DefineConstants>
+	</PropertyGroup>
 
 </Project>

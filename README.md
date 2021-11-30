@@ -19,6 +19,7 @@
 | .Net Core 2.2          | 1.0.0         | 2.0.2   | :x:                |
 | .Net Core 3.1          | 1.0.0         | Current | :heavy_check_mark: |
 | .Net 5.0               | 3.0.0         | Current | :heavy_check_mark: |
+| .Net 6.0               | 3.2.0         | Current | :heavy_check_mark: |
 
 
 ## Description
