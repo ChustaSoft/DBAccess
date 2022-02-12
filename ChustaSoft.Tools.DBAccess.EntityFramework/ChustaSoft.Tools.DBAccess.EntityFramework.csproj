@@ -13,8 +13,8 @@
 		<FileVersion>3.2.1</FileVersion>
 		<AssemblyVersion>3.2.1</AssemblyVersion>
 		<PackageProjectUrl>https://github.com/ChustaSoft/DBAccess</PackageProjectUrl>
-		<PackageLicenseUrl>https://github.com/ChustaSoft/DBAccess/blob/master/LICENSE</PackageLicenseUrl>
-		<PackageReleaseNotes>https://github.com/ChustaSoft/DBAccess/wiki/Release-notes</PackageReleaseNotes>
+		<PackageLicenseUrl>https://github.com/ChustaSoft/DBAccess/blob/main/LICENSE</PackageLicenseUrl>
+		<PackageReleaseNotes>https://github.com/ChustaSoft/DBAccess/blob/main/changelog.md</PackageReleaseNotes>
 		<RepositoryUrl>https://github.com/ChustaSoft/DBAccess.git</RepositoryUrl>
 		<RepositoryType>GIT</RepositoryType>
 		<PackageTags>Utilities;Extensions;EFCore,EntityFramework;EF6;UnitOfWork;UoW</PackageTags>
