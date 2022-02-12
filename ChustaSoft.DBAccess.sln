@@ -21,6 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChustaSoft.Tools.DBAccess.M
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Documentation", "3. Documentation", "{C9DB94D1-3B80-4803-8226-187AF5959A57}"
 	ProjectSection(SolutionItems) = preProject
+		changelog.md = changelog.md
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
